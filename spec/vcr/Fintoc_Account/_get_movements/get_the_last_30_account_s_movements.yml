@@ -1,0 +1,202 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v1/links/6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx
+      User-Agent:
+      - fintoc-ruby/0.1.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Sep 2020 19:16:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d8b6f113165d70d514d4cf2ee64e8242b1600456609; expires=Sun, 18-Oct-20
+        19:16:49 GMT; path=/; domain=.fintoc.com; HttpOnly; SameSite=Lax; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"897ae694e5399ed740681eeb2602478d"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 34ada870-9271-41e8-a0fe-8e1677508b83
+      X-Runtime:
+      - '0.329873'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 05443ee5ff0000e5260f885200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5d4d674ff9d1e526-ARI
+    body:
+      encoding: UTF-8
+      string: '{"id":"6n12zLmai3lLE9Dq","holder_id":"782592211","username":"416148503","holder_type":"business","created_at":"2020-08-18T17:37:24.550Z","institution":{"id":"cl_banco_de_chile","name":"Banco
+        de Chile","country":"cl"},"link_token":null,"mode":"test","accounts":[{"id":"JjEQx2rPTGGKbrP5","type":"checking_account","number":"813990168","name":"Cuenta
+        Corriente","official_name":"Cuenta Corriente","balance":{"available":23457460,"current":23457460,"limit":23457460},"holder_id":"404276727","holder_name":"Sta.
+        Francisco Ordóñez Esquivel","currency":"CLP"}]}'
+  recorded_at: Fri, 18 Sep 2020 19:16:50 GMT
+- request:
+    method: get
+    uri: https://api.fintoc.com/v1/accounts/JjEQx2rPTGGKbrP5/movements?link_token=6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx
+      User-Agent:
+      - fintoc-ruby/0.1.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Sep 2020 19:16:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=ddf5e65cbc6237286c18a67b1e09f90b01600456610; expires=Sun, 18-Oct-20
+        19:16:50 GMT; path=/; domain=.fintoc.com; HttpOnly; SameSite=Lax; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Link:
+      - <https://api.fintoc.com/v1/accounts/JjEQx2rPTGGKbrP5/movements?link_token=6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W&page=1>;
+        rel="first", <https://api.fintoc.com/v1/accounts/JjEQx2rPTGGKbrP5/movements?link_token=6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W&page=2>;
+        rel="next", <https://api.fintoc.com/v1/accounts/JjEQx2rPTGGKbrP5/movements?link_token=6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W&page=126>;
+        rel="last"
+      X-Total-Count:
+      - '3772'
+      Etag:
+      - W/"ceadd8d6cf0ce8ad83fae593c1123c61"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b97178b1-fe5a-40c9-baa8-2fa56b789cd5
+      X-Runtime:
+      - '0.591828'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 05443eeb740000d2b8f0818200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5d4d6758b909d2b8-EZE
+    body:
+      encoding: UTF-8
+      string: '[{"id":"6xq4Y9WHG7268PEO","description":"Minus unde debitis aut.","amount":-7078548,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"652407749","number":"575894988","institution":{"id":"cl_banco_bci","name":"Banco
+        BCI","country":"cl"},"holder_name":"Caridad Sanches Montalvo"},"sender_account":null,"comment":null,"reference_id":null},{"id":"3M2y8AJHwOb4eRpn","description":"Mollitia
+        dolorem assumenda ipsam.","amount":5140623,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"745931278","number":"590331532","institution":{"id":"cl_banco_estado","name":"Banco
+        Estado","country":"cl"},"holder_name":"Sta. Carolina Colunga Cervántez"},"comment":null,"reference_id":null},{"id":"0jLD8gMHyrMOY5B9","description":"Sed
+        amet sapiente doloremque.","amount":-3694550,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"745931278","number":"818035810","institution":{"id":"cl_banco_bbva","name":"Banco
+        BBVA","country":"cl"},"holder_name":"Óscar Curiel Rael"},"sender_account":null,"comment":null,"reference_id":null},{"id":"panmNdbHvDmnezw4","description":"Sint
+        neque repellat at.","amount":9917953,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"jJP6YByHmVRqe4OM","description":"Ut
+        sit nesciunt consequatur.","amount":1916918,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"koGQNL3HnloBYlpj","description":"Et
+        perferendis vel expedita.","amount":-2531625,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"652407749","number":"584336279","institution":{"id":"cl_banco_bci","name":"Banco
+        BCI","country":"cl"},"holder_name":"Margarita Ledesma Palomino"},"sender_account":null,"comment":null,"reference_id":null},{"id":"ZdLMeQ7HGlRjNoAv","description":"Ut
+        eligendi sed dolores.","amount":4918734,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"584192437","number":"792774435","institution":{"id":"cl_banco_santander","name":"Banco
+        Santander","country":"cl"},"holder_name":"Sta. Ángela Cervantes Montenegro"},"comment":null,"reference_id":null},{"id":"ZMd9Y5PHwJA4eQLg","description":"Fugit
+        sit qui incidunt.","amount":7874946,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"584192437","number":"932704549","institution":{"id":"cl_banco_bci","name":"Banco
+        BCI","country":"cl"},"holder_name":"Manuela Barrios Urbina"},"comment":null,"reference_id":null},{"id":"ypv5Yo1Hqrwy8gqj","description":"Fugiat
+        necessitatibus hic id.","amount":5058888,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"652407749","number":"965028784","institution":{"id":"cl_banco_estado","name":"Banco
+        Estado","country":"cl"},"holder_name":"José Eduardo Sevilla Palacios"},"comment":null,"reference_id":null},{"id":"X4Ag8xaHabPbea2b","description":"Et
+        iste qui qui.","amount":1603261,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"584192437","number":"471177268","institution":{"id":"cl_banco_estado","name":"Banco
+        Estado","country":"cl"},"holder_name":"Jorge Luis Mesa Barrera"},"comment":null,"reference_id":null},{"id":"zJP0YXVHz99R8omy","description":"Rem
+        accusantium quia cupiditate.","amount":-3761146,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"652407749","number":"131329714","institution":{"id":"cl_banco_bbva","name":"Banco
+        BBVA","country":"cl"},"holder_name":"Luis Pabón Loera"},"sender_account":null,"comment":null,"reference_id":null},{"id":"6xq4Y9WHG11o8PEO","description":"Expedita
+        modi beatae rerum.","amount":-3641133,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"745931278","number":"374287044","institution":{"id":"cl_banco_scotiabank","name":"Banco
+        Scotiabank","country":"cl"},"holder_name":"Raquel Piña Domínquez"},"sender_account":null,"comment":null,"reference_id":null},{"id":"X4Ag8xaHaoWxea2b","description":"Voluptatem
+        quod iure eos.","amount":-8441183,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"XZB9NynH6VOA8Axp","description":"Cum
+        fugit voluptates placeat.","amount":7970176,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"652407749","number":"743079291","institution":{"id":"cl_banco_estado","name":"Banco
+        Estado","country":"cl"},"holder_name":"Dolores Roldán Rosales"},"comment":null,"reference_id":null},{"id":"0QEaeq4HjzV58mWb","description":"Nihil
+        unde alias quia.","amount":-7889255,"currency":"CLP","post_date":"2020-09-15T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"KD5XekJHDl1X8wjE","description":"Ut
+        et ipsa ullam.","amount":-4821107,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"791209161","number":"989468299","institution":{"id":"cl_banco_itau","name":"Banco
+        Itaú","country":"cl"},"holder_name":"Adriana Porras Saiz"},"sender_account":null,"comment":null,"reference_id":null},{"id":"WwbK8VEHOoK6NEp6","description":"Laborum
+        eligendi et aut.","amount":-7274860,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"MPDkeRjHdLaBe90j","description":"Ut
+        laboriosam voluptate ullam.","amount":-3172435,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"3M2y8AJHw5d5eRpn","description":"Sed
+        voluptatem atque reiciendis.","amount":-9277774,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"3BX28ZBHyqpr87bo","description":"Voluptas
+        dolore officiis est.","amount":-741308,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"LgrK8G4HBVEze51o","description":"Saepe
+        qui vero consequatur.","amount":-4059726,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"3M2y8AJHw5LxeRpn","description":"Sequi
+        voluptatibus voluptatem commodi.","amount":7984645,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"791209161","number":"299623675","institution":{"id":"cl_banco_itau","name":"Banco
+        Itaú","country":"cl"},"holder_name":"Elisa Cervantes Alva"},"comment":null,"reference_id":null},{"id":"VXxa86kHwy3meMG9","description":"Quos
+        voluptas rerum aspernatur.","amount":-1492682,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"791209161","number":"444744772","institution":{"id":"cl_banco_santander","name":"Banco
+        Santander","country":"cl"},"holder_name":"Sta. Benjamín Huerta Duarte"},"sender_account":null,"comment":null,"reference_id":null},{"id":"9w5WYOnHLZ0Oe4zJ","description":"Qui
+        cupiditate sed et.","amount":-7122412,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"745931278","number":"391519006","institution":{"id":"cl_banco_santander","name":"Banco
+        Santander","country":"cl"},"holder_name":"Lilia Apodaca Frías"},"sender_account":null,"comment":null,"reference_id":null},{"id":"mr0xNzXHZQGAeVG6","description":"Corporis
+        aut cupiditate iste.","amount":7522880,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":null,"sender_account":{"holder_id":"791209161","number":"788832075","institution":{"id":"cl_banco_scotiabank","name":"Banco
+        Scotiabank","country":"cl"},"holder_name":"Silvia Zarate Echevarría"},"comment":null,"reference_id":null},{"id":"QbO7Y7RHjKKze4Zl","description":"Et
+        ab quia distinctio.","amount":-1181224,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"AzyX8PXHGd7P867b","description":"Vel
+        libero esse adipisci.","amount":-6350965,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"791209161","number":"971137909","institution":{"id":"cl_banco_bbva","name":"Banco
+        BBVA","country":"cl"},"holder_name":"Gilberto Farías Lozada"},"sender_account":null,"comment":null,"reference_id":null},{"id":"XZB9NynHXJrE8Axp","description":"Impedit
+        blanditiis dolorum veniam.","amount":-5309284,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null},{"id":"6EdV8pvHRGJbYR50","description":"Et
+        iste perferendis ut.","amount":-620367,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"transfer","recipient_account":{"holder_id":"745931278","number":"461024335","institution":{"id":"cl_banco_scotiabank","name":"Banco
+        Scotiabank","country":"cl"},"holder_name":"Sr. Juan Carlos Verdugo Armenta"},"sender_account":null,"comment":null,"reference_id":null},{"id":"zJP0YXVHvQEV8omy","description":"Quasi
+        animi amet vel.","amount":7340581,"currency":"CLP","post_date":"2020-09-14T00:00:00Z","transaction_date":null,"type":"other","recipient_account":null,"sender_account":null,"comment":null,"reference_id":null}]'
+  recorded_at: Fri, 18 Sep 2020 19:16:52 GMT
+recorded_with: VCR 6.0.0

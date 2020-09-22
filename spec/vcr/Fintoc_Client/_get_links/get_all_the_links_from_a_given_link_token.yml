@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v1/links
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx
+      User-Agent:
+      - fintoc-ruby/0.1.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Sep 2020 19:26:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=dc4cf711d7c11ede2fa14201db8d1508f1600457201; expires=Sun, 18-Oct-20
+        19:26:41 GMT; path=/; domain=.fintoc.com; HttpOnly; SameSite=Lax; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Link:
+      - <https://api.fintoc.com/v1/links?page=1>; rel="first", <https://api.fintoc.com/v1/links?page=1>;
+        rel="last"
+      X-Total-Count:
+      - '1'
+      Etag:
+      - W/"80e799153079ddb19ef402cbfea3c804"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2a317c68-1b6c-4155-ab8d-8094601312ac
+      X-Runtime:
+      - '0.041459'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 054447ef030000f80e939be200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5d4d75c4dc82f80e-EZE
+    body:
+      encoding: UTF-8
+      string: '[{"id":"6n12zLmai3lLE9Dq","holder_id":"782592211","username":"416148503","holder_type":"business","created_at":"2020-08-18T17:37:24.550Z","institution":{"id":"cl_banco_de_chile","name":"Banco
+        de Chile","country":"cl"},"link_token":null,"mode":"test","accounts":null}]'
+  recorded_at: Fri, 18 Sep 2020 19:26:42 GMT
+recorded_with: VCR 6.0.0

@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v1/links/6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx
+      User-Agent:
+      - fintoc-ruby/0.1.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Sep 2020 19:30:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d422e7ea5f64ed2f17d7849b72bc08f861600457421; expires=Sun, 18-Oct-20
+        19:30:21 GMT; path=/; domain=.fintoc.com; HttpOnly; SameSite=Lax; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"897ae694e5399ed740681eeb2602478d"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - bbfc257f-e666-4de8-8943-13b5311319e2
+      X-Runtime:
+      - '0.382821'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 05444b49530000e52eca0a5200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5d4d7b221a91e52e-ARI
+    body:
+      encoding: UTF-8
+      string: '{"id":"6n12zLmai3lLE9Dq","holder_id":"782592211","username":"416148503","holder_type":"business","created_at":"2020-08-18T17:37:24.550Z","institution":{"id":"cl_banco_de_chile","name":"Banco
+        de Chile","country":"cl"},"link_token":null,"mode":"test","accounts":[{"id":"JjEQx2rPTGGKbrP5","type":"checking_account","number":"813990168","name":"Cuenta
+        Corriente","official_name":"Cuenta Corriente","balance":{"available":23457460,"current":23457460,"limit":23457460},"holder_id":"404276727","holder_name":"Sta.
+        Francisco Ordóñez Esquivel","currency":"CLP"}]}'
+  recorded_at: Fri, 18 Sep 2020 19:30:22 GMT
+- request:
+    method: get
+    uri: https://api.fintoc.com/v1/links/6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W?link_token=6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx
+      User-Agent:
+      - fintoc-ruby/0.1.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Sep 2020 19:30:23 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=dcbe25b41d5cf53120aeb80d08e32f03e1600457422; expires=Sun, 18-Oct-20
+        19:30:22 GMT; path=/; domain=.fintoc.com; HttpOnly; SameSite=Lax; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"897ae694e5399ed740681eeb2602478d"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 72ddb4c5-36b3-4dfd-b85d-33fd23e8661c
+      X-Runtime:
+      - '0.330236'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Origin
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 05444b4ee00000d7d13612e200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5d4d7b2b0a7cd7d1-EZE
+    body:
+      encoding: UTF-8
+      string: '{"id":"6n12zLmai3lLE9Dq","holder_id":"782592211","username":"416148503","holder_type":"business","created_at":"2020-08-18T17:37:24.550Z","institution":{"id":"cl_banco_de_chile","name":"Banco
+        de Chile","country":"cl"},"link_token":null,"mode":"test","accounts":[{"id":"JjEQx2rPTGGKbrP5","type":"checking_account","number":"813990168","name":"Cuenta
+        Corriente","official_name":"Cuenta Corriente","balance":{"available":23457460,"current":23457460,"limit":23457460},"holder_id":"404276727","holder_name":"Sta.
+        Francisco Ordóñez Esquivel","currency":"CLP"}]}'
+  recorded_at: Fri, 18 Sep 2020 19:30:23 GMT
+recorded_with: VCR 6.0.0
