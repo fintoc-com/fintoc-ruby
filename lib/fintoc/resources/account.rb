@@ -6,9 +6,8 @@ require 'fintoc/resources/balance'
 module Fintoc
   class Account
     include Utils
-    attr_reader :type, :name, :holder_name, :currency
-    attr_reader :id, :official_name, :number, :holder_id
-    attr_reader :balance, :movements
+    attr_reader :id, :name, :holder_name, :currency, :type, :refreshed_at,
+                :official_name, :number, :holder_id, :balance, :movements
     def initialize(
       id:,
       name:,
@@ -18,6 +17,7 @@ module Fintoc
       holder_name:,
       type:,
       currency:,
+      refreshed_at: nil,
       balance: nil,
       movements: nil,
       client: nil,
@@ -31,6 +31,7 @@ module Fintoc
       @holder_name = holder_name
       @type = type
       @currency = currency
+      @refreshed_at = DateTime.iso8601(refreshed_at) if refreshed_at
       @balance = Fintoc::Balance.new(**balance)
       @movements = movements || []
       @client = client

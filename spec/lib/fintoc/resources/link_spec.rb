@@ -24,6 +24,7 @@ RSpec.describe Fintoc::Link do
           "holder_name": 'Jon Snow',
           "type": 'checking_account',
           "currency": 'CLP',
+          "refreshed_at": nil,
           "balance": {
             "available": 7_010_510,
             "current": 7_010_510,
@@ -39,6 +40,7 @@ RSpec.describe Fintoc::Link do
           "holder_name": 'Jon Snow',
           "type": 'line_of_credit',
           "currency": 'CLP',
+          "refreshed_at": nil,
           "balance": {
             "available": 500_000,
             "current": 500_000,

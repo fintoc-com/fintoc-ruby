@@ -145,7 +145,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"id":"6n12zLmai3lLE9Dq","holder_id":"782592211","username":"416148503","holder_type":"business","created_at":"2020-08-18T17:37:24.550Z","institution":{"id":"cl_banco_de_chile","name":"Banco
         de Chile","country":"cl"},"link_token":null,"mode":"test","accounts":[{"id":"JjEQx2rPTGGKbrP5","type":"checking_account","number":"813990168","name":"Cuenta
-        Corriente","official_name":"Cuenta Corriente","balance":{"available":23457460,"current":23457460,"limit":23457460},"holder_id":"404276727","holder_name":"Sta.
+        Corriente","refreshed_at":null,"official_name":"Cuenta Corriente","balance":{"available":23457460,"current":23457460,"limit":23457460},"holder_id":"404276727","holder_name":"Sta.
         Francisco Ordóñez Esquivel","currency":"CLP"}]}'
   recorded_at: Fri, 18 Sep 2020 19:30:23 GMT
 recorded_with: VCR 6.0.0
