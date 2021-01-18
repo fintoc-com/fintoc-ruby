@@ -1,18 +1,13 @@
-# Fintoc
-
-# Fintoc meets Ruby 
-
-[![Version](https://img.shields.io/npm/v/fintoc.svg)](https://www.npmjs.org/package/fintoc)
-[![Try on RunKit](https://badge.runkitcdn.com/fintoc.svg)](https://runkit.com/npm/fintoc)
+# Fintoc meets Ruby
 
 You have just found the [Ruby](https://www.ruby-lang.org/)-flavored client of [Fintoc](https://fintoc.com). It mainly consists of a port (more of a carbon copy, really) of [fintoc-python](https://github.com/fintoc-com/fintoc-python).
 
 ## Why?
 
 You can think of [Fintoc API](https://fintoc.com/docs) as a piscola.
-And the key ingredient to a properly made piscola are the ice cubes.  
+And the key ingredient to a properly made piscola are the ice cubes.
 Sure, you can still have a [piscola without ice cubes](https://curl.haxx.se/).
-But hey… that’s not enjoyable -- why would you do that?  
+But hey… that’s not enjoyable -- why would you do that?
 Do yourself a favor: go grab some ice cubes by installing this refreshing library.
 
 ## Table of contents
@@ -56,19 +51,22 @@ Or install it yourself as:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
-link = client.link('link_token')
+client = Fintoc::Client.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
+link = client.get_link('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
 account = link.find(type: 'checking_account')
 
-#Get the las 30 movements
+# Get the las 30 movements
 movements = account.get_movements
 
-#Or get the all the movements since 
+# Or get all the movements since a specific date
 movements = account.get_movements(since: '2020-08-15')
 
 ```
 And that’s it!
+
 ## Documentation
+
+This client supports all Fintoc API endpoints. For complete information about the API, head to the [docs](https://docs.fintoc.com/reference).
 
 ## Examples
 
@@ -79,8 +77,7 @@ require 'fintoc'
 
 client = Fintoc::Client.new('api_key')
 link = client.get_link('link_token')
-accounts = link.get_accounts
-puts accounts
+puts link.accounts
 
 # Or... you can pretty print all the accounts in a Link
 
@@ -98,11 +95,10 @@ client = Fintoc::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
-# or 
+# Or by number
 account = link.find(number: '1111111')
 
-# or
-
+# Or by account id
 account = link.find(id: 'sdfsdf234')
 ```
 
@@ -125,8 +121,8 @@ client = Fintoc::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(number: '1111111')
 account.update_balance
-
 ```
+
 ### Get movements
 
 ```ruby
@@ -137,12 +133,15 @@ client = Fintoc::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
-# You can get the account movements since a specific Date
+# You can get the account movements since a specific DateTime
 yesterday = DateTime.now - 1
 account.get_movements(since: yesterday)
 
-# Or... you can use an ISO 8601 formatted string representation of the Date
+# Or you can use an ISO 8601 formatted string representation of the Date
 account.get_movements(since: '2020-01-01')
+
+# You can also set how many movements you want per_page
+account.get_movements(since: '2020-01-01', per_page: 100)
 ```
 
 Calling **get_movements** without arguments gets the last 30 movements of the account
@@ -162,8 +161,6 @@ You can run all the tests just by running:
 rspec
 ```
 
-
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/fintoc-com/fintoc.
-
