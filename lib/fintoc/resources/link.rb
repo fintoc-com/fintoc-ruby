@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'date'
 require 'tabulate'
 require 'fintoc/utils'
@@ -29,7 +27,12 @@ module Fintoc
       @holder_type = holder_type
       @institution = Fintoc::Institution.new(**institution)
       @created_at = Date.iso8601(created_at)
-      @accounts = accounts.nil? ? [] : accounts.lazy.map { |data| Fintoc::Account.new(**data, client: client) }
+      @mode = mode
+      @accounts = if accounts.nil?
+                    []
+                  else
+                    accounts.map { |data| Fintoc::Account.new(**data, client: client) }
+                  end
       @token = link_token
       @client = client
     end
