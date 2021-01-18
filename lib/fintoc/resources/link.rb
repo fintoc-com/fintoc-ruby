@@ -9,8 +9,8 @@ require 'tabulate'
 
 module Fintoc
   class Link
-    attr_reader :id, :username, :holder_type, :institution
-    attr_reader :created_at, :accounts, :link_token
+    attr_reader :id, :username, :holder_type, :institution, :created_at, :mode,
+                :accounts, :link_token
     include Utils
     def initialize(
       id:,
@@ -18,6 +18,7 @@ module Fintoc
       holder_type:,
       institution:,
       created_at:,
+      mode:,
       accounts: nil,
       link_token: nil,
       client: nil,

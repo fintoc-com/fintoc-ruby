@@ -1,4 +1,5 @@
 require 'fintoc/resources/link'
+
 RSpec.describe Fintoc::Link do
   let(:data) do
     {
@@ -12,46 +13,48 @@ RSpec.describe Fintoc::Link do
         "id": 'cl_banco_de_chile',
         "name": 'Banco de Chile'
       },
+      "mode": 'test',
       "accounts": [
-          {
-            "id": 'Z6AwnGn4idL7DPj4',
-            "name": 'Cuenta Corriente',
-            "official_name": 'Cuenta Corriente Moneda Local',
-            "number": '9530516286',
-            "holder_id": '134910798',
-            "holder_name": 'Jon Snow',
-            "type": 'checking_account',
-            "currency": 'CLP',
-            "balance": {
-              "available": 7_010_510,
-              "current": 7_010_510,
-              "limit": 7_510_510
-            }
-          },
-          {
-            "id": 'BO381oEATXonG6bj',
-            "name": 'Línea de Crédito',
-            "official_name": 'Linea De Credito Personas',
-            "number": '19534121467',
-            "holder_id": '134910798',
-            "holder_name": 'Jon Snow',
-            "type": 'line_of_credit',
-            "currency": 'CLP',
-            "balance": {
-              "available": 500_000,
-              "current": 500_000,
-              "limit": 500_000
-            }
+        {
+          "id": 'Z6AwnGn4idL7DPj4',
+          "name": 'Cuenta Corriente',
+          "official_name": 'Cuenta Corriente Moneda Local',
+          "number": '9530516286',
+          "holder_id": '134910798',
+          "holder_name": 'Jon Snow',
+          "type": 'checking_account',
+          "currency": 'CLP',
+          "balance": {
+            "available": 7_010_510,
+            "current": 7_010_510,
+            "limit": 7_510_510
           }
+        },
+        {
+          "id": 'BO381oEATXonG6bj',
+          "name": 'Línea de Crédito',
+          "official_name": 'Linea De Credito Personas',
+          "number": '19534121467',
+          "holder_id": '134910798',
+          "holder_name": 'Jon Snow',
+          "type": 'line_of_credit',
+          "currency": 'CLP',
+          "balance": {
+            "available": 500_000,
+            "current": 500_000,
+            "limit": 500_000
+          }
+        }
       ]
     }
   end
-  let(:link) { Fintoc::Link.new(**data)}
+  let(:link) { described_class.new(**data) }
+
   it 'create an instance of Link' do
-    expect(link).to be_an_instance_of(Fintoc::Link)
+    expect(link).to be_an_instance_of(described_class)
   end
 
-  context 'Link #find' do
+  describe '#find' do
     it 'returns and valid checking account if the arg is type: "checking_account"' do
       checking_account = link.find(type: 'checking_account')
       data_acc = data[:accounts][0]
