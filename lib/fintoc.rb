@@ -1,7 +1,6 @@
-# frozen_string_literal: true
-
 require 'fintoc/version'
+require 'fintoc/errors'
+require 'fintoc/client'
 
 module Fintoc
-
 end
