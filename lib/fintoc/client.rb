@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'http'
 require 'fintoc/utils'
 require 'fintoc/errors'
@@ -33,7 +31,11 @@ module Fintoc
         parameters = params(method, **kwargs)
         response = make_request(method, resource, parameters)
         content = JSON.parse(response.body, symbolize_names: true)
-        raise_custom_error(content[:error]) if response.status.client_error? || response.status.server_error?
+
+        if response.status.client_error? || response.status.server_error?
+          raise_custom_error(content[:error])
+        end
+
         @link_headers = response.headers.get('link')
         content
       end
@@ -105,7 +107,8 @@ module Fintoc
       if resource.start_with? 'https'
         client.send(method, resource)
       else
-        client.send(method, "#{Fintoc::Constants::SCHEME}#{Fintoc::Constants::BASE_URL}#{resource}", parameters)
+        url = "#{Fintoc::Constants::SCHEME}#{Fintoc::Constants::BASE_URL}#{resource}"
+        client.send(method, url, parameters)
       end
     end
 
@@ -129,10 +132,10 @@ module Fintoc
       Module.const_get("Fintoc::Errors::#{klass}")
     end
 
-    # This attribute getter Parse the link headers using some regex 24K magic in the air...
+    # This attribute getter parses the link headers using some regex 24K magic in the air...
     # Ex.
     # <https://api.fintoc.com/v1/links?page=1>; rel="first", <https://api.fintoc.com/v1/links?page=1>; rel="last"
-    # this helps to handle pagination see: https://fintoc.com/docs#paginacion 
+    # this helps to handle pagination see: https://fintoc.com/docs#paginacion
     # return a hash like { first:"https://api.fintoc.com/v1/links?page=1" }
     #
     # @param link_headers [String]
