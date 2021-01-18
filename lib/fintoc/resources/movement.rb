@@ -3,9 +3,9 @@ require 'fintoc/resources/transfer_account'
 
 module Fintoc
   class Movement
-    attr_reader :id, :amount, :currency, :description
-    attr_reader :post_date, :transaction_date, :type, :recipient_account
-    attr_reader :sender_account, :account
+    attr_reader :id, :amount, :currency, :description, :reference_id,
+                :post_date, :transaction_date, :type, :recipient_account,
+                :sender_account, :account, :comment
 
     def initialize(
       id:,
@@ -15,6 +15,7 @@ module Fintoc
       post_date:,
       transaction_date:,
       type:,
+      reference_id:,
       recipient_account:,
       sender_account:,
       comment:,
@@ -27,6 +28,7 @@ module Fintoc
       @post_date = DateTime.iso8601(post_date)
       @transaction_date = DateTime.iso8601(transaction_date) if transaction_date
       @type = type
+      @reference_id = reference_id
       @recipient_account = Fintoc::TransferAccount.new(**recipient_account) if recipient_account
       @sender_account = Fintoc::TransferAccount.new(**sender_account) if sender_account
       @comment = comment
