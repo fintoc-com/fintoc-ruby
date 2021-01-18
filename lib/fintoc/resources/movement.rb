@@ -24,8 +24,8 @@ module Fintoc
       @amount = amount
       @currency = currency
       @description = description
-      @post_date = Date.iso8601(post_date)
-      @transaction_date = Date.iso8601(transaction_date) if transaction_date
+      @post_date = DateTime.iso8601(post_date)
+      @transaction_date = DateTime.iso8601(transaction_date) if transaction_date
       @type = type
       @recipient_account = Fintoc::TransferAccount.new(**recipient_account) if recipient_account
       @sender_account = Fintoc::TransferAccount.new(**sender_account) if sender_account
