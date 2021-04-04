@@ -134,7 +134,7 @@ link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
 # You can get the account movements since a specific DateTime
-yesterday = DateTime.now - 1
+yesterday = DateTime.now - 1.day
 account.get_movements(since: yesterday)
 
 # Or you can use an ISO 8601 formatted string representation of the Date
