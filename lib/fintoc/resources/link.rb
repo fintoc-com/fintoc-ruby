@@ -52,13 +52,12 @@ module Fintoc
     end
 
     def show_accounts(rows = 5)
-      puts "This links has #{Utils.plurlize(@accounts.size, 'account')}"
-
+      puts "This links has #{Utils.pluralize(@accounts.size, 'account')}"
       return unless @accounts.any?
 
       accounts = @accounts.to_a.slice(0, rows)
                           .map.with_index do |acc, index|
-                            [index + 1, acc.name, acc.holder_name, account.currency]
+                            [index + 1, acc.name, acc.holder_name, acc.currency]
                           end
       headers = ['#', 'Name', 'Holder', 'Currency']
       puts
