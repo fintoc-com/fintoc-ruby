@@ -36,4 +36,13 @@ RSpec.describe Fintoc::Client do
       expect(returned_account).to be_an_instance_of(Fintoc::Account)
     end
   end
+
+  describe '#get_accounts', :vcr do
+    it 'should print accounts to console' do
+      link = client.get_link(link_token)
+      expect do
+        link.show_accounts
+      end.to output(start_with('This links has 1 account')).to_stdout
+    end
+  end
 end
