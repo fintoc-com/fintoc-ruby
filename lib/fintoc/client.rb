@@ -4,6 +4,7 @@ require 'fintoc/errors'
 require 'fintoc/resources/link'
 require 'fintoc/constants'
 require 'fintoc/version'
+require 'fintoc/header'
 require 'json'
 
 module Fintoc
@@ -11,10 +12,7 @@ module Fintoc
     include Utils
     def initialize(api_key)
       @api_key = api_key
-      @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
-      @headers = { "Authorization": @api_key, "User-Agent": @user_agent }
-      @link_headers = nil
-      @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
+      @headers = Header.new api_key
       @default_params = {}
     end
 
@@ -36,17 +34,17 @@ module Fintoc
           raise_custom_error(content[:error])
         end
 
-        @link_headers = response.headers.get('link')
+        @headers.link = response.headers.get('link')
         content
       end
     end
 
     def fetch_next
-      next_ = link_headers['next']
+      next_ = @headers.link['next']
       Enumerator.new do |yielder|
         while next_
           yielder << get.call(next_)
-          next_ = link_headers['next']
+          next_ = @headers.link['next']
         end
       end
     end
@@ -78,13 +76,7 @@ module Fintoc
     private
 
     def client
-      @client ||= HTTP.headers(@headers)
-    end
-
-    def parse_headers(dict, link)
-      matches = link.strip.match(@link_header_pattern)
-      dict[matches[:rel]] = matches[:url]
-      dict
+      @client ||= HTTP.headers(@headers.params)
     end
 
     def _get_link(link_token)
@@ -130,20 +122,6 @@ module Fintoc
       # without this the error class name would be like InternalServerErrorError (^-^)
       klass = pascal_klass_name.end_with?('Error') ? pascal_klass_name : "#{pascal_klass_name}Error"
       Module.const_get("Fintoc::Errors::#{klass}")
-    end
-
-    # This attribute getter parses the link headers using some regex 24K magic in the air...
-    # Ex.
-    # <https://api.fintoc.com/v1/links?page=1>; rel="first", <https://api.fintoc.com/v1/links?page=1>; rel="last"
-    # this helps to handle pagination see: https://fintoc.com/docs#paginacion
-    # return a hash like { first:"https://api.fintoc.com/v1/links?page=1" }
-    #
-    # @param link_headers [String]
-    # @return [Hash]
-    def link_headers
-      return if @link_headers.nil?
-
-      @link_headers[0].split(',').reduce({}) { |dict, link| parse_headers(dict, link) }
     end
   end
 end
