@@ -1,5 +1,5 @@
-require_relative "fintoc/core.rb"
-require_relative "fintoc/version.rb"
+require_relative 'fintoc/core'
+require_relative 'fintoc/version'
 
 module Fintoc
   def self.new(api_key)
