@@ -7,18 +7,18 @@ module Fintoc
       @api_key = api_key
       @user_agent = user_agent
       @params = params
-      @__client = nil
+      @_client = nil
     end
 
-    def _client
-      if @__client.nil?
-        @__client = Faraday.new(
+    def client
+      if @_client.nil?
+        @_client = Faraday.new(
           url: @base_url,
           headers: @headers,
           params: @params
         )
       end
-      return @__client
+      return @_client
     end
 
     def headers
