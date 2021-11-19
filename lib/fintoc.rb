@@ -1,6 +1,5 @@
-require 'fintoc/version'
-require 'fintoc/errors'
-require 'fintoc/client'
+require_relative "fintoc/core.rb"
+require_relative "fintoc/version.rb"
 
 module Fintoc
 end
