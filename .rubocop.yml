@@ -2,9 +2,15 @@ AllCops:
   TargetRubyVersion: 2.5
   NewCops: enable
 
+Metrics/MethodLength:
+  Max: 15
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/MutableConstant:
+  Enabled: false
+Style/RaiseArgs:
+  EnforcedStyle: compact
+Style/RedundantBegin:
   Enabled: false
