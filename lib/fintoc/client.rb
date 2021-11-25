@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday_middleware'
 
 module Fintoc
   class Client
@@ -12,11 +13,11 @@ module Fintoc
 
     def client
       if @_client.nil?
-        @_client = Faraday.new(
-          url: @base_url,
-          headers: @headers,
-          params: @params
-        )
+        @_client = Faraday.new(url: @base_url, headers: @headers, params: @params) do |f|
+          f.request :json
+          f.response :raise_error
+          f.response :json, parser_options: { symbolize_names: true }
+        end
       end
       @_client
     end
