@@ -4,6 +4,8 @@ AllCops:
 
 Metrics/MethodLength:
   Max: 15
+Metrics/ParameterLists:
+  CountKeywordArgs: false
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
