@@ -1,6 +1,8 @@
 require 'faraday'
 require 'faraday_middleware'
 
+require_relative 'paginator'
+
 module Fintoc
   class Client
     def initialize(base_url: nil, api_key: nil, user_agent: nil, params: {})
@@ -24,6 +26,15 @@ module Fintoc
 
     def headers
       { Authorization: @api_key, 'User-Agent': @user_agent }
+    end
+
+    def request(path: nil, paginated: false, method: 'get', params: {}, json: {})
+      return Paginator.paginate(@_client, path, params) if paginated
+
+      response = @_client.run_request(method, path, json, @headers) do |req|
+        req.params = params.dup
+      end
+      response.response_body
     end
 
     def extend(base_url: nil, api_key: nil, user_agent: nil, params: nil)
