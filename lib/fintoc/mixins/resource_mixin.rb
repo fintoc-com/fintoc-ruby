@@ -33,5 +33,18 @@ module Fintoc
         end
       end
     end
+
+    def serialize
+      serialized = {}
+      @attributes.each do |key|
+        element = (
+          send(key).instance_of?(Array) ?
+            send(key).map { |x| Utils.serialize(x) } :
+            Utils.serialize(send(key))
+        )
+        serialized = { **serialized, key => element }
+      end
+      serialized
+    end
   end
 end

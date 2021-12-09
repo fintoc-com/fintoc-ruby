@@ -10,6 +10,8 @@ Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/MultilineTernaryOperator:
+  Enabled: false
 Style/MutableConstant:
   Enabled: false
 Style/RaiseArgs:
