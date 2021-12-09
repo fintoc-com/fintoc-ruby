@@ -11,6 +11,13 @@ module Fintoc
       string.chomp('s')
     end
 
+    def self.set_attribute(object, key, value)
+      raise NameError.new if object.methods.include?(key.to_sym)
+
+      object.instance_variable_set("@#{key}".to_sym, value)
+      object.class.class_eval { attr_reader key.to_sym }
+    end
+
     def self.iso_datetime?(string)
       begin
         DateTime.iso8601(string)

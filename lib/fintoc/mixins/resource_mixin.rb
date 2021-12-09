@@ -23,10 +23,10 @@ module Fintoc
             resource = Utils.singularize(resource)
             element = value.empty? ? {} : value[0]
             klass = Utils.get_resource_class(resource, element)
-            send("#{key}=", value.map { |x| Utils.objetize(klass, client, x) })
+            Utils.set_attribute(self, key, value.map { |x| Utils.objetize(klass, client, x) })
           else
             klass = Utils.get_resource_class(resource, value)
-            send("#{key}=", Utils.objetize(klass, client, value))
+            Utils.set_attribute(self, key, Utils.objetize(klass, client, value))
           end
           @attributes << key
         rescue NameError # rubocop:disable Lint/SuppressedException
