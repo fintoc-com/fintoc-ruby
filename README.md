@@ -62,6 +62,20 @@ movements = account.get_movements
 movements = account.get_movements(since: '2020-08-15')
 
 ```
+## Quickstart with the new refactored API
+```ruby
+require 'fintoc'
+
+Fintoc.api_key = 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx'
+link = Fintoc::Link.find('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
+account = link.accounts.find(type: 'checking_account')
+
+# Get the las 30 movements
+movements = account.movements
+
+# Or get all the movements since a specific date
+movements = account.movements.find(since: '2020-08-15')
+```
 And that’s it!
 
 ## Documentation
@@ -82,6 +96,22 @@ puts link.accounts
 # Or... you can pretty print all the accounts in a Link
 
 link = client.get_link('link_token')
+link.show_accounts
+
+```
+
+### Get accounts with the new refactored API
+
+```ruby
+require 'fintoc'
+
+client = Fintoc.api_key = 'api_key'
+link = Fintoc::Link.find('link_token')
+puts link.accounts
+
+# Or... you can pretty print all the accounts in a Link
+
+link = Fintoc::Link.find('link_token')
 link.show_accounts
 
 ```
