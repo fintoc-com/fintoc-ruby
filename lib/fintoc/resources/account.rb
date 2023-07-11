@@ -11,11 +11,11 @@ module Fintoc
     has_many :movements, class_name: Fintoc::Movement.to_s
 
     def show_movements(rows = 5)
-      puts("This account has #{Utils.pluralize(@movements.size, 'movement')}.")
+      puts("This account has #{Utils.pluralize(movements.size, 'movement')}.")
 
-      return unless @movements.any?
+      return unless movements.any?
 
-      movements = @movements.to_a.slice(0, rows)
+      movements = movements.to_a.slice(0, rows)
                             .map.with_index do |mov, index|
                               [index + 1, mov.amount, mov.currency, mov.description, mov.locale_date]
                             end
@@ -25,7 +25,7 @@ module Fintoc
     end
 
     def to_s
-      "💰 #{@holder_name}’s #{@name} #{@balance}"
+      "💰 #{holder_name}’s #{@name} #{@balance}"
     end
   end
 end

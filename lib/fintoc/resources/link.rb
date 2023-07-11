@@ -13,10 +13,10 @@ module Fintoc
     include Utils
 
     def show_accounts(rows = 5)
-      puts "This links has #{Utils.pluralize(@accounts.size, 'account')}"
+      puts "This links has #{Utils.pluralize(accounts.size, 'account')}"
       return unless @accounts.any?
 
-      accounts = @accounts
+      accounts = accounts
                   .to_a
                   .slice(0, rows)
                   .map.with_index do |acc, index|
@@ -28,18 +28,14 @@ module Fintoc
     end
 
     def update_accounts
-      @accounts.each do |account|
+      accounts.each do |account|
         account.update_balance
         account.update_movements
       end
     end
 
-    def delete
-      @client.delete_link(@id)
-    end
-
     def to_s
-      "<#{@username}@#{@institution.name}> 🔗 <Fintoc>"
+      "<#{username}@#{institution.name}> 🔗 <Fintoc>"
     end
   end
 end
