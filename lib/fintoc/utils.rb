@@ -32,7 +32,7 @@ module Fintoc
     # @param suffix [String]
     # @return [String]
     def pluralize(amount, noun, suffix = 's')
-      quantifier = amount or 'no'
+      quantifier = amount || 'no'
       "#{quantifier} #{amount == 1 ? noun : noun + suffix}"
     end
 

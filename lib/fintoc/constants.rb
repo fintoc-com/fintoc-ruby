@@ -4,5 +4,6 @@ module Fintoc
     GENERAL_DOC_URL = "https://fintoc.com/docs"
     SCHEME = "https://"
     BASE_URL = "api.fintoc.com/v1/"
+    PAGINATION_REGEX = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
   end
 end

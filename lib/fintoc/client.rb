@@ -14,7 +14,6 @@ module Fintoc
       @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
       @headers = { "Authorization": @api_key, "User-Agent": @user_agent }
       @link_headers = nil
-      @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
       @default_params = {}
     end
 
@@ -82,7 +81,7 @@ module Fintoc
     end
 
     def parse_headers(dict, link)
-      matches = link.strip.match(@link_header_pattern)
+      matches = link.strip.match(Fintoc::Constants::PAGINATION_REGEX)
       dict[matches[:rel]] = matches[:url]
       dict
     end
