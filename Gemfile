@@ -13,3 +13,6 @@ gem 'rubocop-rails', '~> 2.33', '>= 2.33.3'
 gem 'rubocop-rspec', '~> 3.6'
 gem 'vcr', '~> 6.3'
 gem 'webmock'
+
+# Version constraints for Ruby 2.3+ compatibility
+gem 'activesupport', '< 8.0'  # activesupport 8.0+ requires Ruby 3.1+
