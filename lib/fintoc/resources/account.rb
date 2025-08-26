@@ -6,8 +6,10 @@ require 'fintoc/resources/balance'
 module Fintoc
   class Account
     include Utils
+
     attr_reader :id, :name, :holder_name, :currency, :type, :refreshed_at,
                 :official_name, :number, :holder_id, :balance, :movements
+
     def initialize(
       id:,
       name:,
@@ -55,10 +57,13 @@ module Fintoc
 
       return unless @movements.any?
 
-      movements = @movements.to_a.slice(0, rows)
-                            .map.with_index do |mov, index|
-                              [index + 1, mov.amount, mov.currency, mov.description, mov.locale_date]
-                            end
+      movements =
+        @movements
+        .to_a
+        .slice(0, rows)
+        .map.with_index do |mov, index|
+          [index + 1, mov.amount, mov.currency, mov.description, mov.locale_date]
+        end
       headers = ['#', 'Amount', 'Currency', 'Description', 'Date']
       puts
       puts tabulate(headers, movements, indent: 4, style: 'fancy')

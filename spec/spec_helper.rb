@@ -3,7 +3,7 @@ require 'fintoc'
 require 'vcr'
 
 VCR.configure do |c|
-  vcr_mode = ENV['VCR_MODE'] =~ /rec/i ? :all : :once
+  vcr_mode = /rec/i.match?(ENV.fetch('VCR_MODE', nil)) ? :all : :once
 
   c.default_cassette_options = {
     record: vcr_mode,

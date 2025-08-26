@@ -1,10 +1,13 @@
 require 'fintoc/errors'
 
 RSpec.describe Fintoc::Errors do
-  let(:error) { { 
-    message: 'Missing required param: link_token',
-    doc_url: 'https://fintoc.com/docs#invalid-request-error'
-    } }
+  let(:error) do
+    {
+      message: 'Missing required param: link_token',
+      doc_url: 'https://fintoc.com/docs#invalid-request-error'
+    }
+  end
+
   it 'raises a Invalid Request Error' do
     expect { raise Fintoc::Errors::InvalidRequestError.new(error[:message], error[:doc_url]) }
       .to(raise_error(an_instance_of(Fintoc::Errors::InvalidRequestError))

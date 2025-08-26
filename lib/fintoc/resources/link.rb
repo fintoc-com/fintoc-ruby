@@ -3,13 +3,14 @@ require 'tabulate'
 require 'fintoc/utils'
 require 'fintoc/resources/account'
 require 'fintoc/resources/institution'
-require 'tabulate'
 
 module Fintoc
   class Link
     attr_reader :id, :username, :holder_type, :institution, :created_at, :mode,
                 :accounts, :link_token
+
     include Utils
+
     def initialize(
       id:,
       username:,
