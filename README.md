@@ -13,18 +13,18 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
 ## Table of contents
 
 - [Fintoc meets Ruby](#fintoc-meets-ruby)
+  - [Why?](#why)
   - [Table of contents](#table-of-contents)
-  - [How to install](#how-to-install)
+  - [How to Install](#how-to-install)
   - [Quickstart](#quickstart)
   - [Documentation](#documentation)
   - [Examples](#examples)
     - [Get accounts](#get-accounts)
     - [Get movements](#get-movements)
-  - [Dependencies](#dependencies)
-  - [How to test…](#how-to-test)
-  - [Roadmap](#roadmap)
-  - [Acknowledgements](#acknowledgements)
-
+  - [Development](#development)
+    - [Dependencies](#dependencies)
+    - [Setup](#setup)
+  - [Contributing](#contributing)
 
 ## How to Install
 
@@ -36,11 +36,11 @@ gem 'fintoc'
 
 And then execute:
 
-    $ bundle install
+  $ bundle install
 
 Or install it yourself as:
 
-    $ gem install fintoc
+  $ gem install fintoc
 
 ## Quickstart
 
@@ -60,8 +60,8 @@ movements = account.get_movements
 
 # Or get all the movements since a specific date
 movements = account.get_movements(since: '2020-08-15')
-
 ```
+
 And that’s it!
 
 ## Documentation
@@ -146,21 +146,33 @@ account.get_movements(since: '2020-01-01', per_page: 100)
 
 Calling **get_movements** without arguments gets the last 30 movements of the account
 
-## Dependencies
+## Development
 
-This project relies on the following packages:
+### Dependencies
 
-- [**http.rb**](https://github.com/httprb/http)
-- [**tabulate**](https://github.com/roylez/tabulate)
+This gem supports **Ruby 2.3+** but development requires modern tooling:
 
-## How to test…
+- **Ruby:** 2.3+ (3.2+ recommended for development)
+- **Bundler:** 2.7+ (for development)
+- **Git:** For version control
 
-You can run all the tests just by running:
+### Setup
 
-```
-rspec
+```bash
+# Clone the repository
+git clone https://github.com/fintoc-com/fintoc-ruby.git
+cd fintoc-ruby
+
+# Install dependencies (requires Bundler 2.7+)
+bundle install
+
+# Run tests
+bundle exec rspec
+
+# Run linting
+bundle exec rubocop
 ```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/fintoc-com/fintoc.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/fintoc-com/fintoc-ruby](https://github.com/fintoc-com/fintoc-ruby).

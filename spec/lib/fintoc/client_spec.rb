@@ -38,7 +38,7 @@ RSpec.describe Fintoc::Client do
   end
 
   describe '#get_accounts', :vcr do
-    it 'should print accounts to console' do
+    it 'prints accounts to console' do
       link = client.get_link(link_token)
       expect do
         link.show_accounts

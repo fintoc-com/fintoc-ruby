@@ -32,7 +32,7 @@ module Fintoc
     # @param suffix [String]
     # @return [String]
     def pluralize(amount, noun, suffix = 's')
-      quantifier = amount or 'no'
+      quantifier = amount || 'no'
       "#{quantifier} #{amount == 1 ? noun : noun + suffix}"
     end
 
@@ -41,7 +41,7 @@ module Fintoc
     # @param name [String]
     # @return [String]
     def snake_to_pascal(name)
-      name.split('_').map(&:capitalize).join('')
+      name.split('_').map(&:capitalize).join
     end
   end
 end

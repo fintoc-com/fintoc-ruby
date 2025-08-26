@@ -9,12 +9,13 @@ Gem::Specification.new do |spec|
   spec.summary       = 'The official Ruby client for the Fintoc API.'
   spec.description   = 'The official Ruby client for the Fintoc API.'
   spec.homepage      = 'https://github.com/fintoc-com/fintoc-ruby'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.2.2')
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/fintoc-com/fintoc-ruby'
+  spec.metadata['rubygems_mfa_required'] = 'true'
   # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.
@@ -27,10 +28,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.add_dependency 'http'
   spec.add_dependency 'tabulate'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.81.0'
-  spec.add_development_dependency 'rubocop-performance'
-  spec.add_development_dependency 'rubocop-rspec'
-  spec.add_development_dependency 'vcr'
-  spec.add_development_dependency 'webmock'
 end

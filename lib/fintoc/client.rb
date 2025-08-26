@@ -9,10 +9,11 @@ require 'json'
 module Fintoc
   class Client
     include Utils
+
     def initialize(api_key)
       @api_key = api_key
       @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
-      @headers = { "Authorization": @api_key, "User-Agent": @user_agent }
+      @headers = { Authorization: @api_key, 'User-Agent': @user_agent }
       @link_headers = nil
       @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
       @default_params = {}
@@ -52,7 +53,7 @@ module Fintoc
     end
 
     def get_link(link_token)
-      data = { **_get_link(link_token), "link_token": link_token }
+      data = { **_get_link(link_token), link_token: link_token }
       build_link(data)
     end
 
@@ -132,6 +133,7 @@ module Fintoc
       Module.const_get("Fintoc::Errors::#{klass}")
     end
 
+    # rubocop:disable Layout/LineLength
     # This attribute getter parses the link headers using some regex 24K magic in the air...
     # Ex.
     # <https://api.fintoc.com/v1/links?page=1>; rel="first", <https://api.fintoc.com/v1/links?page=1>; rel="last"
@@ -140,6 +142,7 @@ module Fintoc
     #
     # @param link_headers [String]
     # @return [Hash]
+    # rubocop:enable Layout/LineLength
     def link_headers
       return if @link_headers.nil?
 

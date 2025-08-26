@@ -9,8 +9,9 @@ RSpec.describe Fintoc::TransferAccount do
       institution: { id: 'cl_banco_de_chile', name: 'Banco de Chile', country: 'cl' }
     }
   end
-  let(:transfer) { Fintoc::TransferAccount.new(**data) }
+  let(:transfer) { described_class.new(**data) }
+
   it 'create an instance of TransferAccount' do
-    expect(transfer).to be_an_instance_of(Fintoc::TransferAccount)
+    expect(transfer).to be_an_instance_of(described_class)
   end
 end

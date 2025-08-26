@@ -4,6 +4,8 @@ module Fintoc
   module Errors
     class FintocError < StandardError
       def initialize(message, doc_url = Fintoc::Constants::GENERAL_DOC_URL)
+        super(message)
+
         @message = message
         @doc_url = doc_url
       end
@@ -16,6 +18,7 @@ module Fintoc
         message
       end
     end
+
     class InvalidRequestError < FintocError; end
     class LinkError < FintocError; end
     class AuthenticationError < FintocError; end

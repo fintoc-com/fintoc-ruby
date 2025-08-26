@@ -1,14 +1,16 @@
-require:
+plugins:
   - rubocop-rspec
   - rubocop-performance
+  - rubocop-capybara
+  - rubocop-rails
+
 AllCops:
   Exclude:
   - "vendor/**/*"
   - "db/**/*"
   - "bin/**/*"
-  TargetRubyVersion: 2.6
-Rails:
-  Enabled: false
+  TargetRubyVersion: 3.2
+  NewCops: enable
 Performance:
   Enabled: true
 Layout/ParameterAlignment:
@@ -115,7 +117,7 @@ Style/PercentLiteralDelimiters:
     "%w": "()"
     "%W": "()"
     "%x": "()"
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Description: Check the names of predicate methods.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#bool-methods-qmark
   Enabled: true
@@ -509,5 +511,10 @@ RSpec/ExpectChange:
   EnforcedStyle: block
 RSpec/EmptyExampleGroup:
   Enabled: true
-  CustomIncludeMethods:
-    - run_test!
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+Rails/Output:
+  Enabled: false
+Rails/Delegate:
+  Description: Prefer delegate method for delegations.
+  Enabled: false
