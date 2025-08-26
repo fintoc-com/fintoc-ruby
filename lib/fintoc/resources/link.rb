@@ -47,8 +47,8 @@ module Fintoc
       end
     end
 
-    def find(**kwargs)
-      results = find_all(**kwargs)
+    def find(**)
+      results = find_all(**)
       results.any? ? results.first : nil
     end
 

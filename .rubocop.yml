@@ -9,7 +9,7 @@ AllCops:
   - "vendor/**/*"
   - "db/**/*"
   - "bin/**/*"
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 3.2
   NewCops: enable
 Performance:
   Enabled: true
