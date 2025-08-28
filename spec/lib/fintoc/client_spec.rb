@@ -1,5 +1,5 @@
 require 'fintoc/client'
-require 'fintoc/resources/link'
+require 'fintoc/resources/movements/link'
 require 'fintoc/resources/movements/account'
 require 'fintoc/resources/movement'
 

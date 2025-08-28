@@ -1,6 +1,6 @@
-require 'fintoc/resources/link'
+require 'fintoc/resources/movements/link'
 
-RSpec.describe Fintoc::Link do
+RSpec.describe Fintoc::Movements::Link do
   let(:data) do
     {
       id: 'nMNejK7BT8oGbvO4',
