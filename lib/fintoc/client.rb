@@ -2,7 +2,7 @@ require 'http'
 require 'fintoc/utils'
 require 'fintoc/errors'
 require 'fintoc/resources/link'
-require 'fintoc/resources/entity'
+require 'fintoc/resources/transfers/entity'
 require 'fintoc/constants'
 require 'fintoc/version'
 require 'json'
@@ -131,7 +131,7 @@ module Fintoc
     end
 
     def build_entity(data)
-      Entity.new(**data, client: self)
+      Transfers::Entity.new(**data, client: self)
     end
 
     def make_request(method, resource, parameters, version: :v1)

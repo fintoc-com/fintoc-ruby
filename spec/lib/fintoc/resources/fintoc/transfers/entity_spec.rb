@@ -1,6 +1,6 @@
-require 'fintoc/resources/entity'
+require 'fintoc/resources/transfers/entity'
 
-RSpec.describe Fintoc::Entity do
+RSpec.describe Fintoc::Transfers::Entity do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
   let(:client) { Fintoc::Client.new(api_key) }
 
