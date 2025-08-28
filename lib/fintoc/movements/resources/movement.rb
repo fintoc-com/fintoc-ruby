@@ -1,5 +1,5 @@
 require 'date'
-require 'fintoc/resources/movements/transfer_account'
+require 'fintoc/movements/resources/transfer_account'
 
 module Fintoc
   module Movements

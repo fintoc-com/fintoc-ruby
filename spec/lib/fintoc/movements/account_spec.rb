@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/account'
+require 'fintoc/movements/resources/account'
 
 RSpec.describe Fintoc::Movements::Account do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }

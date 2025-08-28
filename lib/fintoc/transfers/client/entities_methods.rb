@@ -1,9 +1,8 @@
-require 'fintoc/clients/base_client'
-require 'fintoc/resources/transfers/entity'
+require 'fintoc/transfers/resources/entity'
 
 module Fintoc
-  module Clients
-    class TransfersClient < BaseClient
+  module Transfers
+    module EntitiesMethods
       def get_entity(entity_id)
         data = _get_entity(entity_id)
         build_entity(data)
@@ -26,7 +25,7 @@ module Fintoc
       end
 
       def build_entity(data)
-        Transfers::Entity.new(**data, client: self)
+        Fintoc::Transfers::Entity.new(**data, client: self)
       end
     end
   end

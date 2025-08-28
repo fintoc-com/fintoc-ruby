@@ -1,7 +1,7 @@
 require 'tabulate'
 require 'fintoc/utils'
-require 'fintoc/resources/movements/movement'
-require 'fintoc/resources/movements/balance'
+require 'fintoc/movements/resources/movement'
+require 'fintoc/movements/resources/balance'
 
 module Fintoc
   module Movements

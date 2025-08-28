@@ -1,25 +1,7 @@
-require 'fintoc/clients/movements_client'
-
-RSpec.describe Fintoc::Clients::MovementsClient do
-  let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
-  let(:client) { described_class.new(api_key) }
+RSpec.shared_examples 'a client with links methods' do
   let(:link_token) { '6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W' }
 
-  describe '.new' do
-    it 'creates an instance of Clients::MovementsClient' do
-      expect(client).to be_an_instance_of(described_class)
-    end
-  end
-
-  describe '#to_s' do
-    it 'returns a formatted string representation' do
-      expect(client.to_s)
-        .to include('Fintoc::Clients::MovementsClient')
-        .and include('🔑=')
-    end
-  end
-
-  it 'responds to movements-specific methods' do
+  it 'responds to link-specific methods' do
     expect(client)
       .to respond_to(:get_link)
       .and respond_to(:get_links)

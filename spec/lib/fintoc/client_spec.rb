@@ -1,7 +1,7 @@
 require 'fintoc/client'
-require 'fintoc/resources/movements/link'
-require 'fintoc/resources/movements/account'
-require 'fintoc/resources/movements/movement'
+require 'fintoc/movements/resources/link'
+require 'fintoc/movements/resources/account'
+require 'fintoc/movements/resources/movement'
 
 RSpec.describe Fintoc::Client do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
@@ -13,8 +13,8 @@ RSpec.describe Fintoc::Client do
     end
 
     it 'creates movements and transfers clients' do
-      expect(client.movements).to be_an_instance_of(Fintoc::Clients::MovementsClient)
-      expect(client.transfers).to be_an_instance_of(Fintoc::Clients::TransfersClient)
+      expect(client.movements).to be_an_instance_of(Fintoc::Movements::Client)
+      expect(client.transfers).to be_an_instance_of(Fintoc::Transfers::Client)
     end
   end
 
