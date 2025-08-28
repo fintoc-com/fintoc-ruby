@@ -19,18 +19,22 @@ module Fintoc
       @default_params = {}
     end
 
-    def get
-      request('get')
+    def get(version: :v1)
+      request('get', version: version)
     end
 
-    def delete
-      request('delete')
+    def delete(version: :v1)
+      request('delete', version: version)
     end
 
-    def request(method)
+    def get_v2
+      get(version: :v2)
+    end
+
+    def request(method, version: :v1)
       proc do |resource, **kwargs|
         parameters = params(method, **kwargs)
-        response = make_request(method, resource, parameters)
+        response = make_request(method, resource, parameters, version: version)
         content = JSON.parse(response.body, symbolize_names: true)
 
         if response.status.client_error? || response.status.server_error?
@@ -102,13 +106,14 @@ module Fintoc
       Link.new(**data, client: self)
     end
 
-    def make_request(method, resource, parameters)
+    def make_request(method, resource, parameters, version: :v1)
       # this is to handle url returned in the link headers
       # I'm sure there is a better and more clever way to solve this
       if resource.start_with? 'https'
         client.send(method, resource)
       else
-        url = "#{Fintoc::Constants::SCHEME}#{Fintoc::Constants::BASE_URL}#{resource}"
+        base_url = version == :v2 ? Fintoc::Constants::BASE_URL_V2 : Fintoc::Constants::BASE_URL
+        url = "#{Fintoc::Constants::SCHEME}#{base_url}#{resource}"
         client.send(method, url, parameters)
       end
     end
