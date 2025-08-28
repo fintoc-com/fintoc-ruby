@@ -1,7 +1,7 @@
 require 'fintoc/client'
 require 'fintoc/resources/movements/link'
 require 'fintoc/resources/movements/account'
-require 'fintoc/resources/movement'
+require 'fintoc/resources/movements/movement'
 
 RSpec.describe Fintoc::Client do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }

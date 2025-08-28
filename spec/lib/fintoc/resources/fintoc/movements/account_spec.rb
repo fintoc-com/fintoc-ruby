@@ -49,7 +49,7 @@ RSpec.describe Fintoc::Movements::Account do
     it "get the last 30 account's movements", :vcr do
       movements = linked_account.get_movements
       expect(movements.size).to be <= 30
-      expect(movements).to all(be_a(Fintoc::Movement))
+      expect(movements).to all(be_a(Fintoc::Movements::Movement))
     end
   end
 
@@ -57,14 +57,14 @@ RSpec.describe Fintoc::Movements::Account do
     it "get account's movements with arguments", :vcr do
       movements = linked_account.get_movements(since: '2020-08-15')
       linked_account.show_movements
-      expect(movements).to all(be_a(Fintoc::Movement))
+      expect(movements).to all(be_a(Fintoc::Movements::Movement))
     end
   end
 
   describe '#update_balance' do
     it "update account's movements", :vcr do
       movements = linked_account.update_movements
-      expect(movements).to all(be_a(Fintoc::Movement))
+      expect(movements).to all(be_a(Fintoc::Movements::Movement))
     end
   end
 end
