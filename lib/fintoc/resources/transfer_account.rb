@@ -1,4 +1,4 @@
-require 'fintoc/resources/institution'
+require 'fintoc/resources/movements/institution'
 
 module Fintoc
   class TransferAccount
@@ -8,7 +8,7 @@ module Fintoc
       @holder_id = holder_id
       @holder_name = holder_name
       @number = number
-      @institution = institution && Fintoc::Institution.new(**institution)
+      @institution = institution && Fintoc::Movements::Institution.new(**institution)
     end
 
     def id

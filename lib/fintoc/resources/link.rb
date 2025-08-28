@@ -2,7 +2,7 @@ require 'date'
 require 'tabulate'
 require 'fintoc/utils'
 require 'fintoc/resources/movements/account'
-require 'fintoc/resources/institution'
+require 'fintoc/resources/movements/institution'
 
 module Fintoc
   class Link
@@ -26,7 +26,7 @@ module Fintoc
       @id = id
       @username = username
       @holder_type = holder_type
-      @institution = Fintoc::Institution.new(**institution)
+      @institution = Fintoc::Movements::Institution.new(**institution)
       @created_at = Date.iso8601(created_at)
       @mode = mode
       @accounts = if accounts.nil?
