@@ -60,7 +60,7 @@ RSpec.describe Fintoc::Link do
     it 'returns and valid checking account if the arg is type: "checking_account"' do
       checking_account = link.find(type: 'checking_account')
       data_acc = data[:accounts][0]
-      expect(checking_account).to be_an_instance_of(Fintoc::Account)
+      expect(checking_account).to be_an_instance_of(Fintoc::Movements::Account)
       expect(checking_account.to_s)
         .to(
           eq(
