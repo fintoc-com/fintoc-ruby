@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/institution'
+require 'fintoc/movements/resources/institution'
 
 module Fintoc
   module Movements

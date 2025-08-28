@@ -1,9 +1,8 @@
-require 'fintoc/clients/base_client'
-require 'fintoc/resources/movements/link'
+require 'fintoc/movements/resources/link'
 
 module Fintoc
-  module Clients
-    class MovementsClient < BaseClient
+  module Movements
+    module LinksMethods
       def get_link(link_token)
         data = { **_get_link(link_token), link_token: link_token }
         build_link(data)

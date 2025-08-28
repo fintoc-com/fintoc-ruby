@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/institution'
+require 'fintoc/movements/resources/institution'
 
 RSpec.describe Fintoc::Movements::Institution do
   let(:data) do

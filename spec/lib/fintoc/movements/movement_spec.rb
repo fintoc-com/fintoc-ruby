@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/movement'
+require 'fintoc/movements/resources/movement'
 
 RSpec.describe Fintoc::Movements::Movement do
   let(:data) do

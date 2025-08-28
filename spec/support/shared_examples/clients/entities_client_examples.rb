@@ -1,24 +1,5 @@
-require 'fintoc/clients/transfers_client'
-
-RSpec.describe Fintoc::Clients::TransfersClient do
-  let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
-  let(:client) { described_class.new(api_key) }
-
-  describe '.new' do
-    it 'creates an instance of TransfersClient' do
-      expect(client).to be_an_instance_of(described_class)
-    end
-  end
-
-  describe '#to_s' do
-    it 'returns a formatted string representation' do
-      expect(client.to_s)
-        .to include('Fintoc::Clients::TransfersClient')
-        .and include('🔑=')
-    end
-  end
-
-  it 'responds to transfers-specific methods' do
+RSpec.shared_examples 'a client with entities methods' do
+  it 'responds to entity-specific methods' do
     expect(client)
       .to respond_to(:get_entity)
       .and respond_to(:get_entities)

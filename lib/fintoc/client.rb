@@ -1,13 +1,13 @@
-require 'fintoc/clients/movements_client'
-require 'fintoc/clients/transfers_client'
+require 'fintoc/movements/client/client'
+require 'fintoc/transfers/client/client'
 
 module Fintoc
   class Client
     attr_reader :movements, :transfers
 
     def initialize(api_key)
-      @movements = Clients::MovementsClient.new(api_key)
-      @transfers = Clients::TransfersClient.new(api_key)
+      @movements = Fintoc::Movements::Client.new(api_key)
+      @transfers = Fintoc::Transfers::Client.new(api_key)
     end
 
     # Delegate common methods to maintain backward compatibility

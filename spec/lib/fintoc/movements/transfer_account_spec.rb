@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/transfer_account'
+require 'fintoc/movements/resources/transfer_account'
 
 RSpec.describe Fintoc::Movements::TransferAccount do
   let(:data) do

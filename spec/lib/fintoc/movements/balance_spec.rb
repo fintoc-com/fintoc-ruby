@@ -1,4 +1,4 @@
-require 'fintoc/resources/movements/balance'
+require 'fintoc/movements/resources/balance'
 
 RSpec.describe Fintoc::Movements::Balance do
   let(:data) { { available: 1000, current: 500, limit: 10 } }

@@ -1,8 +1,8 @@
 require 'date'
 require 'tabulate'
 require 'fintoc/utils'
-require 'fintoc/resources/movements/account'
-require 'fintoc/resources/movements/institution'
+require 'fintoc/movements/resources/account'
+require 'fintoc/movements/resources/institution'
 
 module Fintoc
   module Movements
