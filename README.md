@@ -21,6 +21,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
   - [Examples](#examples)
     - [Get accounts](#get-accounts)
     - [Get movements](#get-movements)
+    - [Get entities](#get-entities)
   - [Development](#development)
     - [Dependencies](#dependencies)
     - [Setup](#setup)
@@ -145,6 +146,31 @@ account.get_movements(since: '2020-01-01', per_page: 100)
 ```
 
 Calling **get_movements** without arguments gets the last 30 movements of the account
+
+### Get entities
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Client.new('api_key')
+
+# Get all entities
+entities = client.get_entities
+
+# Get a specific entity
+entity = client.get_entity('ent_12345')
+
+puts entity.holder_name  # => "My Company LLC"
+puts entity.holder_id    # => "12345678-9"
+puts entity.is_root      # => true
+```
+
+You can also list entities with pagination:
+
+```ruby
+# Get entities with pagination
+entities = client.get_entities(limit: 10, starting_after: 'ent_123')
+```
 
 ## Development
 
