@@ -68,7 +68,7 @@ RSpec.describe Fintoc::Client do
       entity = client.get_entity(entity_id)
 
       expect(entity)
-        .to be_an_instance_of(Fintoc::Entity)
+        .to be_an_instance_of(Fintoc::Transfers::Entity)
         .and have_attributes(
           id: entity_id,
           holder_name: 'Test Company LLC'
@@ -105,7 +105,7 @@ RSpec.describe Fintoc::Client do
     it 'returns an array of Entity instances' do
       entities = client.get_entities
 
-      expect(entities).to all(be_a(Fintoc::Entity))
+      expect(entities).to all(be_a(Fintoc::Transfers::Entity))
       expect(entities.size).to eq(2)
       expect(entities.first.id).to eq('ent_12345')
       expect(entities.last.id).to eq('ent_67890')
