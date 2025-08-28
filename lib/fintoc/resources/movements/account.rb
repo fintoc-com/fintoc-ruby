@@ -1,6 +1,6 @@
 require 'tabulate'
 require 'fintoc/utils'
-require 'fintoc/resources/movement'
+require 'fintoc/resources/movements/movement'
 require 'fintoc/resources/movements/balance'
 
 module Fintoc
@@ -45,7 +45,7 @@ module Fintoc
       end
 
       def get_movements(**params)
-        _get_movements(**params).lazy.map { |movement| Fintoc::Movement.new(**movement) }
+        _get_movements(**params).lazy.map { |movement| Fintoc::Movements::Movement.new(**movement) }
       end
 
       def update_movements(**params)
