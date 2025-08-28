@@ -40,4 +40,33 @@ RSpec.describe Fintoc::Entity do
       expect(entity.to_s).to eq('🏢 Test Company LLC (ent_12345)')
     end
   end
+
+  describe '#refresh' do
+    let(:updated_data) do
+      {
+        **data,
+        holder_name: 'Updated Company LLC'
+      }
+    end
+
+    let(:updated_entity) { described_class.new(**updated_data, client: client) }
+
+    before do
+      allow(client).to receive(:get_entity).with('ent_12345').and_return(updated_entity)
+    end
+
+    it 'refreshes the entity with updated data from the API' do
+      expect(entity).to have_attributes(
+        holder_name: 'Test Company LLC'
+      )
+
+      entity.refresh
+
+      expect(client).to have_received(:get_entity).with('ent_12345')
+
+      expect(entity).to have_attributes(
+        holder_name: 'Updated Company LLC'
+      )
+    end
+  end
 end
