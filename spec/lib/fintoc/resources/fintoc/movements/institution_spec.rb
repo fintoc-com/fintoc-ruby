@@ -1,6 +1,6 @@
-require 'fintoc/resources/institution'
+require 'fintoc/resources/movements/institution'
 
-RSpec.describe Fintoc::Institution do
+RSpec.describe Fintoc::Movements::Institution do
   let(:data) do
     { id: 'cl_banco_de_chile', name: 'Banco de Chile', country: 'cl' }
   end
