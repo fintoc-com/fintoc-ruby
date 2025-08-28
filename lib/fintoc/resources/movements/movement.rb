@@ -1,5 +1,5 @@
 require 'date'
-require 'fintoc/resources/transfer_account'
+require 'fintoc/resources/movements/transfer_account'
 
 module Fintoc
   module Movements
@@ -30,8 +30,11 @@ module Fintoc
         @transaction_date = DateTime.iso8601(transaction_date) if transaction_date
         @type = type
         @reference_id = reference_id
-        @recipient_account = Fintoc::TransferAccount.new(**recipient_account) if recipient_account
-        @sender_account = Fintoc::TransferAccount.new(**sender_account) if sender_account
+        @recipient_account =
+          if recipient_account
+            Fintoc::Movements::TransferAccount.new(**recipient_account)
+          end
+        @sender_account = Fintoc::Movements::TransferAccount.new(**sender_account) if sender_account
         @comment = comment
       end
 
