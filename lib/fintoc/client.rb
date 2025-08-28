@@ -28,6 +28,10 @@ module Fintoc
       request('delete', version: version)
     end
 
+    def post(version: :v1)
+      request('post', version: version)
+    end
+
     def get_v2
       get(version: :v2)
     end
