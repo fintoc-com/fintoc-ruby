@@ -2,6 +2,7 @@ require 'http'
 require 'fintoc/utils'
 require 'fintoc/errors'
 require 'fintoc/resources/link'
+require 'fintoc/resources/entity'
 require 'fintoc/constants'
 require 'fintoc/version'
 require 'json'
@@ -73,6 +74,15 @@ module Fintoc
       get_link(link_token).find(id: account_id)
     end
 
+    def get_entity(entity_id)
+      data = _get_entity(entity_id)
+      build_entity(data)
+    end
+
+    def get_entities(**params)
+      _get_entities(**params).map { |data| build_entity(data) }
+    end
+
     def to_s
       visible_chars = 4
       hidden_part = '*' * (@api_key.size - visible_chars)
@@ -104,6 +114,20 @@ module Fintoc
       param = Utils.pick(data, 'link_token')
       @default_params.update(param)
       Link.new(**data, client: self)
+    end
+
+    def _get_entity(entity_id)
+      get(version: :v2).call("entities/#{entity_id}")
+    end
+
+    def _get_entities(**params)
+      response = get(version: :v2).call('entities', **params)
+      # Handle both single entity and list responses
+      response.is_a?(Array) ? response : [response]
+    end
+
+    def build_entity(data)
+      Entity.new(**data, client: self)
     end
 
     def make_request(method, resource, parameters, version: :v1)
