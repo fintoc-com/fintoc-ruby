@@ -17,6 +17,10 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
   - [Table of contents](#table-of-contents)
   - [How to Install](#how-to-install)
   - [Quickstart](#quickstart)
+  - [Client Architecture](#client-architecture)
+    - [**Movements API Client**](#movements-api-client)
+    - [**Transfers API Client**](#transfers-api-client)
+    - [**Backward compatibility**](#backward-compatibility)
   - [Documentation](#documentation)
   - [Examples](#examples)
     - [Get accounts](#get-accounts)
@@ -52,11 +56,12 @@ Or install it yourself as:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
-link = client.get_link('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
+movements_client =
+  Fintoc::Clients::MovementsClient.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
+link = movements_client.get_link('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
 account = link.find(type: 'checking_account')
 
-# Get the las 30 movements
+# Get the last 30 movements
 movements = account.get_movements
 
 # Or get all the movements since a specific date
@@ -64,6 +69,40 @@ movements = account.get_movements(since: '2020-08-15')
 ```
 
 And that’s it!
+
+## Client Architecture
+
+The Fintoc Ruby client is organized into separate clients that mirror the official API structure:
+
+### **Movements API Client**
+
+```ruby
+movements_client = Fintoc::Clients::MovementsClient.new('api_key')
+
+links = movements_client.get_links
+link = movements_client.get_link('link_token')
+movements_client.delete_link('link_id')
+account = movements_client.get_account('link_token', 'account_id')
+```
+
+### **Transfers API Client**
+
+```ruby
+transfers_client = Fintoc::Clients::TransfersClient.new('api_key')
+
+entities = transfers_client.get_entities
+entity = transfers_client.get_entity('entity_id')
+```
+
+### **Backward compatibility**
+
+The previous `Fintoc::Client` class is kept for backward compatibility purposes.
+
+```ruby
+client = Fintoc::Client.new('api_key')
+
+links = client.get_links
+```
 
 ## Documentation
 
@@ -76,7 +115,7 @@ This client supports all Fintoc API endpoints. For complete information about th
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::MovementsClient.new('api_key')
 link = client.get_link('link_token')
 puts link.accounts
 
@@ -92,7 +131,7 @@ If you want to find a specific account in a link, you can use **find**. You can 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::MovementsClient.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
@@ -108,7 +147,7 @@ You can also search for multiple accounts matching a specific criteria with **fi
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::MovementsClient.new('api_key')
 link = client.get_link('link_token')
 accounts = link.find_all(currency: 'CLP')
 ```
@@ -118,7 +157,7 @@ To update the account balance you can use **update_balance**:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::MovementsClient.new('api_key')
 link = client.get_link('link_token')
 account = link.find(number: '1111111')
 account.update_balance
@@ -130,7 +169,7 @@ account.update_balance
 require 'fintoc'
 require 'time'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::MovementsClient.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
@@ -152,7 +191,7 @@ Calling **get_movements** without arguments gets the last 30 movements of the ac
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key')
+client = Fintoc::Clients::TransfersClient.new('api_key')
 
 # Get all entities
 entities = client.get_entities
