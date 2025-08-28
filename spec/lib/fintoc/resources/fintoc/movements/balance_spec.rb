@@ -1,6 +1,6 @@
-require 'fintoc/resources/balance'
+require 'fintoc/resources/movements/balance'
 
-RSpec.describe Fintoc::Balance do
+RSpec.describe Fintoc::Movements::Balance do
   let(:data) { { available: 1000, current: 500, limit: 10 } }
   let(:balance) { described_class.new(**data) }
 

@@ -1,7 +1,7 @@
 require 'tabulate'
 require 'fintoc/utils'
 require 'fintoc/resources/movement'
-require 'fintoc/resources/balance'
+require 'fintoc/resources/movements/balance'
 
 module Fintoc
   module Movements
@@ -35,13 +35,13 @@ module Fintoc
         @type = type
         @currency = currency
         @refreshed_at = DateTime.iso8601(refreshed_at) if refreshed_at
-        @balance = Fintoc::Balance.new(**balance)
+        @balance = Fintoc::Movements::Balance.new(**balance)
         @movements = movements || []
         @client = client
       end
 
       def update_balance
-        @balance = Fintoc::Balance.new(**get_account[:balance])
+        @balance = Fintoc::Movements::Balance.new(**get_account[:balance])
       end
 
       def get_movements(**params)
