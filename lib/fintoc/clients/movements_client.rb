@@ -1,5 +1,5 @@
 require 'fintoc/clients/base_client'
-require 'fintoc/resources/link'
+require 'fintoc/resources/movements/link'
 
 module Fintoc
   module Clients
@@ -34,7 +34,7 @@ module Fintoc
       def build_link(data)
         param = Utils.pick(data, 'link_token')
         @default_params.update(param)
-        Link.new(**data, client: self)
+        Fintoc::Movements::Link.new(**data, client: self)
       end
     end
   end

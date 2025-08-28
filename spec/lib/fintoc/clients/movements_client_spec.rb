@@ -30,14 +30,14 @@ RSpec.describe Fintoc::Clients::MovementsClient do
   describe '#get_link' do
     it 'get the link from a given link token', :vcr do
       link = client.get_link(link_token)
-      expect(link).to be_an_instance_of(Fintoc::Link)
+      expect(link).to be_an_instance_of(Fintoc::Movements::Link)
     end
   end
 
   describe '#get_links' do
     it 'get all the links from a given link token', :vcr do
       links = client.get_links
-      expect(links).to all(be_a(Fintoc::Link))
+      expect(links).to all(be_a(Fintoc::Movements::Link))
     end
   end
 
