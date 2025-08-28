@@ -1,6 +1,6 @@
 require 'fintoc/client'
 require 'fintoc/resources/link'
-require 'fintoc/resources/account'
+require 'fintoc/resources/movements/account'
 require 'fintoc/resources/movement'
 
 RSpec.describe Fintoc::Client do
@@ -33,7 +33,7 @@ RSpec.describe Fintoc::Client do
       link = client.get_link(link_token)
       account = link.find(type: 'checking_account')
       returned_account = client.get_account(link_token, account.id)
-      expect(returned_account).to be_an_instance_of(Fintoc::Account)
+      expect(returned_account).to be_an_instance_of(Fintoc::Movements::Account)
     end
   end
 

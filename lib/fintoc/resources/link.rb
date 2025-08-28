@@ -1,7 +1,7 @@
 require 'date'
 require 'tabulate'
 require 'fintoc/utils'
-require 'fintoc/resources/account'
+require 'fintoc/resources/movements/account'
 require 'fintoc/resources/institution'
 
 module Fintoc
@@ -32,7 +32,7 @@ module Fintoc
       @accounts = if accounts.nil?
                     []
                   else
-                    accounts.map { |data| Fintoc::Account.new(**data, client: client) }
+                    accounts.map { |data| Fintoc::Movements::Account.new(**data, client: client) }
                   end
       @token = link_token
       @client = client
