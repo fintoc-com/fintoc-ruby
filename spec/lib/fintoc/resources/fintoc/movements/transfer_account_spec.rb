@@ -1,6 +1,6 @@
-require 'fintoc/resources/transfer_account'
+require 'fintoc/resources/movements/transfer_account'
 
-RSpec.describe Fintoc::TransferAccount do
+RSpec.describe Fintoc::Movements::TransferAccount do
   let(:data) do
     {
       holder_id: '771806538',
