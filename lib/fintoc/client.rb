@@ -4,7 +4,7 @@ require 'fintoc/transfers/client/client'
 module Fintoc
   class Client
     # Deprecated in favor of Fintoc::Movements::Client and Fintoc::Transfers::Client
-    # It should not be used anymore
+    # It should not be used anymore, but it will be kept for now for backward compatibility
 
     attr_reader :movements, :transfers
 
