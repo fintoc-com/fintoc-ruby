@@ -19,9 +19,7 @@ module Fintoc
       end
 
       def _get_entities(**params)
-        response = get(version: :v2).call('entities', **params)
-        # Handle both single entity and list responses
-        response.is_a?(Array) ? response : [response]
+        get(version: :v2).call('entities', **params)
       end
 
       def build_entity(data)
