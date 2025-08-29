@@ -1,3 +1,4 @@
+require 'money'
 require 'fintoc/utils'
 
 module Fintoc
@@ -38,7 +39,7 @@ module Fintoc
       end
 
       def to_s
-        "💰 #{@description} (#{@id}) - #{format_currency(@available_balance, @currency)}"
+        "💰 #{@description} (#{@id}) - #{Money.from_cents(@available_balance, @currency).format}"
       end
 
       def refresh
@@ -68,19 +69,6 @@ module Fintoc
 
       def closed?
         @status == 'closed'
-      end
-
-      private
-
-      def format_currency(amount, currency)
-        case currency
-        when 'MXN'
-          "MXN $#{amount / 100.0}"
-        when 'CLP'
-          "CLP $#{amount}"
-        else
-          "#{currency} #{amount}"
-        end
       end
     end
   end
