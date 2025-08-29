@@ -18,11 +18,7 @@ RSpec.describe Fintoc::Transfers::Client do
     end
   end
 
-  it 'responds to transfers-specific methods' do
-    expect(client)
-      .to respond_to(:get_entity)
-      .and respond_to(:get_entities)
-  end
-
   it_behaves_like 'a client with entities methods'
+
+  it_behaves_like 'a client with accounts methods'
 end
