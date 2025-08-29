@@ -30,6 +30,10 @@ module Fintoc
       request('post', version: version)
     end
 
+    def patch(version: :v1)
+      request('patch', version: version)
+    end
+
     def request(method, version: :v1)
       proc do |resource, **kwargs|
         parameters = params(method, **kwargs)
