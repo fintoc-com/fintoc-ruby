@@ -2,7 +2,7 @@ require 'fintoc/transfers/resources/entity'
 
 RSpec.describe Fintoc::Transfers::Entity do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
-  let(:client) { Fintoc::Client.new(api_key) }
+  let(:client) { Fintoc::Transfers::Client.new(api_key) }
 
   let(:data) do
     {

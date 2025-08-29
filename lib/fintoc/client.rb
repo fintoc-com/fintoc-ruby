@@ -3,6 +3,9 @@ require 'fintoc/transfers/client/client'
 
 module Fintoc
   class Client
+    # Deprecated in favor of Fintoc::Movements::Client and Fintoc::Transfers::Client
+    # It should not be used anymore
+
     attr_reader :movements, :transfers
 
     def initialize(api_key)
