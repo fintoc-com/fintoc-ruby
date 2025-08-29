@@ -43,10 +43,8 @@ module Fintoc
       end
 
       def refresh
-        account_data = @client.get_account(@id)
-        initialize(**account_data.instance_variables.each_with_object({}) do |var, hash|
-          hash[var.to_s.delete('@').to_sym] = account_data.instance_variable_get(var)
-        end)
+        fresh_account = @client.get_account(@id)
+        refresh_from_account(fresh_account)
       end
 
       def update(description: nil)
@@ -54,9 +52,7 @@ module Fintoc
         params[:description] = description if description
 
         updated_account = @client.update_account(@id, **params)
-        initialize(**updated_account.instance_variables.each_with_object({}) do |var, hash|
-          hash[var.to_s.delete('@').to_sym] = updated_account.instance_variable_get(var)
-        end)
+        refresh_from_account(updated_account)
       end
 
       def active?
@@ -69,6 +65,27 @@ module Fintoc
 
       def closed?
         @status == 'closed'
+      end
+
+      private
+
+      def refresh_from_account(account)
+        raise 'Account must be the same instance' unless account.id == @id
+
+        initialize(
+          id: account.id,
+          object: account.object,
+          mode: account.mode,
+          description: account.description,
+          available_balance: account.available_balance,
+          currency: account.currency,
+          is_root: account.is_root,
+          root_account_number_id: account.root_account_number_id,
+          root_account_number: account.root_account_number,
+          status: account.status,
+          entity: account.entity,
+          client: @client
+        )
       end
     end
   end

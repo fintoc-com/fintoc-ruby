@@ -31,10 +31,24 @@ module Fintoc
       end
 
       def refresh
-        entity_data = @client.get_entity(@id)
-        initialize(**entity_data.instance_variables.each_with_object({}) do |var, hash|
-          hash[var.to_s.delete('@').to_sym] = entity_data.instance_variable_get(var)
-        end)
+        fresh_entity = @client.get_entity(@id)
+        refresh_from_entity(fresh_entity)
+      end
+
+      private
+
+      def refresh_from_entity(entity)
+        raise 'Entity must be the same instance' unless entity.id == @id
+
+        initialize(
+          id: entity.id,
+          object: entity.object,
+          mode: entity.mode,
+          holder_name: entity.holder_name,
+          holder_id: entity.holder_id,
+          is_root: entity.is_root,
+          client: @client
+        )
       end
     end
   end
