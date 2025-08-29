@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/accounts
+    body:
+      encoding: UTF-8
+      string: '{"entity_id":"ent_31t0VhhrAXASFQTVYfCfIBnljbT","description":"Test
+        account"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 29 Aug 2025 20:02:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '383'
+      Connection:
+      - close
+      Cf-Ray:
+      - 976ea4bf29a642f0-MIA
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"dfa167aa8ce1e0f1d5764f021583ccfb"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1fed91d6-8877-4d68-884c-54de16443d43
+      X-Runtime:
+      - '0.282044'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=m1B2GZTfOo6Y24n8mMkDyjW%2Fpf5dVb1QH8vBVV0%2BIS9i7qAS%2FHrpWNcjpWKMX91r%2FsV67xtSI1gc0UWqgoawtWxhHZ%2FVgSP8V6331v6OATD3KkLJIA3gW0WKoxl%2B5B%2Fb"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=132154&min_rtt=131328&rtt_var=49838&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1935&delivery_rate=32437&cwnd=38&unsent_bytes=0&cid=b5f864790f975efa&ts=696&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","object":"account","mode":"test","root_account_number":"735969000000203297","is_root":false,"root_account_number_id":"acno_31yYL5uOb39vzvRIszPhoXYMjt4","available_balance":0,"currency":"MXN","entity":{"id":"ent_31t0VhhrAXASFQTVYfCfIBnljbT","holder_name":"Fintoc","holder_id":"ND","is_root":true},"description":"Test
+        account","status":"active"}'
+  recorded_at: Fri, 29 Aug 2025 20:02:00 GMT
+recorded_with: VCR 6.3.1
