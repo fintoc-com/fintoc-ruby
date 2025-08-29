@@ -41,6 +41,13 @@ module Fintoc
         "💰 #{@description} (#{@id}) - #{format_currency(@available_balance, @currency)}"
       end
 
+      def refresh
+        account_data = @client.get_account(@id)
+        initialize(**account_data.instance_variables.each_with_object({}) do |var, hash|
+          hash[var.to_s.delete('@').to_sym] = account_data.instance_variable_get(var)
+        end)
+      end
+
       def active?
         @status == 'active'
       end
