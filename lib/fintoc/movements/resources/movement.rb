@@ -39,7 +39,7 @@ module Fintoc
       end
 
       def ==(other)
-        @id = other.id
+        @id == other.id
       end
 
       alias eql? ==
