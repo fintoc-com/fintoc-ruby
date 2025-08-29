@@ -131,4 +131,36 @@ RSpec.describe Fintoc::Transfers::Account do
       expect(account.description).to eq('Updated account description')
     end
   end
+
+  describe '#update' do
+    let(:updated_data) { data.merge(description: 'New account description') }
+
+    let(:updated_account) { described_class.new(**updated_data, client: client) }
+
+    before do
+      allow(client).to receive(:update_account) do |_id, params|
+        updated_data_for_call = { **data, **params }
+        described_class.new(**updated_data_for_call, client: client)
+      end
+    end
+
+    it 'updates the account description and refreshes the instance' do
+      expect(account.description).to eq('My root account')
+
+      account.update(description: 'New account description')
+
+      expect(client)
+        .to have_received(:update_account)
+        .with('acc_123', description: 'New account description')
+
+      expect(account.description).to eq('New account description')
+    end
+
+    it 'only sends provided parameters' do
+      account.update(description: 'Test description')
+      expect(client)
+        .to have_received(:update_account)
+        .with('acc_123', description: 'Test description')
+    end
+  end
 end
