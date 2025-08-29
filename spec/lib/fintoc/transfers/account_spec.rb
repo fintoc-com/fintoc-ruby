@@ -111,4 +111,24 @@ RSpec.describe Fintoc::Transfers::Account do
       end
     end
   end
+
+  describe '#refresh' do
+    let(:updated_data) { data.merge(description: 'Updated account description') }
+
+    let(:updated_account) { described_class.new(**updated_data, client: client) }
+
+    before do
+      allow(client).to receive(:get_account).with('acc_123').and_return(updated_account)
+    end
+
+    it 'refreshes the account with updated data from the API' do
+      expect(account.description).to eq('My root account')
+
+      account.refresh
+
+      expect(client).to have_received(:get_account).with('acc_123')
+
+      expect(account.description).to eq('Updated account description')
+    end
+  end
 end
