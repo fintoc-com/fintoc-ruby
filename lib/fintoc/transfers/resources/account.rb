@@ -48,6 +48,16 @@ module Fintoc
         end)
       end
 
+      def update(description: nil)
+        params = {}
+        params[:description] = description if description
+
+        updated_account = @client.update_account(@id, **params)
+        initialize(**updated_account.instance_variables.each_with_object({}) do |var, hash|
+          hash[var.to_s.delete('@').to_sym] = updated_account.instance_variable_get(var)
+        end)
+      end
+
       def active?
         @status == 'active'
       end
