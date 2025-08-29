@@ -1,7 +1,7 @@
 require 'fintoc/transfers/client/client'
 
 RSpec.describe Fintoc::Transfers::Client do
-  let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
+  let(:api_key) { 'sk_test_SeCreT-aPi_KeY' }
   let(:client) { described_class.new(api_key) }
 
   describe '.new' do

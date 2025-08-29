@@ -12,7 +12,7 @@ module Fintoc
     def initialize(api_key)
       @api_key = api_key
       @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
-      @headers = { Authorization: @api_key, 'User-Agent': @user_agent }
+      @headers = { Authorization: "Bearer #{@api_key}", 'User-Agent': @user_agent }
       @link_headers = nil
       @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
       @default_params = {}
