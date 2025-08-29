@@ -54,8 +54,10 @@ RSpec.describe Fintoc::Transfers::Account do
   end
 
   describe '#to_s' do
-    it 'returns a formatted string representation with MXN currency' do
-      expect(account.to_s).to eq('💰 My root account (acc_123) - MXN $234591.83')
+    context 'with MXN currency' do
+      it 'returns a formatted string representation with MXN currency' do
+        expect(account.to_s).to eq('💰 My root account (acc_123) - $234,591.83')
+      end
     end
 
     context 'with CLP currency' do
@@ -63,16 +65,8 @@ RSpec.describe Fintoc::Transfers::Account do
       let(:clp_account) { described_class.new(**clp_data) }
 
       it 'returns a formatted string representation with CLP currency' do
-        expect(clp_account.to_s).to eq('💰 My root account (acc_123) - CLP $1000000')
-      end
-    end
-
-    context 'with other currency' do
-      let(:other_data) { data.merge(currency: 'USD', available_balance: 50000) }
-      let(:other_account) { described_class.new(**other_data) }
-
-      it 'returns a formatted string representation with generic currency format' do
-        expect(other_account.to_s).to eq('💰 My root account (acc_123) - USD 50000')
+        expect(Money.from_cents(1000000, 'CLP').currency.thousands_separator).to eq('.')
+        expect(clp_account.to_s).to eq('💰 My root account (acc_123) - $1.000.000')
       end
     end
   end
