@@ -40,15 +40,13 @@ module Fintoc
       def refresh_from_entity(entity)
         raise 'Entity must be the same instance' unless entity.id == @id
 
-        initialize(
-          id: entity.id,
-          object: entity.object,
-          mode: entity.mode,
-          holder_name: entity.holder_name,
-          holder_id: entity.holder_id,
-          is_root: entity.is_root,
-          client: @client
-        )
+        @object = entity.object
+        @mode = entity.mode
+        @holder_name = entity.holder_name
+        @holder_id = entity.holder_id
+        @is_root = entity.is_root
+
+        self
       end
     end
   end

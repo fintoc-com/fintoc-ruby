@@ -73,20 +73,18 @@ module Fintoc
       def refresh_from_account_number(account_number)
         raise 'AccountNumber must be the same instance' unless account_number.id == @id
 
-        initialize(
-          id: account_number.id,
-          object: account_number.object,
-          description: account_number.description,
-          number: account_number.number,
-          created_at: account_number.created_at,
-          updated_at: account_number.updated_at,
-          mode: account_number.mode,
-          status: account_number.status,
-          is_root: account_number.is_root,
-          account_id: account_number.account_id,
-          metadata: account_number.metadata,
-          client: @client
-        )
+        @object = account_number.object
+        @description = account_number.description
+        @number = account_number.number
+        @created_at = account_number.created_at
+        @updated_at = account_number.updated_at
+        @mode = account_number.mode
+        @status = account_number.status
+        @is_root = account_number.is_root
+        @account_id = account_number.account_id
+        @metadata = account_number.metadata
+
+        self
       end
     end
   end
