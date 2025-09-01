@@ -1,0 +1,78 @@
+require 'fintoc/utils'
+
+module Fintoc
+  module Transfers
+    class AccountNumber
+      include Utils
+
+      attr_reader :id, :object, :description, :number, :created_at, :updated_at,
+                  :mode, :status, :is_root, :account_id, :metadata
+
+      def initialize(
+        id:,
+        object:,
+        description:,
+        number:,
+        created_at:,
+        updated_at:,
+        mode:,
+        status:,
+        is_root:,
+        account_id:,
+        metadata:,
+        client: nil,
+        **
+      )
+        @id = id
+        @object = object
+        @description = description
+        @number = number
+        @created_at = created_at
+        @updated_at = updated_at
+        @mode = mode
+        @status = status
+        @is_root = is_root
+        @account_id = account_id
+        @metadata = metadata
+        @client = client
+      end
+
+      def to_s
+        "🔢 #{@number} (#{@id}) - #{@description}"
+      end
+
+      def enabled?
+        @status == 'enabled'
+      end
+
+      def disabled?
+        @status == 'disabled'
+      end
+
+      def root?
+        @is_root
+      end
+
+      private
+
+      def refresh_from_account_number(account_number)
+        raise 'AccountNumber must be the same instance' unless account_number.id == @id
+
+        initialize(
+          id: account_number.id,
+          object: account_number.object,
+          description: account_number.description,
+          number: account_number.number,
+          created_at: account_number.created_at,
+          updated_at: account_number.updated_at,
+          mode: account_number.mode,
+          status: account_number.status,
+          is_root: account_number.is_root,
+          account_id: account_number.account_id,
+          metadata: account_number.metadata,
+          client: @client
+        )
+      end
+    end
+  end
+end
