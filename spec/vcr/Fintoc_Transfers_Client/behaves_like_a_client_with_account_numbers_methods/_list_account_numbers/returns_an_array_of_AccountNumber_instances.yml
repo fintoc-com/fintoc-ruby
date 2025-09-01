@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v2/account_numbers
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Sep 2025 16:46:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '930'
+      Connection:
+      - close
+      Cf-Ray:
+      - 97863f2f0c391ac8-GRU
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Link:
+      - ''
+      Etag:
+      - W/"58e4fdf440240df4932ac91479501c77"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a83b322e-ac48-4797-a170-ff6bfd49f9e1
+      X-Runtime:
+      - '0.051392'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=dRTTdxBVoYQuL895%2FcWmvxxIdm4KCPnpFHLGMJaF0KvPcssrPKaWnOAH97Odm4SZt0gGKrBmolwmLFck4dHoBTYXFdsVTTiCDECq8cVg%2BGYBpKTRUbzwCxXhrZl7wCMz"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=60788&min_rtt=60655&rtt_var=22841&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1798&delivery_rate=70233&cwnd=33&unsent_bytes=0&cid=1248c3ff5fad2964&ts=383&x=0"
+    body:
+      encoding: UTF-8
+      string: '[{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:46:57Z","mode":"test","description":"Test
+        account number","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"},{"id":"acno_31yYL5uOb39vzvRIszPhoXYMjt4","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203297","created_at":"2025-08-29T20:02:00Z","updated_at":"2025-08-29T20:02:00Z","mode":"test","description":null,"metadata":{},"status":"enabled","is_root":true,"object":"account_number"},{"id":"acno_31t0VhIYoVNy4mYjyo8cWZTYcK9","account_id":"acc_31t0VhaF6uFoj0O9oreXw3jDtzL","number":"735969000000203226","created_at":"2025-08-27T20:54:46Z","updated_at":"2025-08-27T20:54:46Z","mode":"test","description":null,"metadata":{},"status":"enabled","is_root":true,"object":"account_number"}]'
+  recorded_at: Mon, 01 Sep 2025 16:46:58 GMT
+recorded_with: VCR 6.3.1
