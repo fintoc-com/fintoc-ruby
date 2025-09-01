@@ -46,6 +46,16 @@ module Fintoc
         refresh_from_account_number(fresh_account_number)
       end
 
+      def update(description: nil, status: nil, metadata: nil)
+        params = {}
+        params[:description] = description if description
+        params[:status] = status if status
+        params[:metadata] = metadata if metadata
+
+        updated_account_number = @client.update_account_number(@id, **params)
+        refresh_from_account_number(updated_account_number)
+      end
+
       def enabled?
         @status == 'enabled'
       end
