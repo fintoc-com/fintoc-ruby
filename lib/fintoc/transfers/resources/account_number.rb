@@ -41,6 +41,11 @@ module Fintoc
         "🔢 #{@number} (#{@id}) - #{@description}"
       end
 
+      def refresh
+        fresh_account_number = @client.get_account_number(@id)
+        refresh_from_account_number(fresh_account_number)
+      end
+
       def enabled?
         @status == 'enabled'
       end

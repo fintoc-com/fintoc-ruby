@@ -103,4 +103,28 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
       end
     end
   end
+
+  describe '#refresh' do
+    let(:refreshed_data) do
+      data.merge(description: 'Updated description')
+    end
+    let(:refreshed_account_number) { described_class.new(**refreshed_data) }
+
+    before do
+      allow(client)
+        .to receive(:get_account_number)
+        .with('acno_Kasf91034gj1AD')
+        .and_return(refreshed_account_number)
+    end
+
+    it 'refreshes the account number with the latest data' do
+      account_number.refresh
+      expect(account_number.description).to eq('Updated description')
+    end
+
+    it 'calls get_account_number with the correct id' do
+      account_number.refresh
+      expect(client).to have_received(:get_account_number).with('acno_Kasf91034gj1AD')
+    end
+  end
 end
