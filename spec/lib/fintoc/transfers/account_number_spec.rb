@@ -127,4 +127,39 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
       expect(client).to have_received(:get_account_number).with('acno_Kasf91034gj1AD')
     end
   end
+
+  describe '#update' do
+    let(:new_metadata) { { user_id: '54321' } }
+    let(:new_description) { 'New description' }
+    let(:new_status) { 'disabled' }
+    let(:updated_data) do
+      data.merge(description: new_description, status: new_status, metadata: new_metadata)
+    end
+    let(:updated_account_number) { described_class.new(**updated_data) }
+
+    before do
+      allow(client).to receive(:update_account_number).and_return(updated_account_number)
+    end
+
+    it 'updates all provided parameters' do
+      account_number
+        .update(description: new_description, status: new_status, metadata: new_metadata)
+
+      expect(account_number.description).to eq(new_description)
+      expect(account_number.status).to eq(new_status)
+      expect(account_number.metadata).to eq(new_metadata)
+    end
+
+    it 'calls update_account_number with all parameters' do
+      account_number
+        .update(description: new_description, status: new_status, metadata: new_metadata)
+
+      expect(client).to have_received(:update_account_number).with(
+        account_number.id,
+        description: new_description,
+        status: new_status,
+        metadata: new_metadata
+      )
+    end
+  end
 end
