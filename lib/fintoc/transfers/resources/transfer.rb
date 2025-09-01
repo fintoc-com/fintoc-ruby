@@ -1,0 +1,96 @@
+require 'money'
+require 'fintoc/utils'
+
+module Fintoc
+  module Transfers
+    class Transfer
+      include Utils
+
+      attr_reader :id, :object, :amount, :currency, :direction, :status, :mode,
+                  :post_date, :transaction_date, :comment, :reference_id, :receipt_url,
+                  :tracking_key, :return_reason, :counterparty, :account_number,
+                  :metadata, :created_at
+
+      def initialize( # rubocop:disable Metrics/MethodLength
+        id:,
+        object:,
+        amount:,
+        currency:,
+        status:,
+        mode:,
+        counterparty:,
+        direction: nil,
+        post_date: nil,
+        transaction_date: nil,
+        comment: nil,
+        reference_id: nil,
+        receipt_url: nil,
+        tracking_key: nil,
+        return_reason: nil,
+        account_number: nil,
+        metadata: {},
+        created_at: nil,
+        client: nil,
+        **
+      )
+        @id = id
+        @object = object
+        @amount = amount
+        @currency = currency
+        @direction = direction
+        @status = status
+        @mode = mode
+        @post_date = post_date
+        @transaction_date = transaction_date
+        @comment = comment
+        @reference_id = reference_id
+        @receipt_url = receipt_url
+        @tracking_key = tracking_key
+        @return_reason = return_reason
+        @counterparty = counterparty
+        @account_number = account_number
+        @metadata = metadata || {}
+        @created_at = created_at
+        @client = client
+      end
+
+      def to_s
+        amount_str = Money.from_cents(@amount, @currency).format
+        direction_icon = inbound? ? '⬇️' : '⬆️'
+        "#{direction_icon} #{amount_str} (#{@id}) - #{@status}"
+      end
+
+      def pending?
+        @status == 'pending'
+      end
+
+      def succeeded?
+        @status == 'succeeded'
+      end
+
+      def failed?
+        @status == 'failed'
+      end
+
+      def returned?
+        @status == 'returned'
+      end
+
+      def return_pending?
+        @status == 'return_pending'
+      end
+
+      def rejected?
+        @status == 'rejected'
+      end
+
+      def inbound?
+        @direction == 'inbound'
+      end
+
+      def outbound?
+        @direction == 'outbound'
+      end
+    end
+  end
+end
