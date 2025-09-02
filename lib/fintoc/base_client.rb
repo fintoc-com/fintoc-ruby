@@ -4,18 +4,20 @@ require 'fintoc/utils'
 require 'fintoc/errors'
 require 'fintoc/constants'
 require 'fintoc/version'
+require 'fintoc/jws'
 
 module Fintoc
   class BaseClient
     include Utils
 
-    def initialize(api_key)
+    def initialize(api_key, jws_private_key: nil)
       @api_key = api_key
       @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
       @headers = { Authorization: "Bearer #{@api_key}", 'User-Agent': @user_agent }
       @link_headers = nil
       @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
       @default_params = {}
+      @jws = jws_private_key ? Fintoc::JWS.new(jws_private_key) : nil
     end
 
     def get(version: :v1)
@@ -26,18 +28,18 @@ module Fintoc
       request('delete', version: version)
     end
 
-    def post(version: :v1)
-      request('post', version: version)
+    def post(version: :v1, use_jws: false)
+      request('post', version: version, use_jws: use_jws)
     end
 
-    def patch(version: :v1)
-      request('patch', version: version)
+    def patch(version: :v1, use_jws: false)
+      request('patch', version: version, use_jws: use_jws)
     end
 
-    def request(method, version: :v1)
+    def request(method, version: :v1, use_jws: false)
       proc do |resource, **kwargs|
         parameters = params(method, **kwargs)
-        response = make_request(method, resource, parameters, version: version)
+        response = make_request(method, resource, parameters, version: version, use_jws: use_jws)
         content = JSON.parse(response.body, symbolize_names: true)
 
         if response.status.client_error? || response.status.server_error?
@@ -78,16 +80,28 @@ module Fintoc
       dict
     end
 
-    def make_request(method, resource, parameters, version: :v1)
+    def build_url(resource, version: :v1)
+      base_url = version == :v2 ? Fintoc::Constants::BASE_URL_V2 : Fintoc::Constants::BASE_URL
+      "#{Fintoc::Constants::SCHEME}#{base_url}#{resource}"
+    end
+
+    def make_request(method, resource, parameters, version: :v1, use_jws: false)
       # this is to handle url returned in the link headers
       # I'm sure there is a better and more clever way to solve this
       if resource.start_with? 'https'
-        client.send(method, resource)
-      else
-        base_url = version == :v2 ? Fintoc::Constants::BASE_URL_V2 : Fintoc::Constants::BASE_URL
-        url = "#{Fintoc::Constants::SCHEME}#{base_url}#{resource}"
-        client.send(method, url, parameters)
+        return client.send(method, resource)
       end
+
+      url = build_url(resource, version:)
+
+      if use_jws && @jws && %w[post patch put].include?(method.downcase)
+        request_body = parameters[:json]&.to_json || ''
+        jws_signature = @jws.generate_signature(request_body)
+
+        return client.headers('Fintoc-JWS-Signature' => jws_signature).send(method, url, parameters)
+      end
+
+      client.send(method, url, parameters)
     end
 
     def params(method, **kwargs)

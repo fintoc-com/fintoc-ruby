@@ -8,9 +8,9 @@ module Fintoc
 
     attr_reader :movements, :transfers
 
-    def initialize(api_key)
+    def initialize(api_key, jws_private_key: nil)
       @movements = Fintoc::Movements::Client.new(api_key)
-      @transfers = Fintoc::Transfers::Client.new(api_key)
+      @transfers = Fintoc::Transfers::Client.new(api_key, jws_private_key: jws_private_key)
     end
 
     # Delegate common methods to maintain backward compatibility
