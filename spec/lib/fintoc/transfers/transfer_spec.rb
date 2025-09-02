@@ -229,4 +229,22 @@ RSpec.describe Fintoc::Transfers::Transfer do
       expect(transfer.refresh).to eq(transfer)
     end
   end
+
+  describe '#return_transfer' do
+    let(:returned_data) { data.merge(status: 'return_pending') }
+    let(:returned_transfer) { described_class.new(**returned_data) }
+
+    before do
+      allow(client).to receive(:return_transfer).with(data[:id]).and_return(returned_transfer)
+    end
+
+    it 'returns the transfer and updates status' do
+      expect { transfer.return_transfer }
+        .to change { transfer.status }.from('pending').to('return_pending')
+    end
+
+    it 'returns self' do
+      expect(transfer.return_transfer).to eq(transfer)
+    end
+  end
 end
