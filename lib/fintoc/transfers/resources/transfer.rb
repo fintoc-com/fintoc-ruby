@@ -60,6 +60,11 @@ module Fintoc
         "#{direction_icon} #{amount_str} (#{@id}) - #{@status}"
       end
 
+      def refresh
+        fresh_transfer = @client.get_transfer(@id)
+        refresh_from_transfer(fresh_transfer)
+      end
+
       def pending?
         @status == 'pending'
       end
@@ -90,6 +95,32 @@ module Fintoc
 
       def outbound?
         @direction == 'outbound'
+      end
+
+      private
+
+      def refresh_from_transfer(transfer) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        raise 'Transfer must be the same instance' unless transfer.id == @id
+
+        @object = transfer.object
+        @amount = transfer.amount
+        @currency = transfer.currency
+        @direction = transfer.direction
+        @status = transfer.status
+        @mode = transfer.mode
+        @post_date = transfer.post_date
+        @transaction_date = transfer.transaction_date
+        @comment = transfer.comment
+        @reference_id = transfer.reference_id
+        @receipt_url = transfer.receipt_url
+        @tracking_key = transfer.tracking_key
+        @return_reason = transfer.return_reason
+        @counterparty = transfer.counterparty
+        @account_number = transfer.account_number
+        @metadata = transfer.metadata
+        @created_at = transfer.created_at
+
+        self
       end
     end
   end
