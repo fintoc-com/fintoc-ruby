@@ -8,7 +8,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
     {
       holder_id: 'LFHU290523OG0',
       holder_name: 'Jon Snow',
-      account_number: '012969123456789120',
+      account_number: '735969000000203297',
       account_type: 'clabe',
       institution: {
         id: '40012',
@@ -20,11 +20,11 @@ RSpec.describe Fintoc::Transfers::Transfer do
 
   let(:account_number_data) do
     {
-      id: 'acno_Kasf91034gj1AD',
+      id: 'acno_326dzRGqxLee3j9TkaBBBMfs2i0',
       object: 'account_number',
-      account_id: 'acc_Jas92lf9adg94ka',
+      account_id: 'acc_31yYL7h9LVPg121AgFtCyJPDsgM',
       description: 'Mis payins',
-      number: '738969123456789120',
+      number: '735969000000203365',
       created_at: '2024-03-01T20:09:42.949787176Z',
       mode: 'test',
       metadata: {
@@ -35,7 +35,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
 
   let(:data) do
     {
-      id: 'tr_jKaHD105H',
+      id: 'tr_329NGN1M4If6VvcMRALv4gjAQJx',
       object: 'transfer',
       amount: 59013,
       currency: 'MXN',
@@ -66,7 +66,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
 
     it 'sets all attributes correctly' do # rubocop:disable RSpec/ExampleLength
       expect(transfer).to have_attributes(
-        id: 'tr_jKaHD105H',
+        id: 'tr_329NGN1M4If6VvcMRALv4gjAQJx',
         object: 'transfer',
         amount: 59013,
         currency: 'MXN',
@@ -92,7 +92,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
     it 'returns a string representation' do
       expect(transfer.to_s)
         .to include('⬆️')
-        .and include('tr_jKaHD105H')
+        .and include('tr_329NGN1M4If6VvcMRALv4gjAQJx')
         .and include('pending')
     end
 
