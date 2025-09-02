@@ -212,4 +212,21 @@ RSpec.describe Fintoc::Transfers::Transfer do
       end
     end
   end
+
+  describe '#refresh' do
+    let(:refreshed_data) { data.merge(status: 'succeeded') }
+    let(:refreshed_transfer) { described_class.new(**refreshed_data) }
+
+    before do
+      allow(client).to receive(:get_transfer).with(data[:id]).and_return(refreshed_transfer)
+    end
+
+    it 'refreshes the transfer data' do
+      expect { transfer.refresh }.to change { transfer.status }.from('pending').to('succeeded')
+    end
+
+    it 'returns self' do
+      expect(transfer.refresh).to eq(transfer)
+    end
+  end
 end
