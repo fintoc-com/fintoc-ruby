@@ -2,7 +2,8 @@ require 'fintoc/transfers/client/client'
 
 RSpec.describe Fintoc::Transfers::Client do
   let(:api_key) { 'sk_test_SeCreT-aPi_KeY' }
-  let(:client) { described_class.new(api_key) }
+  let(:jws_private_key) { nil }
+  let(:client) { described_class.new(api_key, jws_private_key: jws_private_key) }
 
   describe '.new' do
     it 'creates an instance of TransfersClient' do
