@@ -67,6 +67,14 @@ module Fintoc
         @status == 'closed'
       end
 
+      def simulate_receive_transfer(amount:)
+        @client.simulate_receive_transfer(
+          account_number_id: @root_account_number_id,
+          amount:,
+          currency: @currency
+        )
+      end
+
       private
 
       def refresh_from_account(account)
