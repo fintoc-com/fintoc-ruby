@@ -68,6 +68,14 @@ module Fintoc
         @is_root
       end
 
+      def simulate_receive_transfer(amount:, currency: 'MXN')
+        @client.simulate_receive_transfer(
+          account_number_id: @id,
+          amount:,
+          currency:
+        )
+      end
+
       private
 
       def refresh_from_account_number(account_number)
