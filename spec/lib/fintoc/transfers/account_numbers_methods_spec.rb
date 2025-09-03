@@ -30,23 +30,25 @@ RSpec.describe Fintoc::Transfers::AccountNumbersMethods do
 
   describe '#create_account_number' do
     before do
-      allow(client).to receive(:build_account_number)
+      allow(Fintoc::Transfers::AccountNumber).to receive(:new)
     end
 
     it 'calls build_account_number with the response' do
       client.create_account_number(account_id: 'acc_123')
-      expect(client).to have_received(:build_account_number).with({ mock: 'response' })
+      expect(Fintoc::Transfers::AccountNumber)
+        .to have_received(:new).with(mock: 'response', client:)
     end
   end
 
   describe '#get_account_number' do
     before do
-      allow(client).to receive(:build_account_number)
+      allow(Fintoc::Transfers::AccountNumber).to receive(:new)
     end
 
     it 'calls build_account_number with the response' do
       client.get_account_number('acno_123')
-      expect(client).to have_received(:build_account_number).with({ mock: 'response' })
+      expect(Fintoc::Transfers::AccountNumber)
+        .to have_received(:new).with(mock: 'response', client:)
     end
   end
 
@@ -55,24 +57,27 @@ RSpec.describe Fintoc::Transfers::AccountNumbersMethods do
       allow(client)
         .to receive(:_list_account_numbers)
         .and_return([{ mock: 'response1' }, { mock: 'response2' }])
-      allow(client).to receive(:build_account_number)
+      allow(Fintoc::Transfers::AccountNumber).to receive(:new)
     end
 
     it 'calls build_account_number for each response' do
       client.list_account_numbers
-      expect(client).to have_received(:build_account_number).with({ mock: 'response1' })
-      expect(client).to have_received(:build_account_number).with({ mock: 'response2' })
+      expect(Fintoc::Transfers::AccountNumber)
+        .to have_received(:new).with(mock: 'response1', client:)
+      expect(Fintoc::Transfers::AccountNumber)
+        .to have_received(:new).with(mock: 'response2', client:)
     end
   end
 
   describe '#update_account_number' do
     before do
-      allow(client).to receive(:build_account_number)
+      allow(Fintoc::Transfers::AccountNumber).to receive(:new)
     end
 
     it 'calls build_account_number with the response' do
       client.update_account_number('acno_123', description: 'Updated')
-      expect(client).to have_received(:build_account_number).with({ mock: 'response' })
+      expect(Fintoc::Transfers::AccountNumber)
+        .to have_received(:new).with(mock: 'response', client:)
     end
   end
 end
