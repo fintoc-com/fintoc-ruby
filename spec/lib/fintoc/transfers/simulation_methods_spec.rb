@@ -22,7 +22,7 @@ RSpec.describe Fintoc::Transfers::SimulationMethods do
 
   describe '#simulate_receive_transfer' do
     before do
-      allow(client).to receive(:build_transfer)
+      allow(Fintoc::Transfers::Transfer).to receive(:new)
     end
 
     it 'calls build_transfer with the response' do
@@ -31,7 +31,8 @@ RSpec.describe Fintoc::Transfers::SimulationMethods do
         amount: 10000,
         currency: 'MXN'
       )
-      expect(client).to have_received(:build_transfer).with({ mock: 'response' })
+      expect(Fintoc::Transfers::Transfer)
+        .to have_received(:new).with(mock: 'response', client:)
     end
   end
 end
