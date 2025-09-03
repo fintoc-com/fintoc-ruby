@@ -67,7 +67,15 @@ module Fintoc
         @status == 'closed'
       end
 
+      def test_mode?
+        @mode == 'test'
+      end
+
       def simulate_receive_transfer(amount:)
+        unless test_mode?
+          raise Fintoc::Errors::InvalidRequestError, 'Simulation is only available in test mode'
+        end
+
         @client.simulate_receive_transfer(
           account_number_id: @root_account_number_id,
           amount:,
