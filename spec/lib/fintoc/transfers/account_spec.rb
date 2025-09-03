@@ -157,4 +157,24 @@ RSpec.describe Fintoc::Transfers::Account do
         .with('acc_123', description: 'Test description')
     end
   end
+
+  describe '#simulate_receive_transfer' do
+    let(:expected_transfer) { instance_double(Fintoc::Transfers::Transfer) }
+
+    before do
+      allow(client)
+        .to receive(:simulate_receive_transfer)
+        .with(
+          account_number_id: account.root_account_number_id,
+          amount: 10000,
+          currency: account.currency
+        )
+        .and_return(expected_transfer)
+    end
+
+    it 'simulates receiving a transfer using account defaults' do
+      result = account.simulate_receive_transfer(amount: 10000)
+      expect(result).to eq(expected_transfer)
+    end
+  end
 end
