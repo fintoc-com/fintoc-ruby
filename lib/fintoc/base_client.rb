@@ -85,6 +85,10 @@ module Fintoc
       "#{Fintoc::Constants::SCHEME}#{base_url}#{resource}"
     end
 
+    def should_use_jws?(method, use_jws)
+      use_jws && @jws && %w[post patch put].include?(method.downcase)
+    end
+
     def make_request(method, resource, parameters, version: :v1, use_jws: false)
       # this is to handle url returned in the link headers
       # I'm sure there is a better and more clever way to solve this
@@ -94,7 +98,7 @@ module Fintoc
 
       url = build_url(resource, version:)
 
-      if use_jws && @jws && %w[post patch put].include?(method.downcase)
+      if should_use_jws?(method, use_jws)
         request_body = parameters[:json]&.to_json || ''
         jws_signature = @jws.generate_signature(request_body)
 
