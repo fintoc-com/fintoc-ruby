@@ -68,7 +68,15 @@ module Fintoc
         @is_root
       end
 
+      def test_mode?
+        @mode == 'test'
+      end
+
       def simulate_receive_transfer(amount:, currency: 'MXN')
+        unless test_mode?
+          raise Fintoc::Errors::InvalidRequestError, 'Simulation is only available in test mode'
+        end
+
         @client.simulate_receive_transfer(
           account_number_id: @id,
           amount:,

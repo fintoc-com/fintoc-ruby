@@ -163,19 +163,44 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
     end
   end
 
+  describe '#test_mode?' do
+    it 'returns true when mode is test' do
+      expect(account_number.test_mode?).to be true
+    end
+
+    it 'returns false when mode is not test' do
+      live_account_number = described_class.new(**data, mode: 'live')
+      expect(live_account_number.test_mode?).to be false
+    end
+  end
+
   describe '#simulate_receive_transfer' do
     let(:expected_transfer) { instance_double(Fintoc::Transfers::Transfer) }
 
-    before do
-      allow(client)
-        .to receive(:simulate_receive_transfer)
-        .with(account_number_id: account_number.id, amount: 10000, currency: 'MXN')
-        .and_return(expected_transfer)
+    context 'when in test mode' do
+      before do
+        allow(client)
+          .to receive(:simulate_receive_transfer)
+          .with(account_number_id: account_number.id, amount: 10000, currency: 'MXN')
+          .and_return(expected_transfer)
+      end
+
+      it 'simulates receiving a transfer using account number id' do
+        result = account_number.simulate_receive_transfer(amount: 10000)
+        expect(result).to eq(expected_transfer)
+      end
     end
 
-    it 'simulates receiving a transfer using account number id' do
-      result = account_number.simulate_receive_transfer(amount: 10000)
-      expect(result).to eq(expected_transfer)
+    context 'when not in test mode' do
+      let(:live_account_number) { described_class.new(**data, mode: 'live', client: client) }
+
+      it 'raises an error' do
+        expect { live_account_number.simulate_receive_transfer(amount: 10000) }
+          .to raise_error(
+            Fintoc::Errors::InvalidRequestError,
+            /Simulation is only available in test mode/
+          )
+      end
     end
   end
 end
