@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/simulate/receive_transfer
+    body:
+      encoding: UTF-8
+      string: '{"account_number_id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","amount":10000,"currency":"MXN"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 03 Sep 2025 19:42:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '924'
+      Connection:
+      - close
+      Cf-Ray:
+      - 9797baba0e1cf1dd-GRU
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"9b8507bbddf62fbbc39dc0f60d4b934b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 86ee4f18-ab70-4f72-8c7e-13fbfdb54c82
+      X-Runtime:
+      - '0.805720'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=zweUJRHwMtzbEa6DKV8VCWV%2F%2FBNzngx9kLr%2FuhozNtY28G8rqA3vSZ8sgAoLJHSfU1mWsNinNDoRu%2Fe7eLWa3n2Ayzg%2FfZRqtlyNiah3gRfe8jXhcn6PXoevXNtc%2F0p5"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=59037&min_rtt=58831&rtt_var=22475&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1964&delivery_rate=70429&cwnd=253&unsent_bytes=0&cid=a8dd37502f9ccbd5&ts=1128&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"transfer","id":"tr_32CdYk4p58orHAqG8E3f5yrEjeo","amount":10000,"currency":"MXN","direction":"inbound","status":"pending","transaction_date":"2025-09-03T19:42:17Z","post_date":"2025-09-03T00:00:00Z","comment":null,"reference_id":"3","tracking_key":"202509039073500000000000000012","receipt_url":null,"mode":"test","counterparty":{"holder_id":"PPPR510220DB1","holder_name":"Adrianne
+        Murray","account_number":"631969456789123456","account_type":"clabe","institution":{"id":"90631","name":"CI
+        BOLSA","country":"mx"}},"account_number":{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:54:40Z","mode":"test","description":"Updated
+        account number description","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"},"metadata":{},"return_reason":null}'
+  recorded_at: Wed, 03 Sep 2025 19:42:17 GMT
+recorded_with: VCR 6.3.1
