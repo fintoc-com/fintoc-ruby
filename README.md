@@ -23,9 +23,16 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
     - [**Backward compatibility**](#backward-compatibility)
   - [Documentation](#documentation)
   - [Examples](#examples)
-    - [Get accounts](#get-accounts)
-    - [Get movements](#get-movements)
-    - [Get entities](#get-entities)
+    - [Movements API Examples](#movements-api-examples)
+      - [Get accounts](#get-accounts)
+      - [Get movements](#get-movements)
+    - [Transfers API Examples](#transfers-api-examples)
+      - [Entities](#entities)
+      - [Transfer Accounts](#transfer-accounts)
+      - [Account Numbers](#account-numbers)
+      - [Transfers](#transfers)
+      - [Simulation](#simulation)
+      - [Account Verifications](#account-verifications)
   - [Development](#development)
     - [Dependencies](#dependencies)
     - [Setup](#setup)
@@ -57,7 +64,7 @@ Or install it yourself as:
 require 'fintoc'
 
 movements_client =
-  Fintoc::Clients::MovementsClient.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
+  Fintoc::Movements::Client.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
 link = movements_client.get_link('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
 account = link.find(type: 'checking_account')
 
@@ -76,22 +83,56 @@ The Fintoc Ruby client is organized into separate clients that mirror the offici
 
 ### **Movements API Client**
 
-```ruby
-movements_client = Fintoc::Clients::MovementsClient.new('api_key')
+The Movements API client provides access to bank account data and movements:
 
+```ruby
+movements_client = Fintoc::Movements::Client.new('api_key')
+
+# Link management
 links = movements_client.get_links
 link = movements_client.get_link('link_token')
 movements_client.delete_link('link_id')
+
+# Account access
 account = movements_client.get_account('link_token', 'account_id')
 ```
 
 ### **Transfers API Client**
 
-```ruby
-transfers_client = Fintoc::Clients::TransfersClient.new('api_key')
+The Transfers API client provides access to transfer accounts, entities, and transfer operations:
 
+```ruby
+transfers_client = Fintoc::Transfers::Client.new('api_key')
+
+# Entities
 entities = transfers_client.get_entities
 entity = transfers_client.get_entity('entity_id')
+
+# Transfer Accounts
+accounts = transfers_client.list_accounts
+account = transfers_client.get_account('account_id')
+account = transfers_client.create_account(entity_id: 'entity_id', description: 'My Account')
+transfers_client.update_account('account_id', description: 'Updated')
+
+# Account Numbers
+account_numbers = transfers_client.list_account_numbers
+account_number = transfers_client.get_account_number('account_number_id')
+account_number = transfers_client.create_account_number(account_id: 'account_id', description: 'Main')
+transfers_client.update_account_number('account_number_id', description: 'Updated')
+
+# Transfers
+transfers = transfers_client.list_transfers
+transfer = transfers_client.get_transfer('transfer_id')
+transfer = transfers_client.create_transfer(amount: 1000, currency: 'CLP', account_id: 'account_id', counterparty: {...})
+transfers_client.return_transfer('transfer_id')
+
+# Simulation
+simulation = transfers_client.simulate_receive_transfer(account_number_id: 'account_number_id', amount: 1000, currency: 'CLP')
+
+# Account Verifications
+account_verifications = transfers_client.list_account_verifications
+account_verification = transfers_client.get_account_verification('account_verification_id')
+account_verification = transfers_client.create_account_verification(account_number: 'account_number')
 ```
 
 ### **Backward compatibility**
@@ -110,12 +151,14 @@ This client supports all Fintoc API endpoints. For complete information about th
 
 ## Examples
 
-### Get accounts
+### Movements API Examples
+
+#### Get accounts
 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Clients::MovementsClient.new('api_key')
+client = Fintoc::Movements::Client.new('api_key')
 link = client.get_link('link_token')
 puts link.accounts
 
@@ -131,7 +174,7 @@ If you want to find a specific account in a link, you can use **find**. You can 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Clients::MovementsClient.new('api_key')
+client = Fintoc::Movements::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
@@ -147,7 +190,7 @@ You can also search for multiple accounts matching a specific criteria with **fi
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Clients::MovementsClient.new('api_key')
+client = Fintoc::Movements::Client.new('api_key')
 link = client.get_link('link_token')
 accounts = link.find_all(currency: 'CLP')
 ```
@@ -157,19 +200,19 @@ To update the account balance you can use **update_balance**:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Clients::MovementsClient.new('api_key')
+client = Fintoc::Movements::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(number: '1111111')
 account.update_balance
 ```
 
-### Get movements
+#### Get movements
 
 ```ruby
 require 'fintoc'
 require 'time'
 
-client = Fintoc::Clients::MovementsClient.new('api_key')
+client = Fintoc::Movements::Client.new('api_key')
 link = client.get_link('link_token')
 account = link.find(type: 'checking_account')
 
@@ -186,18 +229,20 @@ account.get_movements(since: '2020-01-01', per_page: 100)
 
 Calling **get_movements** without arguments gets the last 30 movements of the account
 
-### Get entities
+### Transfers API Examples
+
+#### Entities
 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Clients::TransfersClient.new('api_key')
+client = Fintoc::Transfers::Client.new('api_key')
 
 # Get all entities
 entities = client.get_entities
 
 # Get a specific entity
-entity = client.get_entity('ent_12345')
+entity = client.get_entity('entity_id')
 
 puts entity.holder_name  # => "My Company LLC"
 puts entity.holder_id    # => "12345678-9"
@@ -208,7 +253,120 @@ You can also list entities with pagination:
 
 ```ruby
 # Get entities with pagination
-entities = client.get_entities(limit: 10, starting_after: 'ent_123')
+entities = client.get_entities(limit: 10, starting_after: 'entity_id')
+```
+
+#### Transfer Accounts
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Transfers::Client.new('api_key')
+
+# Create a transfer account
+account = client.create_account(
+  entity_id: 'entity_id',
+  description: 'My Business Account'
+)
+
+# Get a specific account
+account = client.get_account('account_id')
+
+# List all accounts
+accounts = client.list_accounts
+
+# Update an account
+updated_account = client.update_account('account_id', description: 'Updated Description')
+```
+
+#### Account Numbers
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Transfers::Client.new('api_key')
+
+# Create an account number
+account_number = client.create_account_number(
+  account_id: 'account_id',
+  description: 'Main account number'
+)
+
+# Get a specific account number
+account_number = client.get_account_number('account_number_id')
+
+# List all account numbers
+account_numbers = client.list_account_numbers
+
+# Update an account number
+updated_account_number = client.update_account_number(
+  'account_number_id',
+  description: 'Updated account number'
+)
+```
+
+#### Transfers
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Transfers::Client.new('api_key')
+
+# Create a transfer
+transfer = client.create_transfer(
+  amount: 10000,
+  currency: 'CLP',
+  account_id: 'account_id',
+  counterparty: {
+    name: 'John Doe',
+    rut: '12345678-9',
+    email: 'john@example.com',
+    bank: 'banco_de_chile',
+    account_type: 'checking_account',
+    account_number: '1234567890'
+  }
+)
+
+# Get a specific transfer
+transfer = client.get_transfer('transfer_id')
+
+# List all transfers
+transfers = client.list_transfers
+
+# Return a transfer
+returned_transfer = client.return_transfer('transfer_id')
+```
+
+#### Simulation
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Transfers::Client.new('api_key')
+
+# Simulate receiving a transfer
+simulation = client.simulate_receive_transfer(
+  account_number_id: 'account_number_id',
+  amount: 5000,
+  currency: 'CLP'
+)
+```
+
+#### Account Verifications
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Transfers::Client.new('api_key')
+
+# Create an account verification
+account_verification = client.create_account_verification(account_number: 'account_number')
+
+# Get a specific account verification
+account_verification = client.get_account_verification('account_verification_id')
+
+# List all account verifications
+account_verifications = client.list_account_verifications
 ```
 
 ## Development
