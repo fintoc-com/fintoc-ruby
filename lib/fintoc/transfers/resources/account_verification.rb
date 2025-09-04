@@ -37,6 +37,11 @@ module Fintoc
         "🔍 Account Verification (#{@id}) - #{@status}"
       end
 
+      def refresh
+        fresh_verification = @client.get_account_verification(@id)
+        refresh_from_verification(fresh_verification)
+      end
+
       def pending?
         @status == 'pending'
       end
@@ -47,6 +52,23 @@ module Fintoc
 
       def failed?
         @status == 'failed'
+      end
+
+      private
+
+      def refresh_from_verification(verification)
+        raise 'Account verification must be the same instance' unless verification.id == @id
+
+        @object = verification.object
+        @status = verification.status
+        @reason = verification.reason
+        @transfer_id = verification.transfer_id
+        @counterparty = verification.counterparty
+        @mode = verification.mode
+        @receipt_url = verification.receipt_url
+        @transaction_date = verification.transaction_date
+
+        self
       end
     end
   end
