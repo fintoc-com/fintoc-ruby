@@ -28,4 +28,6 @@ RSpec.describe Fintoc::Transfers::Client do
   it_behaves_like 'a client with transfers methods'
 
   it_behaves_like 'a client with simulation methods'
+
+  it_behaves_like 'a client with account verifications methods'
 end
