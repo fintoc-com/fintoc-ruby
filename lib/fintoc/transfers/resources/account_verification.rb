@@ -1,10 +1,6 @@
-require 'fintoc/utils'
-
 module Fintoc
   module Transfers
     class AccountVerification
-      include Utils
-
       attr_reader :id, :object, :status, :reason, :transfer_id, :counterparty, :mode, :receipt_url,
                   :transaction_date
 

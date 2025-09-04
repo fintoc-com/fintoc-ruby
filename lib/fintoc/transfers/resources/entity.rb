@@ -1,10 +1,6 @@
-require 'fintoc/utils'
-
 module Fintoc
   module Transfers
     class Entity
-      include Utils
-
       attr_reader :object, :mode, :id, :holder_name, :holder_id, :is_root
 
       def initialize(

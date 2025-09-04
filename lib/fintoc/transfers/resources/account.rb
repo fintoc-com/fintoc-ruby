@@ -1,11 +1,8 @@
 require 'money'
-require 'fintoc/utils'
 
 module Fintoc
   module Transfers
     class Account
-      include Utils
-
       attr_reader :id, :object, :mode, :description, :available_balance, :currency,
                   :is_root, :root_account_number_id, :root_account_number, :status, :entity
 

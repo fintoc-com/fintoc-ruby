@@ -1,11 +1,8 @@
 require 'money'
-require 'fintoc/utils'
 
 module Fintoc
   module Transfers
     class Transfer
-      include Utils
-
       attr_reader :id, :object, :amount, :currency, :direction, :status, :mode,
                   :post_date, :transaction_date, :comment, :reference_id, :receipt_url,
                   :tracking_key, :return_reason, :counterparty, :account_number,

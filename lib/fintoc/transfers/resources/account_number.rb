@@ -1,10 +1,6 @@
-require 'fintoc/utils'
-
 module Fintoc
   module Transfers
     class AccountNumber
-      include Utils
-
       attr_reader :id, :object, :description, :number, :created_at, :updated_at,
                   :mode, :status, :is_root, :account_id, :metadata
 
