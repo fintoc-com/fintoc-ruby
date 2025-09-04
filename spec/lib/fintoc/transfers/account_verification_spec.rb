@@ -109,4 +109,44 @@ RSpec.describe Fintoc::Transfers::AccountVerification do
       end
     end
   end
+
+  describe '#refresh' do
+    let(:fresh_data) do
+      data.merge(
+        status: 'failed',
+        reason: 'insufficient_funds'
+      )
+    end
+
+    let(:fresh_verification) { described_class.new(**fresh_data) }
+
+    before do
+      allow(client)
+        .to receive(:get_account_verification)
+        .with('accv_fdme30s11j5k7l1mekq4')
+        .and_return(fresh_verification)
+    end
+
+    it 'refreshes the account verification data' do
+      result = account_verification.refresh
+
+      expect(result).to eq(account_verification)
+      expect(account_verification).to have_attributes(
+        status: 'failed',
+        reason: 'insufficient_funds'
+      )
+    end
+
+    it 'raises an error if the verification ID does not match' do
+      wrong_verification = described_class.new(**fresh_data, id: 'wrong_id')
+
+      allow(client)
+        .to receive(:get_account_verification)
+        .with('accv_fdme30s11j5k7l1mekq4')
+        .and_return(wrong_verification)
+
+      expect { account_verification.refresh }
+        .to raise_error('Account verification must be the same instance')
+    end
+  end
 end
