@@ -126,6 +126,18 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
       account_number.refresh
       expect(client).to have_received(:get_account_number).with('acno_Kasf91034gj1AD')
     end
+
+    it 'raises an error if the account number ID does not match' do
+      wrong_account_number = described_class.new(**data, id: 'wrong_id')
+
+      allow(client)
+        .to receive(:get_account_number)
+        .with('acno_Kasf91034gj1AD')
+        .and_return(wrong_account_number)
+
+      expect { account_number.refresh }
+        .to raise_error(ArgumentError, 'AccountNumber must be the same instance')
+    end
   end
 
   describe '#update' do

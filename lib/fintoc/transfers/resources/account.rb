@@ -83,7 +83,9 @@ module Fintoc
       private
 
       def refresh_from_account(account)
-        raise 'Account must be the same instance' unless account.id == @id
+        unless account.id == @id
+          raise ArgumentError, 'Account must be the same instance'
+        end
 
         @object = account.object
         @mode = account.mode

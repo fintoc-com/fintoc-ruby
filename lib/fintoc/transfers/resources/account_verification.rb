@@ -53,7 +53,9 @@ module Fintoc
       private
 
       def refresh_from_verification(verification)
-        raise 'Account verification must be the same instance' unless verification.id == @id
+        unless verification.id == @id
+          raise ArgumentError, 'Account verification must be the same instance'
+        end
 
         @object = verification.object
         @status = verification.status
