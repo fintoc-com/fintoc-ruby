@@ -124,6 +124,14 @@ RSpec.describe Fintoc::Transfers::Account do
 
       expect(account.description).to eq('Updated account description')
     end
+
+    it 'raises an error if the account ID does not match' do
+      wrong_account = described_class.new(**data, id: 'wrong_id')
+
+      allow(client).to receive(:get_account).with('acc_123').and_return(wrong_account)
+
+      expect { account.refresh }.to raise_error(ArgumentError, 'Account must be the same instance')
+    end
   end
 
   describe '#update' do

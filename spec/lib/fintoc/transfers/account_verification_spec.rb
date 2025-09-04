@@ -146,7 +146,7 @@ RSpec.describe Fintoc::Transfers::AccountVerification do
         .and_return(wrong_verification)
 
       expect { account_verification.refresh }
-        .to raise_error('Account verification must be the same instance')
+        .to raise_error(ArgumentError, 'Account verification must be the same instance')
     end
   end
 end

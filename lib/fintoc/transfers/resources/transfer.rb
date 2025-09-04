@@ -102,7 +102,9 @@ module Fintoc
       private
 
       def refresh_from_transfer(transfer) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        raise 'Transfer must be the same instance' unless transfer.id == @id
+        unless transfer.id == @id
+          raise ArgumentError, 'Transfer must be the same instance'
+        end
 
         @object = transfer.object
         @amount = transfer.amount

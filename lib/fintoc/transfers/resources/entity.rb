@@ -34,7 +34,9 @@ module Fintoc
       private
 
       def refresh_from_entity(entity)
-        raise 'Entity must be the same instance' unless entity.id == @id
+        unless entity.id == @id
+          raise ArgumentError, 'Entity must be the same instance'
+        end
 
         @object = entity.object
         @mode = entity.mode

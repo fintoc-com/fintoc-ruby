@@ -68,5 +68,13 @@ RSpec.describe Fintoc::Transfers::Entity do
         holder_name: 'Updated Company LLC'
       )
     end
+
+    it 'raises an error if the entity ID does not match' do
+      wrong_entity = described_class.new(**data, id: 'wrong_id')
+
+      allow(client).to receive(:get_entity).with('ent_12345').and_return(wrong_entity)
+
+      expect { entity.refresh }.to raise_error(ArgumentError, 'Entity must be the same instance')
+    end
   end
 end

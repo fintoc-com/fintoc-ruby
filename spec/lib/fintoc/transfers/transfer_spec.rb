@@ -228,6 +228,16 @@ RSpec.describe Fintoc::Transfers::Transfer do
     it 'returns self' do
       expect(transfer.refresh).to eq(transfer)
     end
+
+    it 'raises an error if the transfer ID does not match' do
+      wrong_transfer = described_class.new(**data, id: 'wrong_id')
+
+      allow(client)
+        .to receive(:get_transfer).with('tr_329NGN1M4If6VvcMRALv4gjAQJx').and_return(wrong_transfer)
+
+      expect { transfer.refresh }
+        .to raise_error(ArgumentError, 'Transfer must be the same instance')
+    end
   end
 
   describe '#return_transfer' do
