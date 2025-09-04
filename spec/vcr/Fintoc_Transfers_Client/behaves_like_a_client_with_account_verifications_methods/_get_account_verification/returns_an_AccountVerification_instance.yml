@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v2/account_verifications/accv_32F2NLQOOwbeOvfuw8Y1zZCfGdw
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 16:06:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '603'
+      Connection:
+      - close
+      Cf-Ray:
+      - 979ebc832f69c9be-CPH
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"912e11cf6908023f112c73707dbb82cb"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 3f90fdd2-c468-4a93-bb74-763aee816c05
+      X-Runtime:
+      - '0.216110'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=zqdiTM9nU8Qd6m59OzNrTLbjhQMmXzGe0Way81DobYWZZwTSUrKSBDOHAfPmrZx%2BDi4c%2F1jW9bEgvG26J2bxCDro%2FszTccBpILKFysVXlDV2BU1PPe9I8POu2YsanUm4"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=262243&min_rtt=249577&rtt_var=118924&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3880&recv_bytes=1837&delivery_rate=12139&cwnd=33&unsent_bytes=0&cid=28465d7eaadf9d83&ts=1103&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"account_verification","id":"accv_32F2NLQOOwbeOvfuw8Y1zZCfGdw","status":"succeeded","reason":null,"transfer_id":"tr_32F2NNCg5s9JQy5AX5A6toWX9rd","counterparty":{"holder_id":"PPPR510220DB1","holder_name":"Adrianne
+        Murray","account_number":"735969000000203226","account_type":"clabe","institution":{"id":"90735","name":"FINTOC","country":"mx"}},"mode":"test","receipt_url":"https://www.banxico.org.mx/cep-beta/go?i=90735\u0026s=dummy\u0026d=ce2zbPihXLg1MobUPCRrTrw9bB97KEYDGHg6rSGK7PaklMO9uV2ancSh1z2p8bIQCcwNCndMOBQx6ISkSOLTcLQ44r6s3qO7aVSNcWSiOp4%3D","transaction_date":"2025-09-04T16:05:58Z"}'
+  recorded_at: Thu, 04 Sep 2025 16:06:50 GMT
+recorded_with: VCR 6.3.1
