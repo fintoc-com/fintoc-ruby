@@ -218,7 +218,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
     let(:refreshed_transfer) { described_class.new(**refreshed_data) }
 
     before do
-      allow(client).to receive(:get_transfer).with(data[:id]).and_return(refreshed_transfer)
+      allow(client.transfers).to receive(:get).with(data[:id]).and_return(refreshed_transfer)
     end
 
     it 'refreshes the transfer data' do
@@ -232,8 +232,8 @@ RSpec.describe Fintoc::Transfers::Transfer do
     it 'raises an error if the transfer ID does not match' do
       wrong_transfer = described_class.new(**data, id: 'wrong_id')
 
-      allow(client)
-        .to receive(:get_transfer).with('tr_329NGN1M4If6VvcMRALv4gjAQJx').and_return(wrong_transfer)
+      allow(client.transfers)
+        .to receive(:get).with('tr_329NGN1M4If6VvcMRALv4gjAQJx').and_return(wrong_transfer)
 
       expect { transfer.refresh }
         .to raise_error(ArgumentError, 'Transfer must be the same instance')
@@ -245,7 +245,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
     let(:returned_transfer) { described_class.new(**returned_data) }
 
     before do
-      allow(client).to receive(:return_transfer).with(data[:id]).and_return(returned_transfer)
+      allow(client.transfers).to receive(:return).with(data[:id]).and_return(returned_transfer)
     end
 
     it 'returns the transfer and updates status' do
@@ -255,6 +255,7 @@ RSpec.describe Fintoc::Transfers::Transfer do
 
     it 'returns self' do
       expect(transfer.return_transfer).to eq(transfer)
+      expect(transfer.status).to eq('return_pending')
     end
   end
 end

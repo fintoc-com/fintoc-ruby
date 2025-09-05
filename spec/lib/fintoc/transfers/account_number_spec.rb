@@ -111,8 +111,8 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
     let(:refreshed_account_number) { described_class.new(**refreshed_data) }
 
     before do
-      allow(client)
-        .to receive(:get_account_number)
+      allow(client.account_numbers)
+        .to receive(:get)
         .with('acno_Kasf91034gj1AD')
         .and_return(refreshed_account_number)
     end
@@ -124,14 +124,14 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
 
     it 'calls get_account_number with the correct id' do
       account_number.refresh
-      expect(client).to have_received(:get_account_number).with('acno_Kasf91034gj1AD')
+      expect(client.account_numbers).to have_received(:get).with('acno_Kasf91034gj1AD')
     end
 
     it 'raises an error if the account number ID does not match' do
       wrong_account_number = described_class.new(**data, id: 'wrong_id')
 
-      allow(client)
-        .to receive(:get_account_number)
+      allow(client.account_numbers)
+        .to receive(:get)
         .with('acno_Kasf91034gj1AD')
         .and_return(wrong_account_number)
 
@@ -150,7 +150,7 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
     let(:updated_account_number) { described_class.new(**updated_data) }
 
     before do
-      allow(client).to receive(:update_account_number).and_return(updated_account_number)
+      allow(client.account_numbers).to receive(:update).and_return(updated_account_number)
     end
 
     it 'updates all provided parameters' do
@@ -166,7 +166,7 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
       account_number
         .update(description: new_description, status: new_status, metadata: new_metadata)
 
-      expect(client).to have_received(:update_account_number).with(
+      expect(client.account_numbers).to have_received(:update).with(
         account_number.id,
         description: new_description,
         status: new_status,
@@ -191,8 +191,8 @@ RSpec.describe Fintoc::Transfers::AccountNumber do
 
     context 'when in test mode' do
       before do
-        allow(client)
-          .to receive(:simulate_receive_transfer)
+        allow(client.simulate)
+          .to receive(:receive_transfer)
           .with(account_number_id: account_number.id, amount: 10000, currency: 'MXN')
           .and_return(expected_transfer)
       end

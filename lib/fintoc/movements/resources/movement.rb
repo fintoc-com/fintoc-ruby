@@ -20,6 +20,7 @@ module Fintoc
         recipient_account:,
         sender_account:,
         comment:,
+        client: nil,
         **
       )
         @id = id
@@ -36,6 +37,7 @@ module Fintoc
           end
         @sender_account = Fintoc::Movements::TransferAccount.new(**sender_account) if sender_account
         @comment = comment
+        @client = client
       end
 
       def ==(other)

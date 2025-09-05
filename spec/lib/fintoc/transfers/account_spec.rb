@@ -112,7 +112,7 @@ RSpec.describe Fintoc::Transfers::Account do
     let(:updated_account) { described_class.new(**updated_data, client: client) }
 
     before do
-      allow(client).to receive(:get_account).with('acc_123').and_return(updated_account)
+      allow(client.accounts).to receive(:get).with('acc_123').and_return(updated_account)
     end
 
     it 'refreshes the account with updated data from the API' do
@@ -120,7 +120,7 @@ RSpec.describe Fintoc::Transfers::Account do
 
       account.refresh
 
-      expect(client).to have_received(:get_account).with('acc_123')
+      expect(client.accounts).to have_received(:get).with('acc_123')
 
       expect(account.description).to eq('Updated account description')
     end
@@ -128,7 +128,7 @@ RSpec.describe Fintoc::Transfers::Account do
     it 'raises an error if the account ID does not match' do
       wrong_account = described_class.new(**data, id: 'wrong_id')
 
-      allow(client).to receive(:get_account).with('acc_123').and_return(wrong_account)
+      allow(client.accounts).to receive(:get).with('acc_123').and_return(wrong_account)
 
       expect { account.refresh }.to raise_error(ArgumentError, 'Account must be the same instance')
     end
@@ -140,7 +140,7 @@ RSpec.describe Fintoc::Transfers::Account do
     let(:updated_account) { described_class.new(**updated_data, client: client) }
 
     before do
-      allow(client).to receive(:update_account) do |_id, params|
+      allow(client.accounts).to receive(:update) do |_id, params|
         updated_data_for_call = { **data, **params }
         described_class.new(**updated_data_for_call, client: client)
       end
@@ -151,8 +151,8 @@ RSpec.describe Fintoc::Transfers::Account do
 
       account.update(description: 'New account description')
 
-      expect(client)
-        .to have_received(:update_account)
+      expect(client.accounts)
+        .to have_received(:update)
         .with('acc_123', description: 'New account description')
 
       expect(account.description).to eq('New account description')
@@ -160,8 +160,8 @@ RSpec.describe Fintoc::Transfers::Account do
 
     it 'only sends provided parameters' do
       account.update(description: 'Test description')
-      expect(client)
-        .to have_received(:update_account)
+      expect(client.accounts)
+        .to have_received(:update)
         .with('acc_123', description: 'Test description')
     end
   end
@@ -182,8 +182,8 @@ RSpec.describe Fintoc::Transfers::Account do
 
     context 'when in test mode' do
       before do
-        allow(client)
-          .to receive(:simulate_receive_transfer)
+        allow(client.simulate)
+          .to receive(:receive_transfer)
           .with(
             account_number_id: account.root_account_number_id,
             amount: 10000,

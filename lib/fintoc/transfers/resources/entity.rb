@@ -27,7 +27,7 @@ module Fintoc
       end
 
       def refresh
-        fresh_entity = @client.get_entity(@id)
+        fresh_entity = @client.entities.get(@id)
         refresh_from_entity(fresh_entity)
       end
 

@@ -45,7 +45,9 @@ module Fintoc
       end
 
       def get_movements(**params)
-        _get_movements(**params).lazy.map { |movement| Fintoc::Movements::Movement.new(**movement) }
+        _get_movements(**params).lazy.map do
+          |movement| Fintoc::Movements::Movement.new(**movement, client: @client)
+        end
       end
 
       def update_movements(**params)
@@ -77,11 +79,11 @@ module Fintoc
       private
 
       def get_account
-        @client.get.call("accounts/#{@id}")
+        @client.get(version: :v1).call("accounts/#{@id}")
       end
 
       def _get_movements(**params)
-        first = @client.get.call("accounts/#{@id}/movements", **params)
+        first = @client.get(version: :v1).call("accounts/#{@id}/movements", **params)
         return first if params.empty?
 
         first + Utils.flatten(@client.fetch_next)

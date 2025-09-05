@@ -34,7 +34,7 @@ module Fintoc
       end
 
       def refresh
-        fresh_verification = @client.get_account_verification(@id)
+        fresh_verification = @client.account_verifications.get(@id)
         refresh_from_verification(fresh_verification)
       end
 

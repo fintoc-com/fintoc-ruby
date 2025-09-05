@@ -10,6 +10,8 @@ module Fintoc
   class BaseClient
     include Utils
 
+    attr_accessor :default_params
+
     def initialize(api_key, jws_private_key: nil)
       @api_key = api_key
       @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"

@@ -1,6 +1,6 @@
 require 'openssl'
 
-RSpec.shared_examples 'a client with account verifications methods' do
+RSpec.shared_examples 'a client with account verifications manager' do
   let(:account_verification_id) { 'accv_32F2NLQOOwbeOvfuw8Y1zZCfGdw' }
   let(:account_number) { '735969000000203226' }
   let(:jws_private_key) do
@@ -36,53 +36,58 @@ draAAQ5iJEb5BR8AmL6tAQ==
   end
 
   it 'responds to account verification-specific methods' do
-    expect(client)
-      .to respond_to(:create_account_verification)
-      .and respond_to(:get_account_verification)
-      .and respond_to(:list_account_verifications)
+    expect(client).to respond_to(:account_verifications)
+    expect(client.account_verifications)
+      .to be_a(Fintoc::Transfers::Managers::AccountVerificationsManager)
+    expect(client.account_verifications)
+      .to respond_to(:create)
+      .and respond_to(:get)
+      .and respond_to(:list)
   end
 
-  describe '#create_account_verification' do
-    it 'returns an AccountVerification instance', :vcr do
-      account_verification = client.create_account_verification(account_number:)
+  describe '#account_verifications' do
+    describe '#create' do
+      it 'returns an AccountVerification instance', :vcr do
+        account_verification = client.account_verifications.create(account_number:)
 
-      expect(account_verification)
-        .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
-        .and have_attributes(
-          object: 'account_verification',
-          status: 'pending'
+        expect(account_verification)
+          .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
+          .and have_attributes(
+            object: 'account_verification',
+            status: 'pending'
+          )
+      end
+    end
+
+    describe '#get' do
+      it 'returns an AccountVerification instance', :vcr do
+        account_verification = client.account_verifications.get(account_verification_id)
+
+        expect(account_verification)
+          .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
+          .and have_attributes(
+            id: account_verification_id,
+            object: 'account_verification'
+          )
+      end
+    end
+
+    describe '#list' do
+      it 'returns an array of AccountVerification instances', :vcr do
+        account_verifications = client.account_verifications.list
+
+        expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
+        expect(account_verifications.size).to be >= 1
+      end
+
+      it 'accepts filtering parameters', :vcr do
+        account_verifications = client.account_verifications.list(
+          since: '2020-01-01T00:00:00.000Z',
+          limit: 10
         )
-    end
-  end
 
-  describe '#get_account_verification' do
-    it 'returns an AccountVerification instance', :vcr do
-      account_verification = client.get_account_verification(account_verification_id)
-
-      expect(account_verification)
-        .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
-        .and have_attributes(
-          id: account_verification_id,
-          object: 'account_verification'
-        )
-    end
-  end
-
-  describe '#list_account_verifications' do
-    it 'returns an array of AccountVerification instances', :vcr do
-      account_verifications = client.list_account_verifications
-
-      expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
-      expect(account_verifications.size).to be >= 1
-    end
-
-    it 'accepts filtering parameters', :vcr do
-      account_verifications = client.list_account_verifications(
-        since: '2020-01-01T00:00:00.000Z',
-        limit: 10
-      )
-
-      expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
+        expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
+      end
     end
   end
 end

@@ -19,12 +19,11 @@ RSpec.describe Fintoc::Movements::Client do
   end
 
   it 'responds to movements-specific methods' do
-    expect(client)
-      .to respond_to(:get_link)
-      .and respond_to(:get_links)
-      .and respond_to(:delete_link)
-      .and respond_to(:get_account)
+    expect(client.links)
+      .to respond_to(:get)
+      .and respond_to(:list)
+      .and respond_to(:delete)
   end
 
-  it_behaves_like 'a client with links methods'
+  it_behaves_like 'a client with links manager'
 end

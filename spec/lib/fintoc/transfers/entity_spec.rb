@@ -52,7 +52,7 @@ RSpec.describe Fintoc::Transfers::Entity do
     let(:updated_entity) { described_class.new(**updated_data, client: client) }
 
     before do
-      allow(client).to receive(:get_entity).with('ent_12345').and_return(updated_entity)
+      allow(client.entities).to receive(:get).with('ent_12345').and_return(updated_entity)
     end
 
     it 'refreshes the entity with updated data from the API' do
@@ -62,7 +62,7 @@ RSpec.describe Fintoc::Transfers::Entity do
 
       entity.refresh
 
-      expect(client).to have_received(:get_entity).with('ent_12345')
+      expect(client.entities).to have_received(:get).with('ent_12345')
 
       expect(entity).to have_attributes(
         holder_name: 'Updated Company LLC'
@@ -72,7 +72,7 @@ RSpec.describe Fintoc::Transfers::Entity do
     it 'raises an error if the entity ID does not match' do
       wrong_entity = described_class.new(**data, id: 'wrong_id')
 
-      allow(client).to receive(:get_entity).with('ent_12345').and_return(wrong_entity)
+      allow(client.entities).to receive(:get).with('ent_12345').and_return(wrong_entity)
 
       expect { entity.refresh }.to raise_error(ArgumentError, 'Entity must be the same instance')
     end

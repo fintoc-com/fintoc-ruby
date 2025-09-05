@@ -58,12 +58,12 @@ module Fintoc
       end
 
       def refresh
-        fresh_transfer = @client.get_transfer(@id)
+        fresh_transfer = @client.transfers.get(@id)
         refresh_from_transfer(fresh_transfer)
       end
 
       def return_transfer
-        returned_transfer = @client.return_transfer(@id)
+        returned_transfer = @client.transfers.return(@id)
         refresh_from_transfer(returned_transfer)
       end
 
