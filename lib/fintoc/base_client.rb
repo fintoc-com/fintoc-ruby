@@ -64,10 +64,10 @@ module Fintoc
     end
 
     def to_s
-      visible_chars = 4
-      hidden_part = '*' * (@api_key.size - visible_chars)
+      visible_chars = 8
       visible_key = @api_key.slice(0, visible_chars)
-      "#{self.class.name}(🔑=#{hidden_part + visible_key})"
+      hidden_part = '*' * (@api_key.size - visible_chars)
+      "#{self.class.name}(🔑=#{visible_key + hidden_part})"
     end
 
     private
