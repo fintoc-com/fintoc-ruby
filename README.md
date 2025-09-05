@@ -63,8 +63,8 @@ Or install it yourself as:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx')
-link = client_v1.links.get('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W')
+client_v1 = Fintoc::V1::Client.new('api_key')
+link = client_v1.links.get('link_token')
 account = link.find(type: 'checking_account')
 
 # Get the last 30 movements
