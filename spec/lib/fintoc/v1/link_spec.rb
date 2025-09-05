@@ -96,6 +96,58 @@ RSpec.describe Fintoc::V1::Link do
     end
   end
 
+  describe '#update_accounts' do
+    let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
+    let(:client) { Fintoc::V1::Client.new(api_key) }
+    let(:link_token) { '6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W' }
+    let(:linked_link) { client.links.get(link_token) }
+    let(:account_original_balance) do
+      {
+        available: 7_010_510,
+        current: 7_010_510,
+        limit: 7_510_510
+      }
+    end
+    let(:account_data_before_update) do
+      {
+        id: 'Z6AwnGn4idL7DPj4',
+        name: 'Cuenta Corriente',
+        official_name: 'Cuenta Corriente Moneda Local',
+        number: '9530516286',
+        holder_id: '134910798',
+        holder_name: 'Jon Snow',
+        type: 'checking_account',
+        currency: 'CLP',
+        refreshed_at: nil,
+        balance: account_original_balance
+      }
+    end
+
+    let(:data) do
+      {
+        id: 'nMNejK7BT8oGbvO4',
+        username: '183917137',
+        link_token: 'nMNejK7BT8oGbvO4_token_GLtktZX5SKphRtJFe_yJTDWT',
+        holder_type: 'individual',
+        created_at: '2020-04-22T21:10:19.254Z',
+        institution: {
+          country: 'cl',
+          id: 'cl_banco_de_chile',
+          name: 'Banco de Chile'
+        },
+        mode: 'test',
+        accounts: [account_data_before_update]
+      }
+    end
+
+    it 'updates balance and movements for all accounts', :vcr do
+      expect(link.accounts[0].balance.available).to eq(account_original_balance[:available])
+      link.update_accounts
+      expect(link.accounts[0].balance).to be_a(Fintoc::V1::Balance)
+      expect(link.accounts[0].balance.available).not_to eq(account_original_balance[:available])
+    end
+  end
+
   describe '#delete' do
     let(:delete_proc) { instance_double(Proc) }
 
