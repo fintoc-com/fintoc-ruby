@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://api.fintoc.com/v2/account_numbers/acno_326dzRGqxLee3j9TkaBBBMfs2i0
+    body:
+      encoding: UTF-8
+      string: '{"description":"Updated account number description"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Sep 2025 17:04:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '347'
+      Connection:
+      - close
+      Cf-Ray:
+      - 9786589b39b2634f-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"82628675d4c8cf1521db24ac25986c9e"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - aa8a0a15-5f5f-4505-b232-869f9b0fd8ca
+      X-Runtime:
+      - '0.059235'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=zmI4LMK8CCyLk0eNFxF9GFHTqxyri6qzOSTiJ4tg9Xqhz21k9LEjK1ZAfAU4NausD9Kv2SnsSkIlvRmX4V10SnA%2Bi9R0rRdMtCWtvuk1oVIqqKRie9%2Bnbr7YbGemxjiD"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=51825&min_rtt=30574&rtt_var=26644&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3880&recv_bytes=1952&delivery_rate=139334&cwnd=252&unsent_bytes=0&cid=1dbd524bd165a7ea&ts=323&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:54:40Z","mode":"test","description":"Updated
+        account number description","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"}'
+  recorded_at: Mon, 01 Sep 2025 17:04:19 GMT
+recorded_with: VCR 6.3.1

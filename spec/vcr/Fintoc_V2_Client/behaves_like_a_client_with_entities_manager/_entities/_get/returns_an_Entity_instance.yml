@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v2/entities/ent_31t0VhhrAXASFQTVYfCfIBnljbT
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 29 Aug 2025 15:21:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '127'
+      Connection:
+      - close
+      Cf-Ray:
+      - 976d0a19fe74d94e-GRU
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"f896e8d1f096825161c240052d9acb4a"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e74046b0-bcae-4651-a845-9705b2375a43
+      X-Runtime:
+      - '0.242517'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=mfXjDHsKGkEx3BFFZkGTiu9SFzAphuic90v7abBlNrgOnkfgHoMyJKqhxMUMqeVCjTjhpRNn7TwFk7nr1f%2FUvxz1No26uGqS1uyfIimV4ockxJRU%2Bu0xDuLHBKd40ctF"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=58995&min_rtt=58862&rtt_var=22169&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1823&delivery_rate=72372&cwnd=107&unsent_bytes=0&cid=2cf15dc447adbd92&ts=558&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"id":"ent_31t0VhhrAXASFQTVYfCfIBnljbT","mode":"test","holder_name":"Fintoc","holder_id":"ND","is_root":true,"object":"entity"}'
+  recorded_at: Fri, 29 Aug 2025 15:21:40 GMT
+recorded_with: VCR 6.3.1
