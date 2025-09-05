@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fintoc (0.2.0)
+    fintoc (1.0.0)
       http
       money-rails
       tabulate
@@ -53,6 +53,7 @@ GEM
     crass (1.0.6)
     date (3.4.1)
     diff-lcs (1.6.2)
+    docile (1.4.1)
     domain_name (0.6.20240107)
     drb (2.2.3)
     erb (5.0.2)
@@ -211,6 +212,15 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
+    simplecov_linter_formatter (0.2.0)
+      rainbow
+    simplecov_text_formatter (0.1.0)
     stringio (3.1.7)
     tabulate (0.1.2)
     thor (1.4.0)
@@ -249,6 +259,9 @@ DEPENDENCIES
   rubocop-performance (~> 1.25)
   rubocop-rails (~> 2.33, >= 2.33.3)
   rubocop-rspec (~> 3.6)
+  simplecov (~> 0.21)
+  simplecov_linter_formatter
+  simplecov_text_formatter
   vcr (~> 6.3)
   webmock
 
