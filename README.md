@@ -69,7 +69,7 @@ link = movements_client.links.get('6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp85
 account = link.find(type: 'checking_account')
 
 # Get the last 30 movements
-movements = account.momvements.list
+movements = account.movements.list
 
 # Or get all the movements since a specific date
 movements = account.movements.list(since: '2020-08-15')
