@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'tasks/simplecov_config'
 require 'fintoc'
 require 'vcr'
 
