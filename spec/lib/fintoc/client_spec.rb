@@ -21,6 +21,12 @@ RSpec.describe Fintoc::Client do
     end
   end
 
+  describe '#to_s' do
+    it 'returns the client as a string' do
+      expect(client.to_s).to match(/Fintoc::Client\(v1: .*, v2: .*\)/)
+    end
+  end
+
   describe 'client separation' do
     it 'allows direct access to movements client' do
       expect(client.v1.links)

@@ -50,10 +50,20 @@ RSpec.describe Fintoc::V1::Link do
       ]
     }
   end
-  let(:link) { described_class.new(**data) }
+  let(:link) { described_class.new(**data, client:) }
+  let(:client) { Fintoc::V1::Client.new(api_key) }
+  let(:api_key) { 'sk_test_SeCrEt_aPi_KeY' }
 
-  it 'create an instance of Link' do
-    expect(link).to be_an_instance_of(described_class)
+  describe '#new' do
+    it 'create an instance of Link' do
+      expect(link).to be_an_instance_of(described_class)
+    end
+  end
+
+  describe '#to_s' do
+    it 'returns the link as a string' do
+      expect(link.to_s).to eq("<#{data[:username]}@#{data[:institution][:name]}> 🔗 <Fintoc>")
+    end
   end
 
   describe '#find' do
@@ -68,6 +78,37 @@ RSpec.describe Fintoc::V1::Link do
             "(#{data_acc[:balance][:current]})"
           )
         )
+    end
+  end
+
+  describe '#show_accounts' do
+    context 'when link has accounts' do
+      it 'displays accounts information' do
+        expect { link.show_accounts }.to output(/This links has 2 accounts/).to_stdout
+      end
+    end
+
+    context 'when link has no accounts' do
+      it 'displays zero accounts message' do
+        empty_link = described_class.new(**data, accounts: [])
+        expect { empty_link.show_accounts }.to output(/This links has 0 accounts/).to_stdout
+      end
+    end
+  end
+
+  describe '#delete' do
+    let(:delete_proc) { instance_double(Proc) }
+
+    before do
+      allow(client).to receive(:delete).with(version: :v1).and_return(delete_proc)
+      allow(delete_proc)
+        .to receive(:call)
+        .with("links/#{link.id}")
+        .and_return(true)
+    end
+
+    it 'deletes the link successfully' do
+      expect(link.delete).to be true
     end
   end
 end

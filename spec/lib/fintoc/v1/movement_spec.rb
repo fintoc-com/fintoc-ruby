@@ -89,6 +89,12 @@ RSpec.describe Fintoc::V1::Movement do
     end
   end
 
+  describe '#to_s' do
+    it 'returns the movement as a string' do
+      expect(movement.to_s).to eq('59400 (Traspaso de:Fintoc SpA @ 04/17/20)')
+    end
+  end
+
   it 'return uniq movements using the hash method implemented in Movement Class' do
     expect(dup_movements.uniq.length).to eq(1)
   end

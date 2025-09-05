@@ -61,6 +61,40 @@ RSpec.describe Fintoc::V1::Account do
     end
   end
 
+  describe '#show_movements' do
+    context 'when account has movements' do
+      let(:movement) do
+        Fintoc::V1::Movement.new(
+          id: '1',
+          amount: 1000,
+          currency: 'CLP',
+          description: 'Test movement',
+          post_date: '2023-01-01T10:00:00Z',
+          transaction_date: '2023-01-01T10:00:00Z',
+          type: 'normal_movement',
+          reference_id: 'ref123',
+          recipient_account: nil,
+          sender_account: nil,
+          comment: nil
+        )
+      end
+
+      let(:account) { described_class.new(**data, movements: [movement]) }
+
+      it 'displays movements information with non-empty movements array' do
+        expect { account.show_movements }.to output(/This account has 1 movement/).to_stdout
+      end
+    end
+
+    context 'when account has no movements' do
+      let(:account) { described_class.new(**data, movements: []) }
+
+      it 'displays zero movements message' do
+        expect { account.show_movements }.to output(/This account has 0 movements/).to_stdout
+      end
+    end
+  end
+
   describe '#update_balance' do
     it "update account's movements", :vcr do
       movements = linked_account.update_movements
