@@ -13,10 +13,6 @@ module Fintoc
       def message
         "\n#{@message}\n Please check the docs at: #{@doc_url}"
       end
-
-      def to_s
-        message
-      end
     end
 
     # 400 Bad Request Errors
