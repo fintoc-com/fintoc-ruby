@@ -96,6 +96,17 @@ RSpec.describe Fintoc::V1::Account do
   end
 
   describe '#update_balance' do
+    let(:client_for_update_balance) { Fintoc::V1::Client.new(api_key) }
+
+    it "updates the account's balance", :vcr do
+      initial_balance = account.balance
+      account.update_balance
+      expect(account.balance).to be_a(Fintoc::V1::Balance)
+      expect(account.balance).not_to equal(initial_balance)
+    end
+  end
+
+  describe '#update_movements' do
     it "update account's movements", :vcr do
       movements = linked_account.update_movements
       expect(movements).to all(be_a(Fintoc::V1::Movement))
