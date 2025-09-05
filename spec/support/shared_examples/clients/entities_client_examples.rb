@@ -3,7 +3,7 @@ RSpec.shared_examples 'a client with entities manager' do
 
   it 'provides an entities manager' do
     expect(client).to respond_to(:entities)
-    expect(client.entities).to be_a(Fintoc::Transfers::Managers::EntitiesManager)
+    expect(client.entities).to be_a(Fintoc::V2::Managers::EntitiesManager)
     expect(client.entities)
       .to respond_to(:get)
       .and respond_to(:list)
@@ -15,7 +15,7 @@ RSpec.shared_examples 'a client with entities manager' do
         entity = client.entities.get(entity_id)
 
         expect(entity)
-          .to be_an_instance_of(Fintoc::Transfers::Entity)
+          .to be_an_instance_of(Fintoc::V2::Entity)
           .and have_attributes(
             id: entity_id,
             holder_name: 'Fintoc'
@@ -27,7 +27,7 @@ RSpec.shared_examples 'a client with entities manager' do
       it 'returns an array of Entity instances', :vcr do
         entities = client.entities.list
 
-        expect(entities).to all(be_a(Fintoc::Transfers::Entity))
+        expect(entities).to all(be_a(Fintoc::V2::Entity))
         expect(entities.size).to eq(1)
         expect(entities.first.id).to eq('ent_31t0VhhrAXASFQTVYfCfIBnljbT')
       end

@@ -4,7 +4,7 @@ RSpec.shared_examples 'a client with accounts manager' do
 
   it 'responds to account-specific methods' do
     expect(client).to respond_to(:accounts)
-    expect(client.accounts).to be_a(Fintoc::Transfers::Managers::AccountsManager)
+    expect(client.accounts).to be_a(Fintoc::V2::Managers::AccountsManager)
     expect(client.accounts)
       .to respond_to(:create)
       .and respond_to(:get)
@@ -18,7 +18,7 @@ RSpec.shared_examples 'a client with accounts manager' do
         account = client.accounts.create(entity_id:, description: 'Test account')
 
         expect(account)
-          .to be_an_instance_of(Fintoc::Transfers::Account)
+          .to be_an_instance_of(Fintoc::V2::Account)
           .and have_attributes(
             description: 'Test account',
             currency: 'MXN',
@@ -32,7 +32,7 @@ RSpec.shared_examples 'a client with accounts manager' do
         account = client.accounts.get(account_id)
 
         expect(account)
-          .to be_an_instance_of(Fintoc::Transfers::Account)
+          .to be_an_instance_of(Fintoc::V2::Account)
           .and have_attributes(
             id: account_id,
             description: 'Test account'
@@ -44,7 +44,7 @@ RSpec.shared_examples 'a client with accounts manager' do
       it 'returns an array of Account instances', :vcr do
         accounts = client.accounts.list
 
-        expect(accounts).to all(be_a(Fintoc::Transfers::Account))
+        expect(accounts).to all(be_a(Fintoc::V2::Account))
         expect(accounts.size).to be >= 1
         expect(accounts.first.id).to eq(account_id)
       end
@@ -56,7 +56,7 @@ RSpec.shared_examples 'a client with accounts manager' do
         account = client.accounts.update(account_id, description: updated_description)
 
         expect(account)
-          .to be_an_instance_of(Fintoc::Transfers::Account)
+          .to be_an_instance_of(Fintoc::V2::Account)
           .and have_attributes(
             id: account_id,
             description: updated_description

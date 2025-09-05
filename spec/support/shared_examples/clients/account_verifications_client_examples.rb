@@ -38,7 +38,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
   it 'responds to account verification-specific methods' do
     expect(client).to respond_to(:account_verifications)
     expect(client.account_verifications)
-      .to be_a(Fintoc::Transfers::Managers::AccountVerificationsManager)
+      .to be_a(Fintoc::V2::Managers::AccountVerificationsManager)
     expect(client.account_verifications)
       .to respond_to(:create)
       .and respond_to(:get)
@@ -51,7 +51,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
         account_verification = client.account_verifications.create(account_number:)
 
         expect(account_verification)
-          .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
+          .to be_an_instance_of(Fintoc::V2::AccountVerification)
           .and have_attributes(
             object: 'account_verification',
             status: 'pending'
@@ -64,7 +64,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
         account_verification = client.account_verifications.get(account_verification_id)
 
         expect(account_verification)
-          .to be_an_instance_of(Fintoc::Transfers::AccountVerification)
+          .to be_an_instance_of(Fintoc::V2::AccountVerification)
           .and have_attributes(
             id: account_verification_id,
             object: 'account_verification'
@@ -76,7 +76,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
       it 'returns an array of AccountVerification instances', :vcr do
         account_verifications = client.account_verifications.list
 
-        expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
+        expect(account_verifications).to all(be_a(Fintoc::V2::AccountVerification))
         expect(account_verifications.size).to be >= 1
       end
 
@@ -86,7 +86,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
           limit: 10
         )
 
-        expect(account_verifications).to all(be_a(Fintoc::Transfers::AccountVerification))
+        expect(account_verifications).to all(be_a(Fintoc::V2::AccountVerification))
       end
     end
   end

@@ -4,7 +4,7 @@ RSpec.shared_examples 'a client with account numbers manager' do
 
   it 'responds to account number-specific methods' do
     expect(client).to respond_to(:account_numbers)
-    expect(client.account_numbers).to be_a(Fintoc::Transfers::Managers::AccountNumbersManager)
+    expect(client.account_numbers).to be_a(Fintoc::V2::Managers::AccountNumbersManager)
     expect(client.account_numbers)
       .to respond_to(:create)
       .and respond_to(:get)
@@ -20,7 +20,7 @@ RSpec.shared_examples 'a client with account numbers manager' do
         )
 
         expect(account_number)
-          .to be_an_instance_of(Fintoc::Transfers::AccountNumber)
+          .to be_an_instance_of(Fintoc::V2::AccountNumber)
           .and have_attributes(
             account_id:,
             description: 'Test account number',
@@ -34,7 +34,7 @@ RSpec.shared_examples 'a client with account numbers manager' do
         account_number = client.account_numbers.get(account_number_id)
 
         expect(account_number)
-          .to be_an_instance_of(Fintoc::Transfers::AccountNumber)
+          .to be_an_instance_of(Fintoc::V2::AccountNumber)
           .and have_attributes(
             id: account_number_id,
             object: 'account_number'
@@ -46,7 +46,7 @@ RSpec.shared_examples 'a client with account numbers manager' do
       it 'returns an array of AccountNumber instances', :vcr do
         account_numbers = client.account_numbers.list
 
-        expect(account_numbers).to all(be_a(Fintoc::Transfers::AccountNumber))
+        expect(account_numbers).to all(be_a(Fintoc::V2::AccountNumber))
         expect(account_numbers.size).to be >= 1
         expect(account_numbers.first.id).to eq(account_number_id)
       end
@@ -60,7 +60,7 @@ RSpec.shared_examples 'a client with account numbers manager' do
         )
 
         expect(account_number)
-          .to be_an_instance_of(Fintoc::Transfers::AccountNumber)
+          .to be_an_instance_of(Fintoc::V2::AccountNumber)
           .and have_attributes(
             id: account_number_id,
             description: updated_description
