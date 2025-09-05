@@ -1,7 +1,7 @@
 RSpec.shared_examples 'a client with simulate manager' do
   it 'responds to simulate-specific methods' do
     expect(client).to respond_to(:simulate)
-    expect(client.simulate).to be_a(Fintoc::Transfers::Managers::SimulateManager)
+    expect(client.simulate).to be_a(Fintoc::V2::Managers::SimulateManager)
     expect(client.simulate)
       .to respond_to(:receive_transfer)
   end
@@ -20,7 +20,7 @@ RSpec.shared_examples 'a client with simulate manager' do
         transfer = client.simulate.receive_transfer(**simulate_transfer_data)
 
         expect(transfer)
-          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .to be_an_instance_of(Fintoc::V2::Transfer)
           .and have_attributes(
             amount: simulate_transfer_data[:amount],
             currency: simulate_transfer_data[:currency],

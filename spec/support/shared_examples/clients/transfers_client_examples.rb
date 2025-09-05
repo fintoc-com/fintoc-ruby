@@ -58,7 +58,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
 
   it 'responds to transfer-specific methods' do
     expect(client).to respond_to(:transfers)
-    expect(client.transfers).to be_a(Fintoc::Transfers::Managers::TransfersManager)
+    expect(client.transfers).to be_a(Fintoc::V2::Managers::TransfersManager)
     expect(client.transfers)
       .to respond_to(:create)
       .and respond_to(:get)
@@ -72,7 +72,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
         transfer = client.transfers.create(**transfer_data)
 
         expect(transfer)
-          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .to be_an_instance_of(Fintoc::V2::Transfer)
           .and have_attributes(
             amount: 50000,
             currency: 'MXN',
@@ -88,7 +88,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
         transfer = client.transfers.get(transfer_id)
 
         expect(transfer)
-          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .to be_an_instance_of(Fintoc::V2::Transfer)
           .and have_attributes(
             id: transfer_id,
             object: 'transfer'
@@ -100,14 +100,14 @@ draAAQ5iJEb5BR8AmL6tAQ==
       it 'returns an array of Transfer instances', :vcr do
         transfers = client.transfers.list
 
-        expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
+        expect(transfers).to all(be_a(Fintoc::V2::Transfer))
         expect(transfers.size).to be >= 1
       end
 
       it 'accepts filtering parameters', :vcr do
         transfers = client.transfers.list(status: 'succeeded', direction: 'outbound')
 
-        expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
+        expect(transfers).to all(be_a(Fintoc::V2::Transfer))
         expect(transfers).to all(have_attributes(status: 'succeeded', direction: 'outbound'))
       end
     end
@@ -119,7 +119,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
         transfer = client.transfers.return(transfer_id)
 
         expect(transfer)
-          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .to be_an_instance_of(Fintoc::V2::Transfer)
           .and have_attributes(
             id: transfer_id,
             status: 'return_pending'

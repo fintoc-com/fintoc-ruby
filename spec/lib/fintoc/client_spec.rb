@@ -1,11 +1,12 @@
 require 'fintoc/client'
-require 'fintoc/movements/resources/link'
-require 'fintoc/movements/resources/account'
-require 'fintoc/movements/resources/movement'
+require 'fintoc/v1/resources/link'
+require 'fintoc/v1/resources/account'
+require 'fintoc/v1/resources/movement'
 
 RSpec.describe Fintoc::Client do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
-  let(:client) { described_class.new(api_key) }
+  let(:jws_private_key) { OpenSSL::PKey::RSA.new(2048) }
+  let(:client) { described_class.new(api_key, jws_private_key: jws_private_key) }
 
   describe '.new' do
     it 'create an instance Client' do
@@ -13,21 +14,23 @@ RSpec.describe Fintoc::Client do
     end
 
     it 'creates movements and transfers clients' do
-      expect(client.movements).to be_an_instance_of(Fintoc::Movements::Client)
-      expect(client.transfers).to be_an_instance_of(Fintoc::Transfers::Client)
+      expect(client).to respond_to(:v1)
+      expect(client.v1).to be_an_instance_of(Fintoc::V1::Client)
+      expect(client).to respond_to(:v2)
+      expect(client.v2).to be_an_instance_of(Fintoc::V2::Client)
     end
   end
 
   describe 'client separation' do
     it 'allows direct access to movements client' do
-      expect(client.movements.links)
+      expect(client.v1.links)
         .to respond_to(:get)
         .and respond_to(:list)
         .and respond_to(:delete)
     end
 
     it 'allows direct access to transfers client' do
-      expect(client.transfers.entities)
+      expect(client.v2.entities)
         .to respond_to(:get)
         .and respond_to(:list)
     end
@@ -42,13 +45,13 @@ RSpec.describe Fintoc::Client do
   end
 
   describe 'delegation to movements client' do
-    let(:link) { instance_double(Fintoc::Movements::Link) }
-    let(:account) { instance_double(Fintoc::Movements::Account) }
+    let(:link) { instance_double(Fintoc::V1::Link) }
+    let(:account) { instance_double(Fintoc::V1::Account) }
 
     before do
-      allow(client.movements.links).to receive(:get).with('token').and_return(link)
-      allow(client.movements.links).to receive(:list).and_return([link])
-      allow(client.movements.links).to receive(:delete).with('link_id').and_return(true)
+      allow(client.v1.links).to receive(:get).with('token').and_return(link)
+      allow(client.v1.links).to receive(:list).and_return([link])
+      allow(client.v1.links).to receive(:delete).with('link_id').and_return(true)
       allow(link).to receive(:find).with(id: 'account_id').and_return(account)
     end
 
