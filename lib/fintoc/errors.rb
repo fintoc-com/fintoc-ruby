@@ -154,6 +154,9 @@ module Fintoc
     class UnrecognizedRequestError < FintocError; end
     class CoreResponseError < FintocError; end
 
+    # Webhook Errors
+    class WebhookSignatureError < FintocError; end
+
     # Legacy Errors (keeping existing ones for backward compatibility and just in case)
     class LinkError < FintocError; end
     class InstitutionError < FintocError; end
