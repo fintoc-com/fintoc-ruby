@@ -11,6 +11,8 @@ module Fintoc
       attr_reader :id, :name, :holder_name, :currency, :type, :refreshed_at,
                   :official_name, :number, :holder_id, :balance, :movements
 
+      HEADERS = ['#', 'Amount', 'Currency', 'Description', 'Date'].freeze
+
       def initialize(
         id:,
         name:,
@@ -67,9 +69,9 @@ module Fintoc
           .map.with_index do |mov, index|
             [index + 1, mov.amount, mov.currency, mov.description, mov.locale_date]
           end
-        headers = ['#', 'Amount', 'Currency', 'Description', 'Date']
+
         puts
-        puts tabulate(headers, movements, indent: 4, style: 'fancy')
+        puts tabulate(HEADERS, movements, indent: 4, style: 'fancy')
       end
 
       def to_s
