@@ -74,7 +74,7 @@ module Fintoc
       end
 
       def delete
-        @client.delete_link(@id)
+        @client.links.delete(@id)
       end
 
       def to_s
