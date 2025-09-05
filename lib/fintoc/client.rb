@@ -15,27 +15,19 @@ module Fintoc
 
     # Delegate common methods to maintain backward compatibility
     def get_link(link_token)
-      @movements.get_link(link_token)
+      @movements.links.get(link_token)
     end
 
     def get_links
-      @movements.get_links
+      @movements.links.list
     end
 
     def delete_link(link_id)
-      @movements.delete_link(link_id)
+      @movements.links.delete(link_id)
     end
 
     def get_account(link_token, account_id)
-      @movements.get_account(link_token, account_id)
-    end
-
-    def get_entity(entity_id)
-      @transfers.get_entity(entity_id)
-    end
-
-    def get_entities(**params)
-      @transfers.get_entities(**params)
+      @movements.links.get(link_token).find(id: account_id)
     end
 
     def to_s

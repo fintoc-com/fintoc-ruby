@@ -19,15 +19,15 @@ RSpec.describe Fintoc::Transfers::Client do
     end
   end
 
-  it_behaves_like 'a client with entities methods'
+  it_behaves_like 'a client with entities manager'
 
-  it_behaves_like 'a client with accounts methods'
+  it_behaves_like 'a client with accounts manager'
 
-  it_behaves_like 'a client with account numbers methods'
+  it_behaves_like 'a client with account numbers manager'
 
-  it_behaves_like 'a client with transfers methods'
+  it_behaves_like 'a client with transfers manager'
 
-  it_behaves_like 'a client with simulation methods'
+  it_behaves_like 'a client with simulate manager'
 
-  it_behaves_like 'a client with account verifications methods'
+  it_behaves_like 'a client with account verifications manager'
 end

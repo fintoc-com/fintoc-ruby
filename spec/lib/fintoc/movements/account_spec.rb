@@ -2,7 +2,7 @@ require 'fintoc/movements/resources/account'
 
 RSpec.describe Fintoc::Movements::Account do
   let(:api_key) { 'sk_test_9c8d8CeyBTx1VcJzuDgpm4H-bywJCeSx' }
-  let(:client) { Fintoc::Client.new(api_key) }
+  let(:client) { Fintoc::Movements::Client.new(api_key) }
 
   let(:data) do
     {
@@ -25,7 +25,7 @@ RSpec.describe Fintoc::Movements::Account do
   end
 
   let(:link_token) { '6n12zLmai3lLE9Dq_token_gvEJi8FrBge4fb3cz7Wp856W' }
-  let(:link) { client.get_link(link_token) }
+  let(:link) { client.links.get(link_token) }
   let(:account) { described_class.new(**data) }
   let(:linked_account) { link.find(type: 'checking_account') }
 

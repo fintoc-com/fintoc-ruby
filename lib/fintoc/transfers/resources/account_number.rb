@@ -38,7 +38,7 @@ module Fintoc
       end
 
       def refresh
-        fresh_account_number = @client.get_account_number(@id)
+        fresh_account_number = @client.account_numbers.get(@id)
         refresh_from_account_number(fresh_account_number)
       end
 
@@ -48,7 +48,7 @@ module Fintoc
         params[:status] = status if status
         params[:metadata] = metadata if metadata
 
-        updated_account_number = @client.update_account_number(@id, **params)
+        updated_account_number = @client.account_numbers.update(@id, **params)
         refresh_from_account_number(updated_account_number)
       end
 
@@ -73,7 +73,7 @@ module Fintoc
           raise Fintoc::Errors::InvalidRequestError, 'Simulation is only available in test mode'
         end
 
-        @client.simulate_receive_transfer(
+        @client.simulate.receive_transfer(
           account_number_id: @id,
           amount:,
           currency:

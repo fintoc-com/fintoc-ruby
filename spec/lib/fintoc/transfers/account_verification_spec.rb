@@ -121,8 +121,8 @@ RSpec.describe Fintoc::Transfers::AccountVerification do
     let(:fresh_verification) { described_class.new(**fresh_data) }
 
     before do
-      allow(client)
-        .to receive(:get_account_verification)
+      allow(client.account_verifications)
+        .to receive(:get)
         .with('accv_fdme30s11j5k7l1mekq4')
         .and_return(fresh_verification)
     end
@@ -140,8 +140,8 @@ RSpec.describe Fintoc::Transfers::AccountVerification do
     it 'raises an error if the verification ID does not match' do
       wrong_verification = described_class.new(**fresh_data, id: 'wrong_id')
 
-      allow(client)
-        .to receive(:get_account_verification)
+      allow(client.account_verifications)
+        .to receive(:get)
         .with('accv_fdme30s11j5k7l1mekq4')
         .and_return(wrong_verification)
 

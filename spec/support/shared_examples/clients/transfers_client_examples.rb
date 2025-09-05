@@ -1,6 +1,6 @@
 require 'openssl'
 
-RSpec.shared_examples 'a client with transfers methods' do
+RSpec.shared_examples 'a client with transfers manager' do
   let(:jws_private_key) do
     key_string = "-----BEGIN PRIVATE KEY-----
 MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDNLwwQr/uFToDH
@@ -57,70 +57,74 @@ draAAQ5iJEb5BR8AmL6tAQ==
   end
 
   it 'responds to transfer-specific methods' do
-    expect(client)
-      .to respond_to(:create_transfer)
-      .and respond_to(:get_transfer)
-      .and respond_to(:list_transfers)
-      .and respond_to(:return_transfer)
+    expect(client).to respond_to(:transfers)
+    expect(client.transfers).to be_a(Fintoc::Transfers::Managers::TransfersManager)
+    expect(client.transfers)
+      .to respond_to(:create)
+      .and respond_to(:get)
+      .and respond_to(:list)
+      .and respond_to(:return)
   end
 
-  describe '#create_transfer' do
-    it 'returns a Transfer instance', :vcr do
-      transfer = client.create_transfer(**transfer_data)
+  describe '#transfers' do
+    describe '#create' do
+      it 'returns a Transfer instance', :vcr do
+        transfer = client.transfers.create(**transfer_data)
 
-      expect(transfer)
-        .to be_an_instance_of(Fintoc::Transfers::Transfer)
-        .and have_attributes(
-          amount: 50000,
-          currency: 'MXN',
-          comment: 'Test payment',
-          reference_id: '123456',
-          status: 'pending'
-        )
-    end
-  end
-
-  describe '#get_transfer' do
-    it 'returns a Transfer instance', :vcr do
-      transfer = client.get_transfer(transfer_id)
-
-      expect(transfer)
-        .to be_an_instance_of(Fintoc::Transfers::Transfer)
-        .and have_attributes(
-          id: transfer_id,
-          object: 'transfer'
-        )
-    end
-  end
-
-  describe '#list_transfers' do
-    it 'returns an array of Transfer instances', :vcr do
-      transfers = client.list_transfers
-
-      expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
-      expect(transfers.size).to be >= 1
+        expect(transfer)
+          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .and have_attributes(
+            amount: 50000,
+            currency: 'MXN',
+            comment: 'Test payment',
+            reference_id: '123456',
+            status: 'pending'
+          )
+      end
     end
 
-    it 'accepts filtering parameters', :vcr do
-      transfers = client.list_transfers(status: 'succeeded', direction: 'outbound')
+    describe '#get' do
+      it 'returns a Transfer instance', :vcr do
+        transfer = client.transfers.get(transfer_id)
 
-      expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
-      expect(transfers).to all(have_attributes(status: 'succeeded', direction: 'outbound'))
+        expect(transfer)
+          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .and have_attributes(
+            id: transfer_id,
+            object: 'transfer'
+          )
+      end
     end
-  end
 
-  describe '#return_transfer' do
-    let(:transfer_id) { 'tr_329R3l5JksDkoevCGTOBsugCsnb' }
+    describe '#list' do
+      it 'returns an array of Transfer instances', :vcr do
+        transfers = client.transfers.list
 
-    it 'returns a Transfer instance with return_pending status', :vcr do
-      transfer = client.return_transfer(transfer_id)
+        expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
+        expect(transfers.size).to be >= 1
+      end
 
-      expect(transfer)
-        .to be_an_instance_of(Fintoc::Transfers::Transfer)
-        .and have_attributes(
-          id: transfer_id,
-          status: 'return_pending'
-        )
+      it 'accepts filtering parameters', :vcr do
+        transfers = client.transfers.list(status: 'succeeded', direction: 'outbound')
+
+        expect(transfers).to all(be_a(Fintoc::Transfers::Transfer))
+        expect(transfers).to all(have_attributes(status: 'succeeded', direction: 'outbound'))
+      end
+    end
+
+    describe '#return' do
+      let(:transfer_id) { 'tr_329R3l5JksDkoevCGTOBsugCsnb' }
+
+      it 'returns a Transfer instance with return_pending status', :vcr do
+        transfer = client.transfers.return(transfer_id)
+
+        expect(transfer)
+          .to be_an_instance_of(Fintoc::Transfers::Transfer)
+          .and have_attributes(
+            id: transfer_id,
+            status: 'return_pending'
+          )
+      end
     end
   end
 end

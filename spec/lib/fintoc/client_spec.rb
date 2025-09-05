@@ -20,17 +20,16 @@ RSpec.describe Fintoc::Client do
 
   describe 'client separation' do
     it 'allows direct access to movements client' do
-      expect(client.movements)
-        .to respond_to(:get_link)
-        .and respond_to(:get_links)
-        .and respond_to(:delete_link)
-        .and respond_to(:get_account)
+      expect(client.movements.links)
+        .to respond_to(:get)
+        .and respond_to(:list)
+        .and respond_to(:delete)
     end
 
     it 'allows direct access to transfers client' do
-      expect(client.transfers)
-        .to respond_to(:get_entity)
-        .and respond_to(:get_entities)
+      expect(client.transfers.entities)
+        .to respond_to(:get)
+        .and respond_to(:list)
     end
 
     it 'maintains backward compatibility through delegation' do
@@ -39,37 +38,25 @@ RSpec.describe Fintoc::Client do
         .and respond_to(:get_links)
         .and respond_to(:delete_link)
         .and respond_to(:get_account)
-        .and respond_to(:get_entity)
-        .and respond_to(:get_entities)
     end
   end
 
   describe 'delegation to movements client' do
+    let(:link) { instance_double(Fintoc::Movements::Link) }
+    let(:account) { instance_double(Fintoc::Movements::Account) }
+
     before do
-      allow(client.movements).to receive(:get_link).with('token').and_return('link')
-      allow(client.movements).to receive(:get_links).and_return(['links'])
-      allow(client.movements).to receive(:delete_link).with('link_id').and_return(true)
-      allow(client.movements)
-        .to receive(:get_account).with('token', 'account_id').and_return('account')
+      allow(client.movements.links).to receive(:get).with('token').and_return(link)
+      allow(client.movements.links).to receive(:list).and_return([link])
+      allow(client.movements.links).to receive(:delete).with('link_id').and_return(true)
+      allow(link).to receive(:find).with(id: 'account_id').and_return(account)
     end
 
     it 'delegates movements methods to movements client' do
-      expect(client.get_link('token')).to eq('link')
-      expect(client.get_links).to eq(['links'])
+      expect(client.get_link('token')).to eq(link)
+      expect(client.get_links).to eq([link])
       expect(client.delete_link('link_id')).to be(true)
-      expect(client.get_account('token', 'account_id')).to eq('account')
-    end
-  end
-
-  describe 'delegation to transfers client' do
-    before do
-      allow(client.transfers).to receive(:get_entity).with('entity_id').and_return('entity')
-      allow(client.transfers).to receive(:get_entities).with(limit: 10).and_return(['entities'])
-    end
-
-    it 'delegates transfers methods to transfers client' do
-      expect(client.get_entity('entity_id')).to eq('entity')
-      expect(client.get_entities(limit: 10)).to eq(['entities'])
+      expect(client.get_account('token', 'account_id')).to eq(account)
     end
   end
 end
