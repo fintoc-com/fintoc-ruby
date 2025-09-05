@@ -66,7 +66,7 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
     allow(post_proc)
       .to receive(:call)
       .with('transfers/return', transfer_id:)
-      .and_return(first_transfer_data)
+      .and_return(returned_transfer_data)
 
     allow(Fintoc::V2::Transfer).to receive(:new)
   end
@@ -101,7 +101,7 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
     it 'calls build_transfer with the response' do
       manager.return('trf_123')
       expect(Fintoc::V2::Transfer)
-        .to have_received(:new).with(**first_transfer_data, client:)
+        .to have_received(:new).with(**returned_transfer_data, client:)
     end
   end
 end
