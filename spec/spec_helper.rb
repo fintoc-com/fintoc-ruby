@@ -1,6 +1,12 @@
 require 'bundler/setup'
+require 'tasks/simplecov_config'
 require 'fintoc'
 require 'vcr'
+
+# Load shared examples
+Dir[File.join(File.dirname(__FILE__), 'support', 'shared_examples', '**', '*.rb')].each do |f|
+  require f
+end
 
 VCR.configure do |c|
   vcr_mode = /rec/i.match?(ENV.fetch('VCR_MODE', nil)) ? :all : :once

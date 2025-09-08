@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/transfers
+    body:
+      encoding: UTF-8
+      string: '{"amount":50000,"currency":"MXN","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","counterparty":{"holder_id":"LFHU290523OG0","holder_name":"Jon
+        Snow","account_number":"735969000000203297","account_type":"clabe","institution_id":"40012"},"comment":"Test
+        payment","reference_id":"123456"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Fintoc-Jws-Signature:
+      - eyJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMWU0NzU1ZGNlYzFhZjc2NmNhNjQ2ZjI4NzJlOTc1MmYiLCJ0cyI6MTc1NjgyODczMSwiY3JpdCI6WyJ0cyIsIm5vbmNlIl19.jXtZ3_PClHDiL_wMDGXQqtcUu3Oomn-jRACxvmNmJkCK_ETBHNRA1TMW4SFQqSuEW12XX1R1gA2UlOoKDJOLIZHRX6d4muvbcR32gio9mGEDst9e1cHZkUG0QT7eF_Cb4mseAvjeCTbWvIV3f6-FQ9zF0biffejPVsZvg3KArgbyTt3O1_sst1bng4zuTyVaSB4XEHK8gy-HNyJOHKX9GXGGsE7Mma--LeOneDJQCcoLe3-oXmBtkHwLEFRsgNK6jF8-jYJkDPKR5oFA6EuT-Yr1oXiAhsPr5FDZy3H6i99cz14dPk0iUN-UdozW8jj7wLUtWSYLBKrWoPkm5iXn_w
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 02 Sep 2025 15:58:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '863'
+      Connection:
+      - close
+      Cf-Ray:
+      - 978e36138f38b861-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"3bcd22908f94497674e96ead614e8a01"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 96e11256-7b3e-42e6-8514-882728242e85
+      X-Runtime:
+      - '0.293159'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=Iv7AS7YO%2FSvC6uTUZgyWC2%2BaUfgdXl7xakqe1BSg2PGNCHtalgXnlviJpWj1wQJK3dsFWG9U6L0AuPx2E0tMdXKTtuVH8gXuCvBOmscmnic9ljwLzFlpxqN0l1IZeAL4"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=30125&min_rtt=30083&rtt_var=11366&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=2641&delivery_rate=140016&cwnd=252&unsent_bytes=0&cid=b848458890c32a83&ts=558&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"transfer","id":"tr_329NGN1M4If6VvcMRALv4gjAQJx","amount":50000,"currency":"MXN","direction":"outbound","status":"pending","transaction_date":"2025-09-02T15:58:51Z","post_date":null,"comment":"Test
+        payment","reference_id":"123456","tracking_key":"202509029073500000000000000006","receipt_url":null,"mode":"test","counterparty":{"holder_id":"LFHU290523OG0","holder_name":"Jon
+        Snow","account_number":"735969000000203297","account_type":"clabe","institution":{"id":"90735","name":"FINTOC","country":"mx"}},"account_number":{"id":"acno_31yYL5uOb39vzvRIszPhoXYMjt4","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203297","created_at":"2025-08-29T20:02:00Z","updated_at":"2025-08-29T20:02:00Z","mode":"test","description":null,"metadata":{},"status":"enabled","is_root":true,"object":"account_number"},"metadata":{},"return_reason":null}'
+  recorded_at: Tue, 02 Sep 2025 15:58:51 GMT
+recorded_with: VCR 6.3.1

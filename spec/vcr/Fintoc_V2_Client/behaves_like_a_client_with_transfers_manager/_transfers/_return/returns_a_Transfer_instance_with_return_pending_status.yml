@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/transfers/return
+    body:
+      encoding: UTF-8
+      string: '{"transfer_id":"tr_329R3l5JksDkoevCGTOBsugCsnb"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Fintoc-Jws-Signature:
+      - eyJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMGQ3MGY1MzFkNjk0MmM4MjQzMDdiZjZlZTIzZDMxNjYiLCJ0cyI6MTc1Njg1MTYyMywiY3JpdCI6WyJ0cyIsIm5vbmNlIl19.knGOuq89bDkhnw5JwAZ57rI6Sm405T3aXA8KazSTl_DsavvEeN9MY34athHc_JZt3rsf6daOR0ZK-RnaAwdtGP33XzxGqW8iDYaUo7UysiVN0gIJUl_cJazJWxG1joG8t58RWMxyfiE-VQHYER9c_XWB-t0E17ou8WmCMUgWndlGLQ7vgr03mjWXdDT5AYoZ1jXrXqTsgzy7cUAaA0j84H2aH9KFDnKZ17bKdg4NDnSJ-lalzicQeNgjzVzA0BZ-h5t07stsJiWU_EJwJDiqHOaUSSRiqDr-H2cQpppUJMQyGwBCkbtWR0G8PG39f7e97_yFmOcHkeUCHz8nlthdKg
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 02 Sep 2025 22:20:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1128'
+      Connection:
+      - close
+      Cf-Ray:
+      - 979064f7bbd7f21f-GRU
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"3954a8d24b91a22476a95d941ad9e2fa"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c7cb38f4-7136-4d76-8837-0aa2b5aa0381
+      X-Runtime:
+      - '0.363494'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=tVgzLymGEFhRDHaueKi3ZCGKvNSYWPxiAgv6Nbcgp0c152jGVD9oaeNNIyp575JdfHU1llo0RZ8eCm853iwMTMe9jb%2FHC3BGP73GbngYphHVz0KonnREFqeqyXX0qmJ8"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=59502&min_rtt=58986&rtt_var=22488&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=2410&delivery_rate=72220&cwnd=178&unsent_bytes=0&cid=5523d13563682b99&ts=692&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"transfer","id":"tr_329R3l5JksDkoevCGTOBsugCsnb","amount":1000000,"currency":"MXN","direction":"inbound","status":"return_pending","transaction_date":"2025-09-02T16:30:04Z","post_date":"2025-09-02T00:00:00Z","comment":null,"reference_id":"6","tracking_key":"202509029073500000000000000009","receipt_url":"https://www.banxico.org.mx/cep-beta/go?i=90735\u0026s=dummy\u0026d=qOK7ARfoEwlVpkLWUmFvihhtr5%2B4Gf1LA%2FnWvzdRnC8iI16fI6nvQ9dAhBV8NYBa7pR6J8gKo6rGoff3qWJ2xOPIDPJsG2njYPkZrzpG1waTgRRYwe2jS7Y4eikheYeK","mode":"test","counterparty":{"holder_id":"RBZZ190718TEA","holder_name":"Dede
+        Kuhlman","account_number":"110969987654321988","account_type":"clabe","institution":{"id":"40110","name":"JP
+        MORGAN","country":"mx"}},"account_number":{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:54:40Z","mode":"test","description":"Updated
+        account number description","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"},"metadata":{},"return_reason":null}'
+  recorded_at: Tue, 02 Sep 2025 22:20:24 GMT
+recorded_with: VCR 6.3.1

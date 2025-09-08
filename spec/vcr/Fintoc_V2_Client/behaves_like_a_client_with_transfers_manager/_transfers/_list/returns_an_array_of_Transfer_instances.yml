@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v2/transfers
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/0.2.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 02 Sep 2025 15:59:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2218'
+      Connection:
+      - close
+      Cf-Ray:
+      - 978e36a3cd4e0ba0-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Link:
+      - ''
+      Etag:
+      - W/"c44d2930120083fb1fcfe202e1d2c7c5"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 9f2d1b9e-ab81-412c-b2c8-46a21d943e44
+      X-Runtime:
+      - '0.123093'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=dGWez9dCHhHPY3gIOowmzhSbR5PjvTHLFLD2kGv8rpM2Aopvl00MqFrSvjwLfv0b8SN7sBFSRqHfTLsqRSAr0RyMm2v3L1WRrkg3IJHXnMcfpFPH9msZJiFM8Ch1a3pC"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=31982&min_rtt=31972&rtt_var=12010&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1792&delivery_rate=132896&cwnd=253&unsent_bytes=0&cid=cc7a1dbdbfbf7d50&ts=384&x=0"
+    body:
+      encoding: UTF-8
+      string: '[{"object":"transfer","id":"tr_329NGN1M4If6VvcMRALv4gjAQJx","amount":50000,"currency":"MXN","direction":"outbound","status":"succeeded","transaction_date":"2025-09-02T15:58:51Z","post_date":"2025-09-02T00:00:00Z","comment":"Test
+        payment","reference_id":"123456","tracking_key":"202509029073500000000000000006","receipt_url":"https://www.banxico.org.mx/cep-beta/go?i=90735\u0026s=dummy\u0026d=qOK7ARfoEwlVpkLWUmFvihhtr5%2B4Gf1LA%2FnWvzdRnC8vLzAGeXauPtgz1bSaTV%2BmUP9oThn6%2B%2Bujt23nuyI3u8OR00eq5WezdAT1eG%2BhBvo%3D","mode":"test","counterparty":{"holder_id":"LFHU290523OG0","holder_name":"Jon
+        Snow","account_number":"735969000000203297","account_type":"clabe","institution":{"id":"90735","name":"FINTOC","country":"mx"}},"account_number":{"id":"acno_31yYL5uOb39vzvRIszPhoXYMjt4","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203297","created_at":"2025-08-29T20:02:00Z","updated_at":"2025-08-29T20:02:00Z","mode":"test","description":null,"metadata":{},"status":"enabled","is_root":true,"object":"account_number"},"metadata":{},"return_reason":null},{"object":"transfer","id":"tr_329N35lH813ZhFPBvHV8mXiKKMn","amount":10000000,"currency":"MXN","direction":"inbound","status":"succeeded","transaction_date":"2025-09-02T15:57:04Z","post_date":"2025-09-02T00:00:00Z","comment":null,"reference_id":"3","tracking_key":"202509029073500000000000000005","receipt_url":"https://www.banxico.org.mx/cep-beta/go?i=90735\u0026s=dummy\u0026d=qOK7ARfoEwlVpkLWUmFvihhtr5%2B4Gf1LA%2FnWvzdRnC%2FtIlWZFTyXKH99y1SPS%2FioW%2FpFGGl1VboyxCzRY946tah7TfWJHw%2FM75NVz2XXmBZLqjqrQknbHmKnMMubiNsD","mode":"test","counterparty":{"holder_id":"VFHD640116IY8","holder_name":"Nakesha
+        Breitenberg","account_number":"680969192837645191","account_type":"clabe","institution":{"id":"90680","name":"CRISTOBAL
+        COLON","country":"mx"}},"account_number":{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:54:40Z","mode":"test","description":"Updated
+        account number description","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"},"metadata":{},"return_reason":null}]'
+  recorded_at: Tue, 02 Sep 2025 15:59:14 GMT
+recorded_with: VCR 6.3.1

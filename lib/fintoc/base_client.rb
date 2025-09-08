@@ -1,0 +1,150 @@
+require 'http'
+require 'json'
+require 'fintoc/utils'
+require 'fintoc/errors'
+require 'fintoc/constants'
+require 'fintoc/version'
+require 'fintoc/jws'
+
+module Fintoc
+  class BaseClient
+    include Utils
+
+    attr_accessor :default_params
+
+    def initialize(api_key, jws_private_key: nil)
+      @api_key = api_key
+      @user_agent = "fintoc-ruby/#{Fintoc::VERSION}"
+      @headers = { Authorization: "Bearer #{@api_key}", 'User-Agent': @user_agent }
+      @link_headers = nil
+      @link_header_pattern = '<(?<url>.*)>;\s*rel="(?<rel>.*)"'
+      @default_params = {}
+      @jws = jws_private_key ? Fintoc::JWS.new(jws_private_key) : nil
+    end
+
+    def get(version: :v1)
+      request('get', version: version)
+    end
+
+    def delete(version: :v1)
+      request('delete', version: version)
+    end
+
+    def post(version: :v1, use_jws: false)
+      request('post', version: version, use_jws: use_jws)
+    end
+
+    def patch(version: :v1, use_jws: false)
+      request('patch', version: version, use_jws: use_jws)
+    end
+
+    def request(method, version: :v1, use_jws: false)
+      proc do |resource, **kwargs|
+        parameters = params(method, **kwargs)
+        response = make_request(method, resource, parameters, version: version, use_jws: use_jws)
+        content = JSON.parse(response.body, symbolize_names: true)
+
+        if response.status.client_error? || response.status.server_error?
+          raise_custom_error(content[:error])
+        end
+
+        @link_headers = response.headers.get('link')
+        content
+      end
+    end
+
+    def fetch_next
+      next_ = link_headers['next']
+      Enumerator.new do |yielder|
+        while next_
+          yielder << get.call(next_)
+          next_ = link_headers['next']
+        end
+      end
+    end
+
+    def to_s
+      visible_chars = 8
+      visible_key = @api_key.slice(0, visible_chars)
+      hidden_part = '*' * (@api_key.size - visible_chars)
+      "#{self.class.name}(🔑=#{visible_key + hidden_part})"
+    end
+
+    private
+
+    def client
+      @client ||= HTTP.headers(@headers)
+    end
+
+    def parse_headers(dict, link)
+      matches = link.strip.match(@link_header_pattern)
+      dict[matches[:rel]] = matches[:url]
+      dict
+    end
+
+    def build_url(resource, version: :v1)
+      base_url = version == :v2 ? Fintoc::Constants::BASE_URL_V2 : Fintoc::Constants::BASE_URL
+      "#{Fintoc::Constants::SCHEME}#{base_url}#{resource}"
+    end
+
+    def should_use_jws?(method, use_jws)
+      use_jws && @jws && %w[post patch put].include?(method.downcase)
+    end
+
+    def make_request(method, resource, parameters, version: :v1, use_jws: false)
+      # this is to handle url returned in the link headers
+      # I'm sure there is a better and more clever way to solve this
+      if resource.start_with? 'https'
+        return client.send(method, resource)
+      end
+
+      url = build_url(resource, version:)
+
+      if should_use_jws?(method, use_jws)
+        request_body = parameters[:json]&.to_json || ''
+        jws_signature = @jws.generate_signature(request_body)
+
+        return client.headers('Fintoc-JWS-Signature' => jws_signature).send(method, url, parameters)
+      end
+
+      client.send(method, url, parameters)
+    end
+
+    def params(method, **kwargs)
+      if method == 'get'
+        { params: { **@default_params, **kwargs } }
+      else
+        { json: { **@default_params, **kwargs } }
+      end
+    end
+
+    def raise_custom_error(error)
+      raise error_class(error[:code]).new(error[:message], error[:doc_url])
+    end
+
+    def error_class(snake_code)
+      pascal_klass_name = Utils.snake_to_pascal(snake_code)
+      # this conditional klass_name is to handle InternalServerError custom error class
+      # without this the error class name would be like InternalServerErrorError (^-^)
+      klass =
+        pascal_klass_name.end_with?('Error') ? pascal_klass_name : "#{pascal_klass_name}Error"
+      Module.const_get("Fintoc::Errors::#{klass}")
+    end
+
+    # rubocop:disable Layout/LineLength
+    # This attribute getter parses the link headers using some regex 24K magic in the air...
+    # Ex.
+    # <https://api.fintoc.com/v1/links?page=1>; rel="first", <https://api.fintoc.com/v1/links?page=1>; rel="last"
+    # this helps to handle pagination see: https://fintoc.com/docs#paginacion
+    # return a hash like { first:"https://api.fintoc.com/v1/links?page=1" }
+    #
+    # @param link_headers [String]
+    # @return [Hash]
+    # rubocop:enable Layout/LineLength
+    def link_headers
+      return if @link_headers.nil?
+
+      @link_headers[0].split(',').reduce({}) { |dict, link| parse_headers(dict, link) }
+    end
+  end
+end
