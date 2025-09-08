@@ -55,7 +55,7 @@ RSpec.describe Fintoc::V1::Link do
   let(:api_key) { 'sk_test_SeCrEt_aPi_KeY' }
 
   describe '#new' do
-    it 'create an instance of Link' do
+    it 'creates an instance of Link' do
       expect(link).to be_an_instance_of(described_class)
     end
   end

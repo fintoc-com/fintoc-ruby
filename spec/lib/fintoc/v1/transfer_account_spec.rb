@@ -12,7 +12,7 @@ RSpec.describe Fintoc::V1::TransferAccount do
   let(:transfer) { described_class.new(**data) }
 
   describe '#new' do
-    it 'create an instance of TransferAccount' do
+    it 'creates an instance of TransferAccount' do
       expect(transfer).to be_an_instance_of(described_class)
     end
   end

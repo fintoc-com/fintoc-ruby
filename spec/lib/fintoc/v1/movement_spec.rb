@@ -33,7 +33,7 @@ RSpec.describe Fintoc::V1::Movement do
 
   describe '.new' do
     context 'when movement is transfer' do
-      it 'create an instance of Movement' do # rubocop:disable RSpec/MultipleExpectations
+      it 'creates an instance of Movement' do # rubocop:disable RSpec/MultipleExpectations
         expect(movement).to be_an_instance_of(described_class)
         expect(movement.id).to eq('BO381oEATXonG6bj')
         expect(movement.amount).to eq(59400)
@@ -68,7 +68,7 @@ RSpec.describe Fintoc::V1::Movement do
         data[:transaction_date] = nil
       end
 
-      it 'create an instance of Movement' do # rubocop:disable RSpec/MultipleExpectations
+      it 'creates an instance of Movement' do # rubocop:disable RSpec/MultipleExpectations
         expect(movement).to be_an_instance_of(described_class)
         expect(movement.id).to eq('BO381oEATXonG6bj')
         expect(movement.amount).to eq(59400)

@@ -30,7 +30,7 @@ RSpec.describe Fintoc::V1::Account do
   let(:linked_account) { link.find(type: 'checking_account') }
 
   describe '#new' do
-    it 'create an instance of Account' do
+    it 'creates an instance of Account' do
       expect(account).to be_an_instance_of(described_class)
     end
   end
