@@ -63,7 +63,7 @@ Or install it yourself as:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 account = link.find(type: 'checking_account')
 
@@ -85,7 +85,7 @@ The Fintoc Ruby client is organized into separate clients that mirror the offici
 The API client currently provides access to part of the Movements API:
 
 ```ruby
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Link management
 links = client.v1.links.list
@@ -101,7 +101,7 @@ account = link.find(id: account_id)
 The API V2 client currently provides access to part of the Transfers API:
 
 ```ruby
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Entities
 entities = client.v2.entities.list
@@ -150,7 +150,7 @@ account_verification = client.v2.account_verifications.create(account_number: 'a
 The methods of the previous `Fintoc::Client` class implementation are kept for backward compatibility purposes.
 
 ```ruby
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 link = client.get_link('link_token')
 links = client.get_links
@@ -171,7 +171,7 @@ This client does not support all Fintoc API endpoints yet. For complete informat
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 puts link.accounts
 
@@ -187,7 +187,7 @@ If you want to find a specific account in a link, you can use **find**. You can 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 account = link.find(type: 'checking_account')
 
@@ -203,7 +203,7 @@ You can also search for multiple accounts matching a specific criteria with **fi
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 accounts = link.find_all(currency: 'CLP')
 ```
@@ -213,7 +213,7 @@ To update the account balance you can use **update_balance**:
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 account = link.find(number: '1111111')
 account.update_balance
@@ -225,7 +225,7 @@ account.update_balance
 require 'fintoc'
 require 'time'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 link = client.v1.links.get('link_token')
 account = link.find(type: 'checking_account')
 
@@ -249,7 +249,7 @@ Calling **movements.list** without arguments gets the last 30 movements of the a
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Get all entities
 entities = client.v2.entities.list
@@ -270,7 +270,7 @@ entities = client.v2.entities.list(limit: 10, starting_after: 'entity_id')
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Create a transfer account
 account = client.v2.accounts.create(
@@ -293,7 +293,7 @@ updated_account = client.v2.accounts.update('account_id', description: 'Updated 
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Create an account number
 account_number = client.v2.account_numbers.create(
@@ -319,7 +319,7 @@ updated_account_number = client.v2.account_numbers.update(
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Create a transfer
 transfer = client.v2.transfers.create(
@@ -351,7 +351,7 @@ returned_transfer = client.v2.transfers.return('transfer_id')
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Simulate receiving a transfer
 simulated_transfer = client.v2.simulate.receive_transfer(
@@ -366,7 +366,7 @@ simulated_transfer = client.v2.simulate.receive_transfer(
 ```ruby
 require 'fintoc'
 
-client = Fintoc::Client.new('api_key', 'jws_private_key')
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
 # Create an account verification
 account_verification = client.v2.account_verifications.create(account_number: 'account_number')
