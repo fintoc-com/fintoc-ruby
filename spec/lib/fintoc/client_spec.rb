@@ -9,7 +9,7 @@ RSpec.describe Fintoc::Client do
   let(:client) { described_class.new(api_key, jws_private_key: jws_private_key) }
 
   describe '.new' do
-    it 'create an instance Client' do
+    it 'creates an instance Client' do
       expect(client).to be_an_instance_of(described_class)
     end
 

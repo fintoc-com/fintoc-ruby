@@ -8,7 +8,7 @@ RSpec.describe Fintoc::V1::Institution do
   let(:institution) { described_class.new(**data) }
 
   describe '#new' do
-    it 'create an instance of Institution' do
+    it 'creates an instance of Institution' do
       expect(institution).to be_an_instance_of(described_class)
     end
   end

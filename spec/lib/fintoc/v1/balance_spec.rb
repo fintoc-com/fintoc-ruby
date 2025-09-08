@@ -5,7 +5,7 @@ RSpec.describe Fintoc::V1::Balance do
   let(:balance) { described_class.new(**data) }
 
   describe '#new' do
-    it 'create an instance of Balance' do
+    it 'creates an instance of Balance' do
       expect(balance).to be_an_instance_of(described_class)
     end
 
