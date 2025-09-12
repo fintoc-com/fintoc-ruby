@@ -44,4 +44,3 @@ Ej.:
 
 ¿Es seguro hacer rollback?
 ¿Cuáles son los pasos para hacer rollback?
-****
