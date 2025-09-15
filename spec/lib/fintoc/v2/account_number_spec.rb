@@ -170,8 +170,23 @@ RSpec.describe Fintoc::V2::AccountNumber do
         account_number.id,
         description: new_description,
         status: new_status,
-        metadata: new_metadata
+        metadata: new_metadata,
+        idempotency_key: nil
       )
+    end
+
+    context 'with idempotency key' do
+      let(:idempotency_key) { 'account_number_update_123' }
+
+      it 'passes idempotency_key to the manager update method' do
+        account_number.update(description: new_description, idempotency_key:)
+
+        expect(client.account_numbers).to have_received(:update).with(
+          account_number.id,
+          description: new_description,
+          idempotency_key:
+        )
+      end
     end
   end
 
@@ -193,13 +208,48 @@ RSpec.describe Fintoc::V2::AccountNumber do
       before do
         allow(client.simulate)
           .to receive(:receive_transfer)
-          .with(account_number_id: account_number.id, amount: 10000, currency: 'MXN')
+          .with(
+            account_number_id: account_number.id,
+            amount: 10000,
+            currency: 'MXN',
+            idempotency_key: nil
+          )
           .and_return(expected_transfer)
       end
 
       it 'simulates receiving a transfer using account number id' do
         result = account_number.simulate_receive_transfer(amount: 10000)
         expect(result).to eq(expected_transfer)
+      end
+
+      context 'with idempotency key' do
+        let(:idempotency_key) { 'test_simulation_123' }
+
+        before do
+          allow(client.simulate)
+            .to receive(:receive_transfer)
+            .with(
+              account_number_id: account_number.id,
+              amount: 10000,
+              currency: 'MXN',
+              idempotency_key:
+            )
+            .and_return(expected_transfer)
+        end
+
+        it 'passes idempotency key to simulate method' do
+          result = account_number.simulate_receive_transfer(amount: 10000, idempotency_key:)
+
+          expect(client.simulate)
+            .to have_received(:receive_transfer)
+            .with(
+              account_number_id: account_number.id,
+              amount: 10000,
+              currency: 'MXN',
+              idempotency_key:
+            )
+          expect(result).to eq(expected_transfer)
+        end
       end
     end
 

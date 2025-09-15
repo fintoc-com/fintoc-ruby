@@ -27,6 +27,25 @@ RSpec.shared_examples 'a client with account numbers manager' do
             object: 'account_number'
           )
       end
+
+      context 'with idempotency key' do
+        let(:description) { 'Test account number with idempotency' }
+        let(:idempotency_key) { 'test_account_number_creation_123' }
+
+        it 'returns an AccountNumber instance', :vcr do
+          account_number = client.account_numbers.create(
+            account_id:, description:, metadata: { test_id: '12345' }, idempotency_key:
+          )
+
+          expect(account_number)
+            .to be_an_instance_of(Fintoc::V2::AccountNumber)
+            .and have_attributes(
+              account_id:,
+              description:,
+              object: 'account_number'
+            )
+        end
+      end
     end
 
     describe '#get' do
@@ -53,8 +72,9 @@ RSpec.shared_examples 'a client with account numbers manager' do
     end
 
     describe '#update' do
+      let(:updated_description) { 'Updated account number description' }
+
       it 'returns an updated AccountNumber instance', :vcr do
-        updated_description = 'Updated account number description'
         account_number = client.account_numbers.update(
           account_number_id, description: updated_description
         )
@@ -65,6 +85,23 @@ RSpec.shared_examples 'a client with account numbers manager' do
             id: account_number_id,
             description: updated_description
           )
+      end
+
+      context 'with idempotency key' do
+        let(:idempotency_key) { 'test_account_number_update_456' }
+
+        it 'returns an updated AccountNumber instance', :vcr do
+          account_number = client.account_numbers.update(
+            account_number_id, description: updated_description, idempotency_key:
+          )
+
+          expect(account_number)
+            .to be_an_instance_of(Fintoc::V2::AccountNumber)
+            .and have_attributes(
+              id: account_number_id,
+              description: updated_description
+            )
+        end
       end
     end
   end

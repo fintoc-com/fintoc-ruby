@@ -52,8 +52,8 @@ RSpec.describe Fintoc::V2::Managers::AccountsManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
-    allow(client).to receive(:post).with(version: :v2).and_return(post_proc)
-    allow(client).to receive(:patch).with(version: :v2).and_return(patch_proc)
+    allow(client).to receive(:post).with(version: :v2, idempotency_key: nil).and_return(post_proc)
+    allow(client).to receive(:patch).with(version: :v2, idempotency_key: nil).and_return(patch_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -81,6 +81,20 @@ RSpec.describe Fintoc::V2::Managers::AccountsManager do
       expect(Fintoc::V2::Account)
         .to have_received(:new).with(**first_account_data, client:)
     end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:post).with(version: :v2, idempotency_key:).and_return(post_proc)
+      end
+
+      it 'passes idempotency_key to the POST method' do
+        manager.create(entity_id:, description: 'My account', idempotency_key:)
+
+        expect(client).to have_received(:post).with(version: :v2, idempotency_key:)
+      end
+    end
   end
 
   describe '#get' do
@@ -106,6 +120,20 @@ RSpec.describe Fintoc::V2::Managers::AccountsManager do
       manager.update(account_id, name: 'Updated name')
       expect(Fintoc::V2::Account)
         .to have_received(:new).with(**updated_account_data, client:)
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:patch).with(version: :v2, idempotency_key:).and_return(patch_proc)
+      end
+
+      it 'passes idempotency_key to the PATCH method' do
+        manager.update(account_id, name: 'Updated name', idempotency_key:)
+
+        expect(client).to have_received(:patch).with(version: :v2, idempotency_key:)
+      end
     end
   end
 end

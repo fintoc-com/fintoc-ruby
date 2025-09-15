@@ -25,6 +25,23 @@ RSpec.shared_examples 'a client with accounts manager' do
             status: 'active'
           )
       end
+
+      context 'when idempotency key is provided' do
+        let(:idempotency_key) { 'test_account_creation_123' }
+
+        it 'returns an Account instance', :vcr do
+          account =
+            client.accounts.create(entity_id:, description: 'Test account', idempotency_key:)
+
+          expect(account)
+            .to be_an_instance_of(Fintoc::V2::Account)
+            .and have_attributes(
+              description: 'Test account',
+              currency: 'MXN',
+              status: 'active'
+            )
+        end
+      end
     end
 
     describe '#get' do
@@ -51,8 +68,9 @@ RSpec.shared_examples 'a client with accounts manager' do
     end
 
     describe '#update' do
+      let(:updated_description) { 'Updated account description' }
+
       it 'returns an updated Account instance', :vcr do
-        updated_description = 'Updated account description'
         account = client.accounts.update(account_id, description: updated_description)
 
         expect(account)
@@ -61,6 +79,23 @@ RSpec.shared_examples 'a client with accounts manager' do
             id: account_id,
             description: updated_description
           )
+      end
+
+      context 'when idempotency key is provided' do
+        let(:idempotency_key) { 'test_account_update_123' }
+        let(:patch_proc) { instance_double(Proc) }
+
+        it 'returns an updated Account instance', :vcr do
+          account =
+            client.accounts.update(account_id, description: updated_description, idempotency_key:)
+
+          expect(account)
+            .to be_an_instance_of(Fintoc::V2::Account)
+            .and have_attributes(
+              id: account_id,
+              description: updated_description
+            )
+        end
       end
     end
   end

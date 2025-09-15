@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0 - 2025-09-15
+
+### 🚀 New Features
+
+- **Idempotency Key Support**: Added comprehensive idempotency key support across all V2 API operations to help prevent duplicate operations during network issues or retries
+  - **Accounts**: `create` and `update` methods now accept the `idempotency_key` parameter
+  - **Account Numbers**: `create` and `update` methods support idempotency keys
+  - **Transfers**: `create` and `return` operations support idempotency keys
+  - **Account Verifications**: `create` method supports idempotency keys
+  - **Simulation**: `receive_transfer` method supports idempotency keys
+  - **Resource-level methods**: Instance methods like `account.update`, `transfer.return_transfer`, and `account.simulate_receive_transfer` all support idempotency keys
+
 ## 1.0.0 - 2025-09-05
 
 ### 🚀 New Features
@@ -12,7 +24,7 @@
 
 - **V2 Client - Transfers API Implementation**: Partial implementation of Transfers API endpoints in `Fintoc::V2::Client`
   - **Entities**: List and retrieve business entities
-  - **Transfer Accounts**: Create, read, update, and list transfer accounts
+  - **Accounts**: Create, read, update, and list accounts
   - **Account Numbers**: Manage account numbers/CLABEs
   - **Transfers**: Create, retrieve, list, and return transfers
   - **Simulation**: Simulate receiving transfers for testing
@@ -42,4 +54,4 @@
 
 Initial version
 
-* Up to date with the [2020-11-17](https://docs.fintoc.com/docs/api-changelog#2020-11-17) API version
+- Up to date with the [2020-11-17](https://docs.fintoc.com/docs/api-changelog#2020-11-17) API version

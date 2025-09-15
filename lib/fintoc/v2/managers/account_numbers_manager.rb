@@ -8,8 +8,10 @@ module Fintoc
           @client = client
         end
 
-        def create(account_id:, description: nil, metadata: nil, **params)
-          data = _create_account_number(account_id:, description:, metadata:, **params)
+        def create(account_id:, description: nil, metadata: nil, idempotency_key: nil, **params)
+          data = _create_account_number(
+            account_id:, description:, metadata:, idempotency_key:, **params
+          )
           build_account_number(data)
         end
 
@@ -22,20 +24,22 @@ module Fintoc
           _list_account_numbers(**params).map { |data| build_account_number(data) }
         end
 
-        def update(account_number_id, **params)
-          data = _update_account_number(account_number_id, **params)
+        def update(account_number_id, idempotency_key: nil, **params)
+          data = _update_account_number(account_number_id, idempotency_key:, **params)
           build_account_number(data)
         end
 
         private
 
-        def _create_account_number(account_id:, description: nil, metadata: nil, **params)
+        def _create_account_number(
+          account_id:, description: nil, metadata: nil, idempotency_key: nil, **params
+        )
           request_params = { account_id: }
           request_params[:description] = description if description
           request_params[:metadata] = metadata if metadata
           request_params.merge!(params)
 
-          @client.post(version: :v2).call('account_numbers', **request_params)
+          @client.post(version: :v2, idempotency_key:).call('account_numbers', **request_params)
         end
 
         def _get_account_number(account_number_id)
@@ -46,8 +50,9 @@ module Fintoc
           @client.get(version: :v2).call('account_numbers', **params)
         end
 
-        def _update_account_number(account_number_id, **params)
-          @client.patch(version: :v2).call("account_numbers/#{account_number_id}", **params)
+        def _update_account_number(account_number_id, idempotency_key: nil, **params)
+          @client.patch(version: :v2, idempotency_key:)
+                 .call("account_numbers/#{account_number_id}", **params)
         end
 
         def build_account_number(data)

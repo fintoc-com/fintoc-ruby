@@ -81,6 +81,24 @@ draAAQ5iJEb5BR8AmL6tAQ==
             status: 'pending'
           )
       end
+
+      context 'with idempotency key' do
+        let(:idempotency_key) { 'test_transfer_creation_123' }
+
+        it 'returns a Transfer instance', :vcr do
+          transfer = client.transfers.create(**transfer_data, idempotency_key:)
+
+          expect(transfer)
+            .to be_an_instance_of(Fintoc::V2::Transfer)
+            .and have_attributes(
+              amount: 50000,
+              currency: 'MXN',
+              comment: 'Test payment',
+              reference_id: '123456',
+              status: 'pending'
+            )
+        end
+      end
     end
 
     describe '#get' do
@@ -124,6 +142,22 @@ draAAQ5iJEb5BR8AmL6tAQ==
             id: transfer_id,
             status: 'return_pending'
           )
+      end
+
+      context 'with idempotency key' do
+        let(:transfer_id) { 'tr_32jkevdbJyoqZeJpt3s2zSeGsy9' }
+        let(:idempotency_key) { 'test_transfer_return_456' }
+
+        it 'returns a Transfer instance with return_pending status', :vcr do
+          transfer = client.transfers.return(transfer_id, idempotency_key:)
+
+          expect(transfer)
+            .to be_an_instance_of(Fintoc::V2::Transfer)
+            .and have_attributes(
+              id: transfer_id,
+              status: 'return_pending'
+            )
+        end
       end
     end
   end

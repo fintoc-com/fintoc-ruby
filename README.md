@@ -28,11 +28,19 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Get movements](#get-movements)
     - [Transfers API Examples](#transfers-api-examples)
       - [Entities](#entities)
-      - [Transfer Accounts](#transfer-accounts)
+      - [Accounts](#accounts)
       - [Account Numbers](#account-numbers)
       - [Transfers](#transfers)
       - [Simulate](#simulate)
       - [Account Verifications](#account-verifications)
+  - [Idempotency Keys](#idempotency-keys)
+    - [Idempotency Examples](#idempotency-examples)
+      - [Account Methods with Idempotency Key](#account-methods-with-idempotency-key)
+      - [Account Number Methods with Idempotency Key](#account-number-methods-with-idempotency-key)
+      - [Transfer Methods with Idempotency Key](#transfer-methods-with-idempotency-key)
+      - [Simulation with Idempotency Key](#simulation-with-idempotency-key)
+      - [Account Verification with Idempotency Key](#account-verification-with-idempotency-key)
+    - [About idempotency keys](#about-idempotency-keys)
   - [Development](#development)
     - [Dependencies](#dependencies)
     - [Setup](#setup)
@@ -107,7 +115,7 @@ client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 entities = client.v2.entities.list
 entity = client.v2.entities.get('entity_id')
 
-# Transfer Accounts
+# Accounts
 accounts = client.v2.accounts.list
 account = client.v2.accounts.get('account_id')
 account = client.v2.accounts.create(entity_id: 'entity_id', description: 'My Account')
@@ -265,14 +273,14 @@ You can also list entities with pagination:
 entities = client.v2.entities.list(limit: 10, starting_after: 'entity_id')
 ```
 
-#### Transfer Accounts
+#### Accounts
 
 ```ruby
 require 'fintoc'
 
 client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
-# Create a transfer account
+# Create an account
 account = client.v2.accounts.create(
   entity_id: 'entity_id',
   description: 'My Business Account'
@@ -377,6 +385,116 @@ account_verification = client.v2.account_verifications.get('account_verification
 # List all account verifications
 account_verifications = client.v2.account_verifications.list
 ```
+
+## Idempotency Keys
+
+The Fintoc API supports [idempotency](https://docs.fintoc.com/reference/idempotent-requests) for safely retrying requests without accidentally performing the same operation twice. This is particularly useful when creating transfers, account numbers, accounts, or other resources where you want to avoid duplicates due to network issues.
+
+To use idempotency keys, provide an `idempotency_key` parameter when making POST/PATCH requests:
+
+### Idempotency Examples
+
+#### Account Methods with Idempotency Key
+
+Create and update methods support the use of idempotency keys to prevent duplication:
+
+```ruby
+require 'fintoc'
+require 'securerandom'
+
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
+
+idempotency_key = SecureRandom.uuid
+account = client.v2.accounts.create(
+  entity_id: 'entity_id', description: 'My Business Account', idempotency_key:
+)
+
+idempotency_key = SecureRandom.uuid
+updated_account = client.v2.accounts.update(
+  'account_id', description: 'Updated Description', idempotency_key:
+)
+```
+
+Simulation of transfers can also be done with idempotency key:
+
+```ruby
+idempotency_key = SecureRandom.uuid
+account.simulate_receive_transfer(amount: 1000, idempotency_key:)
+```
+
+#### Account Number Methods with Idempotency Key
+
+Create and update methods support the use of idempotency keys as well:
+
+```ruby
+idempotency_key = SecureRandom.uuid
+account_number = client.v2.account_numbers.create(
+  account_id: 'account_id', description: 'Main account number', idempotency_key:
+)
+
+idempotency_key = SecureRandom.uuid
+updated_account_number = client.v2.account_numbers.update(
+  'account_number_id', description: 'Updated description', idempotency_key:
+)
+```
+
+Simulation of transfers can also be done with idempotency key:
+
+```ruby
+account_number.simulate_receive_transfer(amount: 1000, currency: 'MXN', idempotency_key:)
+```
+
+#### Transfer Methods with Idempotency Key
+
+Creating and returning transfers support the use of idempotency keys:
+
+```ruby
+idempotency_key = SecureRandom.uuid
+transfer = client.v2.transfers.create(
+  amount: 10000, currency: 'CLP', account_id: 'account_id', counterparty: { ... }, idempotency_key:
+)
+
+idempotency_key = SecureRandom.uuid
+returned_transfer = client.v2.transfers.return('transfer_id', idempotency_key:)
+```
+
+Returning a transfer as an instance method also supports the use of idempotency key:
+
+```ruby
+idempotency_key = SecureRandom.uuid
+transfer.return_transfer(idempotency_key:)
+```
+
+#### Simulation with Idempotency Key
+
+For simulating transfers, the use of idempotency keys is also supported:
+
+```ruby
+idempotency_key = SecureRandom.uuid
+simulated_transfer = client.v2.simulate.receive_transfer(
+  account_number_id: 'account_number_id', amount: 5000, currency: 'CLP', idempotency_key:
+)
+```
+
+#### Account Verification with Idempotency Key
+
+```ruby
+idempotency_key = SecureRandom.uuid
+account_verification = client.v2.account_verifications.create(
+  account_number: 'account_number', idempotency_key:
+)
+```
+
+### About idempotency keys
+
+- Idempotency keys can be up to 255 characters long
+- Use consistent unique identifiers for the same logical operation (e.g. order IDs, transaction references). If you set them randomly, we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions.
+- The same idempotency key will return the same result, including errors
+- Keys are automatically removed after 24 hours
+- Only POST and PATCH requests currently support idempotency keys
+- If parameters differ with the same key, an error will be raised
+
+For more information, see the [Fintoc API documentation on idempotent requests](https://docs.fintoc.com/reference/idempotent-requests).
 
 ## Development
 

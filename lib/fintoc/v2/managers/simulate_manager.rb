@@ -8,16 +8,18 @@ module Fintoc
           @client = client
         end
 
-        def receive_transfer(account_number_id:, amount:, currency:)
-          data = _simulate_receive_transfer(account_number_id:, amount:, currency:)
+        def receive_transfer(account_number_id:, amount:, currency:, idempotency_key: nil)
+          data = _simulate_receive_transfer(
+            account_number_id:, amount:, currency:, idempotency_key:
+          )
           build_transfer(data)
         end
 
         private
 
-        def _simulate_receive_transfer(account_number_id:, amount:, currency:)
+        def _simulate_receive_transfer(account_number_id:, amount:, currency:, idempotency_key: nil)
           @client
-            .post(version: :v2)
+            .post(version: :v2, idempotency_key:)
             .call('simulate/receive_transfer', account_number_id:, amount:, currency:)
         end
 

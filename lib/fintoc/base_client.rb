@@ -23,25 +23,25 @@ module Fintoc
     end
 
     def get(version: :v1)
-      request('get', version: version)
+      request('get', version:)
     end
 
     def delete(version: :v1)
-      request('delete', version: version)
+      request('delete', version:)
     end
 
-    def post(version: :v1, use_jws: false)
-      request('post', version: version, use_jws: use_jws)
+    def post(version: :v1, use_jws: false, idempotency_key: nil)
+      request('post', version:, use_jws:, idempotency_key:)
     end
 
-    def patch(version: :v1, use_jws: false)
-      request('patch', version: version, use_jws: use_jws)
+    def patch(version: :v1, use_jws: false, idempotency_key: nil)
+      request('patch', version:, use_jws:, idempotency_key:)
     end
 
-    def request(method, version: :v1, use_jws: false)
+    def request(method, version: :v1, use_jws: false, idempotency_key: nil)
       proc do |resource, **kwargs|
         parameters = params(method, **kwargs)
-        response = make_request(method, resource, parameters, version: version, use_jws: use_jws)
+        response = make_request(method, resource, parameters, version:, use_jws:, idempotency_key:)
         content = JSON.parse(response.body, symbolize_names: true)
 
         if response.status.client_error? || response.status.server_error?
@@ -91,7 +91,13 @@ module Fintoc
       use_jws && @jws && %w[post patch put].include?(method.downcase)
     end
 
-    def make_request(method, resource, parameters, version: :v1, use_jws: false)
+    def should_use_idempotency_key?(method, idempotency_key)
+      idempotency_key && %w[post patch put].include?(method.downcase)
+    end
+
+    def make_request(
+      method, resource, parameters, version: :v1, use_jws: false, idempotency_key: nil
+    )
       # this is to handle url returned in the link headers
       # I'm sure there is a better and more clever way to solve this
       if resource.start_with? 'https'
@@ -99,15 +105,20 @@ module Fintoc
       end
 
       url = build_url(resource, version:)
+      request_client = client
 
       if should_use_jws?(method, use_jws)
         request_body = parameters[:json]&.to_json || ''
         jws_signature = @jws.generate_signature(request_body)
 
-        return client.headers('Fintoc-JWS-Signature' => jws_signature).send(method, url, parameters)
+        request_client = request_client.headers('Fintoc-JWS-Signature' => jws_signature)
       end
 
-      client.send(method, url, parameters)
+      if should_use_idempotency_key?(method, idempotency_key)
+        request_client = request_client.headers('Idempotency-Key' => idempotency_key)
+      end
+
+      request_client.send(method, url, parameters)
     end
 
     def params(method, **kwargs)

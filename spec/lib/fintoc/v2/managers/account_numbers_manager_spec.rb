@@ -44,8 +44,8 @@ RSpec.describe Fintoc::V2::Managers::AccountNumbersManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
-    allow(client).to receive(:post).with(version: :v2).and_return(post_proc)
-    allow(client).to receive(:patch).with(version: :v2).and_return(patch_proc)
+    allow(client).to receive(:post).with(version: :v2, idempotency_key: nil).and_return(post_proc)
+    allow(client).to receive(:patch).with(version: :v2, idempotency_key: nil).and_return(patch_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -73,6 +73,27 @@ RSpec.describe Fintoc::V2::Managers::AccountNumbersManager do
       expect(Fintoc::V2::AccountNumber)
         .to have_received(:new).with(**first_account_number_data, client:)
     end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:post).with(version: :v2, idempotency_key:).and_return(post_proc)
+      end
+
+      it 'passes idempotency_key to the POST method' do
+        manager.create(
+          account_id: 'acc_123',
+          description: 'My account number',
+          metadata: {},
+          idempotency_key:
+        )
+
+        expect(client).to have_received(:post).with(version: :v2, idempotency_key:)
+        expect(Fintoc::V2::AccountNumber)
+          .to have_received(:new).with(**first_account_number_data, client:)
+      end
+    end
   end
 
   describe '#get' do
@@ -98,6 +119,20 @@ RSpec.describe Fintoc::V2::Managers::AccountNumbersManager do
       manager.update('acno_123', description: 'Updated description')
       expect(Fintoc::V2::AccountNumber)
         .to have_received(:new).with(**updated_account_number_data, client:)
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:patch).with(version: :v2, idempotency_key:).and_return(patch_proc)
+      end
+
+      it 'passes idempotency_key to the PATCH method' do
+        manager.update('acno_123', description: 'Updated description', idempotency_key:)
+
+        expect(client).to have_received(:patch).with(version: :v2, idempotency_key:)
+      end
     end
   end
 end

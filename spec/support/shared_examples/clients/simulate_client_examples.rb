@@ -27,6 +27,22 @@ RSpec.shared_examples 'a client with simulate manager' do
             account_number: include(id: simulate_transfer_data[:account_number_id])
           )
       end
+
+      context 'with idempotency key' do
+        let(:idempotency_key) { 'test_simulation_123' }
+
+        it 'simulates receiving a transfer with idempotency key', :vcr do
+          transfer = client.simulate.receive_transfer(**simulate_transfer_data, idempotency_key:)
+
+          expect(transfer)
+            .to be_an_instance_of(Fintoc::V2::Transfer)
+            .and have_attributes(
+              amount: simulate_transfer_data[:amount],
+              currency: simulate_transfer_data[:currency],
+              account_number: include(id: simulate_transfer_data[:account_number_id])
+            )
+        end
+      end
     end
   end
 end
