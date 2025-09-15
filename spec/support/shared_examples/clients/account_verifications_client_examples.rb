@@ -57,6 +57,23 @@ draAAQ5iJEb5BR8AmL6tAQ==
             status: 'pending'
           )
       end
+
+      context 'with idempotency key' do
+        let(:idempotency_key) { 'test_account_verification_123' }
+
+        it 'returns an AccountVerification instance', :vcr do
+          account_verification = client.account_verifications.create(
+            account_number:, idempotency_key:
+          )
+
+          expect(account_verification)
+            .to be_an_instance_of(Fintoc::V2::AccountVerification)
+            .and have_attributes(
+              object: 'account_verification',
+              status: 'pending'
+            )
+        end
+      end
     end
 
     describe '#get' do

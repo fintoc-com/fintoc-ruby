@@ -8,8 +8,8 @@ module Fintoc
           @client = client
         end
 
-        def create(account_number:)
-          data = _create_account_verification(account_number:)
+        def create(account_number:, idempotency_key: nil)
+          data = _create_account_verification(account_number:, idempotency_key:)
           build_account_verification(data)
         end
 
@@ -24,8 +24,9 @@ module Fintoc
 
         private
 
-        def _create_account_verification(account_number:)
-          @client.post(version: :v2, use_jws: true).call('account_verifications', account_number:)
+        def _create_account_verification(account_number:, idempotency_key: nil)
+          @client.post(version: :v2, use_jws: true, idempotency_key:)
+                 .call('account_verifications', account_number:)
         end
 
         def _get_account_verification(account_verification_id)
