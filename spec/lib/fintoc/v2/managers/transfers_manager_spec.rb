@@ -43,7 +43,7 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
-    allow(client).to receive(:post).with(version: :v2, use_jws: true).and_return(post_proc)
+    allow(client).to receive(:post).and_return(post_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -77,6 +77,53 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
       expect(Fintoc::V2::Transfer)
         .to have_received(:new).with(**first_transfer_data, client:)
     end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client)
+          .to receive(:post)
+          .with(version: :v2, use_jws: true, idempotency_key:)
+          .and_return(post_proc)
+        allow(post_proc)
+          .to receive(:call)
+          .with(
+            'transfers',
+            amount: 10000,
+            currency: 'MXN',
+            account_id: 'acc_123',
+            counterparty:
+          )
+          .and_return(first_transfer_data)
+      end
+
+      it 'passes idempotency_key to the POST method' do
+        manager.create(
+          amount: 10000, currency: 'MXN', account_id: 'acc_123', counterparty:, idempotency_key:
+        )
+
+        expect(client).to have_received(:post).with(version: :v2, use_jws: true, idempotency_key:)
+        expect(post_proc)
+          .to have_received(:call)
+          .with(
+            'transfers', amount: 10000, currency: 'MXN', account_id: 'acc_123', counterparty:
+          )
+      end
+
+      it 'builds transfer with the response' do
+        manager.create(
+          amount: 10000,
+          currency: 'MXN',
+          account_id: 'acc_123',
+          counterparty:,
+          idempotency_key:
+        )
+
+        expect(Fintoc::V2::Transfer)
+          .to have_received(:new).with(**first_transfer_data, client:)
+      end
+    end
   end
 
   describe '#get' do
@@ -102,6 +149,35 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
       manager.return('trf_123')
       expect(Fintoc::V2::Transfer)
         .to have_received(:new).with(**returned_transfer_data, client:)
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client)
+          .to receive(:post)
+          .with(version: :v2, use_jws: true, idempotency_key:)
+          .and_return(post_proc)
+        allow(post_proc)
+          .to receive(:call)
+          .with('transfers/return', transfer_id:)
+          .and_return(returned_transfer_data)
+      end
+
+      it 'passes idempotency_key to the POST method' do
+        manager.return('trf_123', idempotency_key:)
+
+        expect(client).to have_received(:post).with(version: :v2, use_jws: true, idempotency_key:)
+        expect(post_proc).to have_received(:call).with('transfers/return', transfer_id:)
+      end
+
+      it 'builds transfer with the response' do
+        manager.return('trf_123', idempotency_key:)
+
+        expect(Fintoc::V2::Transfer)
+          .to have_received(:new).with(**returned_transfer_data, client:)
+      end
     end
   end
 end

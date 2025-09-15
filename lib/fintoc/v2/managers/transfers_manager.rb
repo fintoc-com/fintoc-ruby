@@ -8,8 +8,10 @@ module Fintoc
           @client = client
         end
 
-        def create(amount:, currency:, account_id:, counterparty:, **params)
-          data = _create_transfer(amount:, currency:, account_id:, counterparty:, **params)
+        def create(amount:, currency:, account_id:, counterparty:, idempotency_key: nil, **params)
+          data = _create_transfer(
+            amount:, currency:, account_id:, counterparty:, idempotency_key:, **params
+          )
           build_transfer(data)
         end
 
@@ -22,16 +24,18 @@ module Fintoc
           _list_transfers(**params).map { |data| build_transfer(data) }
         end
 
-        def return(transfer_id)
-          data = _return_transfer(transfer_id)
+        def return(transfer_id, idempotency_key: nil)
+          data = _return_transfer(transfer_id, idempotency_key:)
           build_transfer(data)
         end
 
         private
 
-        def _create_transfer(amount:, currency:, account_id:, counterparty:, **params)
+        def _create_transfer(
+          amount:, currency:, account_id:, counterparty:, idempotency_key: nil, **params
+        )
           @client
-            .post(version: :v2, use_jws: true)
+            .post(version: :v2, use_jws: true, idempotency_key:)
             .call('transfers', amount:, currency:, account_id:, counterparty:, **params)
         end
 
@@ -43,8 +47,9 @@ module Fintoc
           @client.get(version: :v2).call('transfers', **params)
         end
 
-        def _return_transfer(transfer_id)
-          @client.post(version: :v2, use_jws: true).call('transfers/return', transfer_id:)
+        def _return_transfer(transfer_id, idempotency_key: nil)
+          @client.post(version: :v2, use_jws: true, idempotency_key:)
+                 .call('transfers/return', transfer_id:)
         end
 
         def build_transfer(data)

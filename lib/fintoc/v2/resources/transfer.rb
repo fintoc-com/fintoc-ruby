@@ -62,8 +62,8 @@ module Fintoc
         refresh_from_transfer(fresh_transfer)
       end
 
-      def return_transfer
-        returned_transfer = @client.transfers.return(@id)
+      def return_transfer(idempotency_key: nil)
+        returned_transfer = @client.transfers.return(@id, idempotency_key:)
         refresh_from_transfer(returned_transfer)
       end
 

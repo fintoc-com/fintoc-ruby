@@ -245,7 +245,8 @@ RSpec.describe Fintoc::V2::Transfer do
     let(:returned_transfer) { described_class.new(**returned_data) }
 
     before do
-      allow(client.transfers).to receive(:return).with(data[:id]).and_return(returned_transfer)
+      allow(client.transfers)
+        .to receive(:return).with(data[:id], idempotency_key: nil).and_return(returned_transfer)
     end
 
     it 'returns the transfer and updates status' do
@@ -256,6 +257,21 @@ RSpec.describe Fintoc::V2::Transfer do
     it 'returns self' do
       expect(transfer.return_transfer).to eq(transfer)
       expect(transfer.status).to eq('return_pending')
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client.transfers)
+          .to receive(:return).with(data[:id], idempotency_key:).and_return(returned_transfer)
+      end
+
+      it 'passes idempotency_key to the return method' do
+        transfer.return_transfer(idempotency_key:)
+
+        expect(client.transfers).to have_received(:return).with(data[:id], idempotency_key:)
+      end
     end
   end
 end
