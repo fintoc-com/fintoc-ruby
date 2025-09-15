@@ -19,7 +19,7 @@ RSpec.describe Fintoc::V2::Managers::SimulateManager do
   end
 
   before do
-    allow(client).to receive(:post).with(version: :v2).and_return(post_proc)
+    allow(client).to receive(:post).with(version: :v2, idempotency_key: nil).and_return(post_proc)
 
     allow(post_proc)
       .to receive(:call)
@@ -34,6 +34,20 @@ RSpec.describe Fintoc::V2::Managers::SimulateManager do
       manager.receive_transfer(account_number_id:, amount:, currency:)
 
       expect(Fintoc::V2::Transfer).to have_received(:new).with(**transfer_data, client:)
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:post).with(version: :v2, idempotency_key:).and_return(post_proc)
+      end
+
+      it 'passes idempotency_key to the POST method' do
+        manager.receive_transfer(account_number_id:, amount:, currency:, idempotency_key:)
+
+        expect(client).to have_received(:post).with(version: :v2, idempotency_key:)
+      end
     end
   end
 end

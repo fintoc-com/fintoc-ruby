@@ -8,8 +8,8 @@ module Fintoc
           @client = client
         end
 
-        def create(entity_id:, description:, **params)
-          data = _create_account(entity_id:, description:, **params)
+        def create(entity_id:, description:, idempotency_key: nil, **params)
+          data = _create_account(entity_id:, description:, idempotency_key:, **params)
           build_account(data)
         end
 
@@ -22,15 +22,16 @@ module Fintoc
           _list_accounts(**params).map { |data| build_account(data) }
         end
 
-        def update(account_id, **params)
-          data = _update_account(account_id, **params)
+        def update(account_id, idempotency_key: nil, **params)
+          data = _update_account(account_id, idempotency_key:, **params)
           build_account(data)
         end
 
         private
 
-        def _create_account(entity_id:, description:, **params)
-          @client.post(version: :v2).call('accounts', entity_id:, description:, **params)
+        def _create_account(entity_id:, description:, idempotency_key: nil, **params)
+          @client.post(version: :v2, idempotency_key:)
+                 .call('accounts', entity_id:, description:, **params)
         end
 
         def _get_account(account_id)
@@ -41,8 +42,8 @@ module Fintoc
           @client.get(version: :v2).call('accounts', **params)
         end
 
-        def _update_account(account_id, **params)
-          @client.patch(version: :v2).call("accounts/#{account_id}", **params)
+        def _update_account(account_id, idempotency_key: nil, **params)
+          @client.patch(version: :v2, idempotency_key:).call("accounts/#{account_id}", **params)
         end
 
         def build_account(data)

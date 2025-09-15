@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/simulate/receive_transfer
+    body:
+      encoding: UTF-8
+      string: '{"account_number_id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","amount":10000,"currency":"MXN"}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/1.0.0
+      Idempotency-Key:
+      - test_simulation_123
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Mon, 15 Sep 2025 13:04:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '924'
+      Connection:
+      - close
+      Cf-Ray:
+      - 97f854777c1d1e84-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"82c29e7cfa8f11f60f76c397c650754d"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2eef2bf6-c1dc-4498-8334-e4ca4aacb02a
+      X-Runtime:
+      - '0.547414'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=UPnsx0ZpXiDFlWdbm4r7LawvP8CIv7KzGUMFzl3VXcbVnonFrn0%2FTPQrwXSe8HoJXpusq%2B%2FDJhwSv9X2EtcQKhoOTYKu%2BBhBEHd2Po28wwowjZagAy9%2F1Fsuertqek8x"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=32249&min_rtt=31721&rtt_var=12273&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=2002&delivery_rate=134295&cwnd=249&unsent_bytes=0&cid=7e19854c47060958&ts=836&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"transfer","id":"tr_32jkevdbJyoqZeJpt3s2zSeGsy9","amount":10000,"currency":"MXN","direction":"inbound","status":"pending","transaction_date":"2025-09-15T13:04:26Z","post_date":"2025-09-15T00:00:00Z","comment":null,"reference_id":"1","tracking_key":"202509159073500000000000000001","receipt_url":null,"mode":"test","counterparty":{"holder_id":"JNDD471123XJ4","holder_name":"Carson
+        Runolfsson","account_number":"723969738291465733","account_type":"clabe","institution":{"id":"90723","name":"Cuenca","country":"mx"}},"account_number":{"id":"acno_326dzRGqxLee3j9TkaBBBMfs2i0","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000203365","created_at":"2025-09-01T16:46:57Z","updated_at":"2025-09-01T16:54:40Z","mode":"test","description":"Updated
+        account number description","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"},"metadata":{},"return_reason":null}'
+  recorded_at: Mon, 15 Sep 2025 13:04:27 GMT
+recorded_with: VCR 6.3.1
