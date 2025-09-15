@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/account_numbers
+    body:
+      encoding: UTF-8
+      string: '{"account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","description":"Test
+        account number with idempotency","metadata":{"test_id":"12345"}}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/1.0.0
+      Idempotency-Key:
+      - test_account_number_creation_123
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 15 Sep 2025 14:15:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '349'
+      Connection:
+      - close
+      Cf-Ray:
+      - 97f8bd111e389d5e-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"db09652a2347900c9e96ea576c983a26"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - aea8245b-9766-414d-8dd4-d7d842eec09f
+      X-Runtime:
+      - '0.367326'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=HjM6CcsOKxOmHdgxwcmucl4Hm4s8RocNGrhc%2Fwzp6RSAVpZa8LmYPJ80vuevgz7OXhqyQg8xFEbALEoV%2FAZUq1Oiy9hoyevJCdrL4XZ2xr%2BzSAIdLYhufTbRAvWxl9tp"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=32046&min_rtt=31823&rtt_var=12093&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=2050&delivery_rate=133865&cwnd=252&unsent_bytes=0&cid=572c0657e0822b97&ts=698&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"id":"acno_32jtLIBHODOQzsrA0myPDSoTGaL","account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","number":"735969000000204474","created_at":"2025-09-15T14:15:51Z","updated_at":"2025-09-15T14:15:51Z","mode":"test","description":"Test
+        account number with idempotency","metadata":{"test_id":"12345"},"status":"enabled","is_root":false,"object":"account_number"}'
+  recorded_at: Mon, 15 Sep 2025 14:15:51 GMT
+recorded_with: VCR 6.3.1
