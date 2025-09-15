@@ -12,7 +12,7 @@
 
 - **V2 Client - Transfers API Implementation**: Partial implementation of Transfers API endpoints in `Fintoc::V2::Client`
   - **Entities**: List and retrieve business entities
-  - **Transfer Accounts**: Create, read, update, and list transfer accounts
+  - **Accounts**: Create, read, update, and list accounts
   - **Account Numbers**: Manage account numbers/CLABEs
   - **Transfers**: Create, retrieve, list, and return transfers
   - **Simulation**: Simulate receiving transfers for testing

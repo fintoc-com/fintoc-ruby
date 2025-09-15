@@ -28,7 +28,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Get movements](#get-movements)
     - [Transfers API Examples](#transfers-api-examples)
       - [Entities](#entities)
-      - [Transfer Accounts](#transfer-accounts)
+      - [Accounts](#accounts)
       - [Account Numbers](#account-numbers)
       - [Transfers](#transfers)
       - [Simulate](#simulate)
@@ -115,7 +115,7 @@ client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 entities = client.v2.entities.list
 entity = client.v2.entities.get('entity_id')
 
-# Transfer Accounts
+# Accounts
 accounts = client.v2.accounts.list
 account = client.v2.accounts.get('account_id')
 account = client.v2.accounts.create(entity_id: 'entity_id', description: 'My Account')
@@ -273,14 +273,14 @@ You can also list entities with pagination:
 entities = client.v2.entities.list(limit: 10, starting_after: 'entity_id')
 ```
 
-#### Transfer Accounts
+#### Accounts
 
 ```ruby
 require 'fintoc'
 
 client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 
-# Create a transfer account
+# Create an account
 account = client.v2.accounts.create(
   entity_id: 'entity_id',
   description: 'My Business Account'
