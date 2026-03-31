@@ -1,4 +1,5 @@
 require 'money'
+require 'fintoc/v2/managers/account_statements_manager'
 
 module Fintoc
   module V2
@@ -79,6 +80,10 @@ module Fintoc
           currency: @currency,
           idempotency_key:
         )
+      end
+
+      def account_statements
+        @account_statements_manager ||= Managers::AccountStatementsManager.new(@client, @id)
       end
 
       private
