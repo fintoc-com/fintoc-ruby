@@ -1,5 +1,6 @@
 require 'money'
 require 'fintoc/v2/managers/account_statements_manager'
+require 'fintoc/v2/managers/movements_manager'
 
 module Fintoc
   module V2
@@ -84,6 +85,10 @@ module Fintoc
 
       def account_statements
         @account_statements ||= Managers::AccountStatementsManager.new(@client, @id)
+      end
+
+      def movements
+        @movements ||= Managers::MovementsManager.new(@client, @id)
       end
 
       private
