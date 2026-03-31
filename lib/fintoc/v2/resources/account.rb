@@ -83,7 +83,7 @@ module Fintoc
       end
 
       def account_statements
-        @account_statements_manager ||= Managers::AccountStatementsManager.new(@client, @id)
+        @account_statements ||= Managers::AccountStatementsManager.new(@client, @id)
       end
 
       private
