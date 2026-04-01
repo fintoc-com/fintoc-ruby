@@ -2,7 +2,8 @@ module Fintoc
   module V2
     class AccountNumber
       attr_reader :id, :object, :description, :number, :created_at, :updated_at,
-                  :mode, :status, :is_root, :account_id, :metadata
+                  :mode, :status, :is_root, :account_id, :metadata,
+                  :last_transfer_at, :deleted_at
 
       def initialize(
         id:,
@@ -16,6 +17,8 @@ module Fintoc
         is_root:,
         account_id:,
         metadata:,
+        last_transfer_at: nil,
+        deleted_at: nil,
         client: nil,
         **
       )
@@ -30,6 +33,8 @@ module Fintoc
         @is_root = is_root
         @account_id = account_id
         @metadata = metadata
+        @last_transfer_at = last_transfer_at
+        @deleted_at = deleted_at
         @client = client
       end
 
@@ -84,9 +89,8 @@ module Fintoc
       private
 
       def refresh_from_account_number(account_number)
-        unless account_number.id == @id
-          raise ArgumentError, 'AccountNumber must be the same instance'
-        end
+        raise ArgumentError, 'AccountNumber must be the same instance' unless
+          account_number.id == @id
 
         @object = account_number.object
         @description = account_number.description
@@ -98,6 +102,8 @@ module Fintoc
         @is_root = account_number.is_root
         @account_id = account_number.account_id
         @metadata = account_number.metadata
+        @last_transfer_at = account_number.last_transfer_at
+        @deleted_at = account_number.deleted_at
 
         self
       end

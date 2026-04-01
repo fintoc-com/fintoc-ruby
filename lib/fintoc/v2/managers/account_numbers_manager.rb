@@ -29,6 +29,10 @@ module Fintoc
           build_account_number(data)
         end
 
+        def delete(account_number_id)
+          _delete_account_number(account_number_id)
+        end
+
         private
 
         def _create_account_number(
@@ -53,6 +57,10 @@ module Fintoc
         def _update_account_number(account_number_id, idempotency_key: nil, **params)
           @client.patch(version: :v2, idempotency_key:)
                  .call("account_numbers/#{account_number_id}", **params)
+        end
+
+        def _delete_account_number(account_number_id)
+          @client.delete(version: :v2).call("account_numbers/#{account_number_id}")
         end
 
         def build_account_number(data)

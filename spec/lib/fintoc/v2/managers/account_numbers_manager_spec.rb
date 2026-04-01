@@ -135,4 +135,20 @@ RSpec.describe Fintoc::V2::Managers::AccountNumbersManager do
       end
     end
   end
+
+  describe '#delete' do
+    let(:delete_proc) { instance_double(Proc) }
+
+    before do
+      allow(client).to receive(:delete).with(version: :v2).and_return(delete_proc)
+      allow(delete_proc)
+        .to receive(:call)
+        .with("account_numbers/#{account_number_id}")
+        .and_return(true)
+    end
+
+    it 'calls delete on the client' do
+      expect(manager.delete(account_number_id)).to be true
+    end
+  end
 end
