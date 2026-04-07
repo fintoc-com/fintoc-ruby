@@ -189,6 +189,30 @@ RSpec.describe Fintoc::V2::Account do
     end
   end
 
+  describe '#account_statements' do
+    it 'returns an AccountStatementsManager instance' do
+      expect(account.account_statements).to be_an_instance_of(Fintoc::V2::Managers::AccountStatementsManager)
+    end
+
+    it 'memoizes the manager instance' do
+      first_call = account.account_statements
+      second_call = account.account_statements
+      expect(first_call).to be(second_call)
+    end
+  end
+
+  describe '#movements' do
+    it 'returns a MovementsManager instance' do
+      expect(account.movements).to be_an_instance_of(Fintoc::V2::Managers::MovementsManager)
+    end
+
+    it 'memoizes the manager instance' do
+      first_call = account.movements
+      second_call = account.movements
+      expect(first_call).to be(second_call)
+    end
+  end
+
   describe '#simulate_receive_transfer' do
     let(:expected_transfer) { instance_double(Fintoc::V2::Transfer) }
 
