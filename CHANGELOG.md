@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 - 2026-04-08
+
+### 🚀 New Features
+
+- **Account Statements**: Added `account_statements` resource under v2 accounts for retrieving account statements
+- **Account Number Deletion**: Added `delete` method for account numbers in the v2 API
+- **Movements**: Added `movements` resource under v2 accounts
+
 ## 1.1.0 - 2025-09-15
 
 ### 🚀 New Features
