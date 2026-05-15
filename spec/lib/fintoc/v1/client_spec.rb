@@ -26,4 +26,6 @@ RSpec.describe Fintoc::V1::Client do
   end
 
   it_behaves_like 'a client with links manager'
+
+  it_behaves_like 'a client with webhook endpoints manager'
 end
