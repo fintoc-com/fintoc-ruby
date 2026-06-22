@@ -1,7 +1,9 @@
+require 'fintoc/v2/managers/onboardings_manager'
+
 module Fintoc
   module V2
     class Entity
-      attr_reader :object, :mode, :id, :holder_name, :holder_id, :is_root
+      attr_reader :object, :mode, :id, :holder_name, :holder_id, :is_root, :status, :country_code
 
       def initialize(
         object:,
@@ -10,6 +12,8 @@ module Fintoc
         holder_name:,
         holder_id:,
         is_root:,
+        status: nil,
+        country_code: nil,
         client: nil,
         **
       )
@@ -19,6 +23,8 @@ module Fintoc
         @holder_name = holder_name
         @holder_id = holder_id
         @is_root = is_root
+        @status = status
+        @country_code = country_code
         @client = client
       end
 
@@ -29,6 +35,10 @@ module Fintoc
       def refresh
         fresh_entity = @client.entities.get(@id)
         refresh_from_entity(fresh_entity)
+      end
+
+      def onboardings
+        @onboardings ||= Managers::OnboardingsManager.new(@client, @id)
       end
 
       private
@@ -43,6 +53,8 @@ module Fintoc
         @holder_name = entity.holder_name
         @holder_id = entity.holder_id
         @is_root = entity.is_root
+        @status = entity.status
+        @country_code = entity.country_code
 
         self
       end

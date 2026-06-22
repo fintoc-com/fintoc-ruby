@@ -38,9 +38,13 @@ module Fintoc
       request('patch', version:, use_jws:, idempotency_key:)
     end
 
+    def put(version: :v1, use_jws: false, idempotency_key: nil)
+      request('put', version:, use_jws:, idempotency_key:)
+    end
+
     def request(method, version: :v1, use_jws: false, idempotency_key: nil)
-      proc do |resource, **kwargs|
-        parameters = params(method, **kwargs)
+      proc do |resource, form: nil, **kwargs|
+        parameters = form ? { form: build_form(form) } : params(method, **kwargs)
         response = make_request(method, resource, parameters, version:, use_jws:, idempotency_key:)
         content = JSON.parse(response.body, symbolize_names: true)
 
@@ -127,6 +131,16 @@ module Fintoc
       else
         { json: { **@default_params, **kwargs } }
       end
+    end
+
+    def build_form(form)
+      form.transform_values do |value|
+        file?(value) ? HTTP::FormData::File.new(value) : value
+      end
+    end
+
+    def file?(value)
+      value.respond_to?(:read) || (value.is_a?(String) && File.file?(value))
     end
 
     def raise_custom_error(error)

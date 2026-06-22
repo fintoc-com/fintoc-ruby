@@ -12,6 +12,8 @@ RSpec.describe Fintoc::V2::Entity do
       holder_name: 'Test Company LLC',
       holder_id: '12345678-9',
       is_root: true,
+      status: 'active',
+      country_code: 'CL',
       client: client
     }
   end
@@ -30,8 +32,36 @@ RSpec.describe Fintoc::V2::Entity do
         id: 'ent_12345',
         holder_name: 'Test Company LLC',
         holder_id: '12345678-9',
+        is_root: true,
+        status: 'active',
+        country_code: 'CL'
+      )
+    end
+
+    it 'defaults status and country_code to nil when not provided' do
+      minimal = described_class.new(
+        object: 'entity',
+        mode: 'test',
+        id: 'ent_12345',
+        holder_name: 'Test Company LLC',
+        holder_id: '12345678-9',
         is_root: true
       )
+
+      expect(minimal).to have_attributes(status: nil, country_code: nil)
+    end
+  end
+
+  describe '#onboardings' do
+    it 'returns an OnboardingsManager instance' do
+      expect(entity.onboardings)
+        .to be_an_instance_of(Fintoc::V2::Managers::OnboardingsManager)
+    end
+
+    it 'memoizes the manager instance' do
+      first_call = entity.onboardings
+      second_call = entity.onboardings
+      expect(first_call).to be(second_call)
     end
   end
 
