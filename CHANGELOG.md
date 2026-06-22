@@ -1,16 +1,5 @@
 # Changelog
 
-## Unreleased
-
-### 🚀 New Features
-
-- **Onboardings**: Added the full onboarding lifecycle under v2 entities. Onboardings are nested off an `Entity` instance via `entity.onboardings`:
-  - `list`, `get`, and `create` (the create body is passed through as-is and validated by the API)
-  - `submit` to send an onboarding for review
-  - `upload_document` and `upload_shareholder_document` for multipart document uploads
-- **Multipart uploads**: Added multipart `form` support and a `put` verb to the HTTP layer to back the onboarding document uploads (uploads are not JWS-signed).
-- **Entity attributes**: Added `status` and `country_code` to the v2 `Entity` resource.
-
 ## 1.2.0 - 2026-04-08
 
 ### 🚀 New Features
