@@ -175,6 +175,25 @@ RSpec.describe Fintoc::BaseClient do
       end
     end
 
+    context 'when a form is given' do
+      before do
+        allow(mock_response).to receive_messages(
+          body: '{}', status: mock_status, headers: mock_headers
+        )
+        allow(mock_status).to receive_messages(client_error?: false, server_error?: false)
+        allow(mock_headers).to receive(:get).with('link').and_return(nil)
+        allow(client).to receive(:make_request).and_return(mock_response)
+      end
+
+      it 'builds a form body instead of params' do
+        pdf = 'spec/support/fixtures/sample_document.pdf'
+        client.request('put').call('test/resource', form: { file: pdf })
+
+        expect(client).to have_received(:make_request)
+          .with('put', 'test/resource', hash_including(:form), any_args)
+      end
+    end
+
     context 'when HTTP request returns an error' do
       let(:error_response_body) do
         {
@@ -325,21 +344,22 @@ RSpec.describe Fintoc::BaseClient do
   end
 
   describe '#params' do
-    it 'wraps file form values and leaves other fields untouched' do
-      result = client.send(:params, 'put',
-                           form: { file: 'spec/support/fixtures/sample_document.pdf',
-                                   description: 'contract' })
-
-      expect(result[:form][:file]).to be_a(HTTP::FormData::File)
-      expect(result[:form][:description]).to eq('contract')
-    end
-
     it 'builds a JSON body for non-GET requests' do
       expect(client.send(:params, 'post', amount: 100)).to eq(json: { amount: 100 })
     end
 
     it 'builds query params for GET requests' do
       expect(client.send(:params, 'get', page: 2)).to eq(params: { page: 2 })
+    end
+  end
+
+  describe '#build_form' do
+    it 'wraps file values and leaves other fields untouched' do
+      result = client.send(:build_form, file: 'spec/support/fixtures/sample_document.pdf',
+                                        text: 'x')
+
+      expect(result[:file]).to be_a(HTTP::FormData::File)
+      expect(result[:text]).to eq('x')
     end
   end
 

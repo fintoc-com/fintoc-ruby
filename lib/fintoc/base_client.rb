@@ -43,8 +43,8 @@ module Fintoc
     end
 
     def request(method, version: :v1, use_jws: false, idempotency_key: nil)
-      proc do |resource, **kwargs|
-        parameters = params(method, **kwargs)
+      proc do |resource, form: nil, **kwargs|
+        parameters = form ? { form: build_form(form) } : params(method, **kwargs)
         response = make_request(method, resource, parameters, version:, use_jws:, idempotency_key:)
         content = JSON.parse(response.body, symbolize_names: true)
 
@@ -126,17 +126,13 @@ module Fintoc
     end
 
     def params(method, **kwargs)
-      if kwargs.key?(:form)
-        { form: build_form(kwargs[:form]) }
-      elsif method == 'get'
+      if method == 'get'
         { params: { **@default_params, **kwargs } }
       else
         { json: { **@default_params, **kwargs } }
       end
     end
 
-    # Wraps file values (IO-like objects or file paths) as multipart file parts
-    # and leaves the rest as plain fields, so a form can mix files and fields.
     def build_form(form)
       form.transform_values do |value|
         file?(value) ? HTTP::FormData::File.new(value) : value
