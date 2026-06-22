@@ -38,6 +38,10 @@ module Fintoc
       request('patch', version:, use_jws:, idempotency_key:)
     end
 
+    def put(version: :v1, use_jws: false, idempotency_key: nil)
+      request('put', version:, use_jws:, idempotency_key:)
+    end
+
     def request(method, version: :v1, use_jws: false, idempotency_key: nil)
       proc do |resource, **kwargs|
         parameters = params(method, **kwargs)
@@ -122,11 +126,25 @@ module Fintoc
     end
 
     def params(method, **kwargs)
-      if method == 'get'
+      if kwargs.key?(:form)
+        { form: build_form(kwargs[:form]) }
+      elsif method == 'get'
         { params: { **@default_params, **kwargs } }
       else
         { json: { **@default_params, **kwargs } }
       end
+    end
+
+    # Wraps file values (IO-like objects or file paths) as multipart file parts
+    # and leaves the rest as plain fields, so a form can mix files and fields.
+    def build_form(form)
+      form.transform_values do |value|
+        file?(value) ? HTTP::FormData::File.new(value) : value
+      end
+    end
+
+    def file?(value)
+      value.respond_to?(:read) || (value.is_a?(String) && File.file?(value))
     end
 
     def raise_custom_error(error)

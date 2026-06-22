@@ -34,6 +34,13 @@ RSpec.describe Fintoc::BaseClient do
     end
   end
 
+  describe '#put' do
+    it 'returns a proc for PUT requests' do
+      put_request = client.put(version: :v1)
+      expect(put_request).to be_a(Proc)
+    end
+  end
+
   describe '#post' do
     it 'returns a proc for POST requests' do
       post_request = client.post(version: :v1)
@@ -314,6 +321,25 @@ RSpec.describe Fintoc::BaseClient do
         expect(mock_http_client)
           .not_to have_received(:headers).with(hash_including('Idempotency-Key'))
       end
+    end
+  end
+
+  describe '#params' do
+    it 'wraps file form values and leaves other fields untouched' do
+      result = client.send(:params, 'put',
+                           form: { file: 'spec/support/fixtures/sample_document.pdf',
+                                   description: 'contract' })
+
+      expect(result[:form][:file]).to be_a(HTTP::FormData::File)
+      expect(result[:form][:description]).to eq('contract')
+    end
+
+    it 'builds a JSON body for non-GET requests' do
+      expect(client.send(:params, 'post', amount: 100)).to eq(json: { amount: 100 })
+    end
+
+    it 'builds query params for GET requests' do
+      expect(client.send(:params, 'get', page: 2)).to eq(params: { page: 2 })
     end
   end
 
