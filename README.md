@@ -33,6 +33,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Transfers](#transfers)
       - [Simulate](#simulate)
       - [Account Verifications](#account-verifications)
+    - [Entity onboardings API Examples](#entity-onboardings-api-examples)
   - [Idempotency Keys](#idempotency-keys)
     - [Idempotency Examples](#idempotency-examples)
       - [Account Methods with Idempotency Key](#account-methods-with-idempotency-key)
@@ -149,6 +150,11 @@ simulated_transfer = client.v2.simulate.receive_transfer(
 account_verifications = client.v2.account_verifications.list
 account_verification = client.v2.account_verifications.get('account_verification_id')
 account_verification = client.v2.account_verifications.create(account_number: 'account_number')
+
+# Entity onboardings
+entity = client.v2.entities.get('entity_id')
+onboardings = entity.onboardings.list
+onboarding = entity.onboardings.get('onboarding_id')
 
 # TODO: Movements
 ```
@@ -384,6 +390,76 @@ account_verification = client.v2.account_verifications.get('account_verification
 
 # List all account verifications
 account_verifications = client.v2.account_verifications.list
+```
+
+### Entity onboardings API Examples
+
+An entity onboarding represents the onboarding process for an entity. You access it from
+an `Entity` instance (`entity.onboardings`); the full lifecycle is available: list,
+retrieve, create, submit, and upload documents to a slot.
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
+entity = client.v2.entities.get('entity_id')
+
+# List the onboardings of an entity (cursor-paginated, light shape)
+onboardings = entity.onboardings.list
+
+# Retrieve a single onboarding (full shape, includes shareholders and documents)
+onboarding = entity.onboardings.get('onboarding_id')
+puts onboarding            # 📋 Onboarding onbprc_0ujs... (in_progress)
+onboarding.shareholders    # => array of shareholder hashes
+onboarding.documents       # => array of document hashes
+
+# Create an onboarding. The nested structures are passed through as-is and
+# validated by the API.
+onboarding = entity.onboardings.create(
+  company_information: {
+    incorporation_date: '2020-01-01',
+    business_activity: 'Software',
+    legal_name: 'ACME Inc.',
+    fiscal_address: 'Av. Siempre Viva 123',
+    business_address: 'Av. Siempre Viva 123',
+    settlement_account: '1234567890',
+    phone: '+56912345678'
+  },
+  legal_representative: {
+    first_name: 'Jane',
+    last_name: 'Doe',
+    email: 'jane@acme.com',
+    nationality: 'CL',
+    identification_number: '12345678-9',
+    position: 'CEO'
+  },
+  transactional_profile: {
+    resource_origins: ['sales'],
+    monthly_amount_range: '0-1000000',
+    monthly_operations_range: '0-100'
+  },
+  shareholders: [
+    {
+      type: 'natural_person',
+      name: 'Jane',
+      last_name: 'Doe',
+      holder_id: '12345678-9',
+      nationality: 'CL',
+      percentage: 100
+    }
+  ]
+)
+
+# Upload a document for a given slot (multipart). `file:` accepts a path or an IO.
+entity.onboardings.upload_document('onboarding_id', 'slot_key', file: 'path/to/file.pdf')
+
+# Upload a document for a specific shareholder (multipart).
+entity.onboardings.upload_shareholder_document(
+  'onboarding_id', 'shareholder_id', file: 'path/to/file.pdf'
+)
+
+# Submit the onboarding for review.
+onboarding = entity.onboardings.submit('onboarding_id')
 ```
 
 ## Idempotency Keys
