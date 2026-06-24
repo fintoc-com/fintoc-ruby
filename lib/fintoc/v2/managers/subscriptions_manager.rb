@@ -38,6 +38,11 @@ module Fintoc
           build_subscription_item(data)
         end
 
+        def update_item(subscription_id, item_id, idempotency_key: nil, **params)
+          data = _update_item(subscription_id, item_id, idempotency_key:, **params)
+          build_subscription_item(data)
+        end
+
         private
 
         def _list_subscriptions(**params)
@@ -66,6 +71,11 @@ module Fintoc
         def _create_item(subscription_id, idempotency_key: nil, **params)
           @client.post(version: :v2, idempotency_key:)
                  .call("subscriptions/#{subscription_id}/items", **params)
+        end
+
+        def _update_item(subscription_id, item_id, idempotency_key: nil, **params)
+          @client.patch(version: :v2, idempotency_key:)
+                 .call("subscriptions/#{subscription_id}/items/#{item_id}", **params)
         end
 
         def build_subscription(data)

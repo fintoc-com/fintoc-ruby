@@ -84,6 +84,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       .and_return(item_data)
 
     allow(Fintoc::V2::Subscription).to receive(:new)
+    allow(patch_proc)
+      .to receive(:call)
+      .with("subscriptions/#{subscription_id}/items/#{item_id}", quantity: 2)
+      .and_return(item_data)
+
     allow(Fintoc::V2::SubscriptionItem).to receive(:new)
   end
 
@@ -135,6 +140,15 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       manager.create_item(subscription_id, price_data:, quantity: 1)
       expect(post_proc)
         .to have_received(:call).with("subscriptions/#{subscription_id}/items", price_data:, quantity: 1)
+      expect(Fintoc::V2::SubscriptionItem)
+        .to have_received(:new).with(**item_data)
+    end
+  end
+  describe '#update_item' do
+    it 'patches the item path and builds the subscription item' do
+      manager.update_item(subscription_id, item_id, quantity: 2)
+      expect(patch_proc)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/items/#{item_id}", quantity: 2)
       expect(Fintoc::V2::SubscriptionItem)
         .to have_received(:new).with(**item_data)
     end
