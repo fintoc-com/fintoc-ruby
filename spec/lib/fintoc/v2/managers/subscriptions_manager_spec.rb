@@ -48,6 +48,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       .with('subscriptions')
       .and_return([first_subscription_data, second_subscription_data])
 
+    allow(get_proc)
+      .to receive(:call)
+      .with("subscriptions/#{subscription_id}")
+      .and_return(first_subscription_data)
+
     allow(Fintoc::V2::Subscription).to receive(:new)
   end
 
@@ -58,6 +63,13 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:new).with(**first_subscription_data, client:)
       expect(Fintoc::V2::Subscription)
         .to have_received(:new).with(**second_subscription_data, client:)
+    end
+  end
+  describe '#get' do
+    it 'calls build_subscription with the response' do
+      manager.get(subscription_id)
+      expect(Fintoc::V2::Subscription)
+        .to have_received(:new).with(**first_subscription_data, client:)
     end
   end
 end
