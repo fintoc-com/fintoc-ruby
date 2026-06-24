@@ -46,6 +46,11 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
       .with('invoices')
       .and_return([first_invoice_data, second_invoice_data])
 
+    allow(get_proc)
+      .to receive(:call)
+      .with("invoices/#{invoice_id}")
+      .and_return(first_invoice_data)
+
     allow(Fintoc::V2::Invoice).to receive(:new)
   end
 
@@ -56,6 +61,14 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
         .to have_received(:new).with(**first_invoice_data, client:)
       expect(Fintoc::V2::Invoice)
         .to have_received(:new).with(**second_invoice_data, client:)
+    end
+  end
+
+  describe '#get' do
+    it 'calls build_invoice with the response' do
+      manager.get(invoice_id)
+      expect(Fintoc::V2::Invoice)
+        .to have_received(:new).with(**first_invoice_data, client:)
     end
   end
 end
