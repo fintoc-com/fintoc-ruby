@@ -5,6 +5,7 @@ require 'fintoc/v2/managers/account_numbers_manager'
 require 'fintoc/v2/managers/transfers_manager'
 require 'fintoc/v2/managers/simulate_manager'
 require 'fintoc/v2/managers/account_verifications_manager'
+require 'fintoc/v2/managers/invoices_manager'
 
 module Fintoc
   module V2
@@ -31,6 +32,10 @@ module Fintoc
 
       def account_verifications
         @account_verifications ||= Managers::AccountVerificationsManager.new(self)
+      end
+
+      def invoices
+        @invoices ||= Managers::InvoicesManager.new(self)
       end
     end
   end
