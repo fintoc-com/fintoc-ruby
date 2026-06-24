@@ -1,4 +1,5 @@
 require 'fintoc/v2/resources/subscription'
+require 'fintoc/v2/resources/subscription_item'
 
 module Fintoc
   module V2
@@ -32,6 +33,11 @@ module Fintoc
           build_subscription(data)
         end
 
+        def create_item(subscription_id, idempotency_key: nil, **params)
+          data = _create_item(subscription_id, idempotency_key:, **params)
+          build_subscription_item(data)
+        end
+
         private
 
         def _list_subscriptions(**params)
@@ -57,8 +63,17 @@ module Fintoc
                  .call("subscriptions/#{subscription_id}/cancel")
         end
 
+        def _create_item(subscription_id, idempotency_key: nil, **params)
+          @client.post(version: :v2, idempotency_key:)
+                 .call("subscriptions/#{subscription_id}/items", **params)
+        end
+
         def build_subscription(data)
           Fintoc::V2::Subscription.new(**data, client: @client)
+        end
+
+        def build_subscription_item(data)
+          Fintoc::V2::SubscriptionItem.new(**data)
         end
       end
     end

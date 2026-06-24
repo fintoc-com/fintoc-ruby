@@ -7,6 +7,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
   let(:patch_proc) { instance_double(Proc) }
   let(:manager) { described_class.new(client) }
   let(:subscription_id) { 'sub_123' }
+  let(:item_id) { 'si_123' }
+  let(:price_data) { { product: 'prod_123', amount: 10_000, currency: 'CLP' } }
+  let(:item_data) do
+    { id: item_id, object: 'subscription_item', price: { id: 'price_123' }, quantity: 1 }
+  end
   let(:items) { [{ price: 'price_123', quantity: 1 }] }
   let(:first_subscription_data) do
     {
@@ -73,7 +78,13 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       .with("subscriptions/#{subscription_id}/cancel")
       .and_return(first_subscription_data)
 
+    allow(post_proc)
+      .to receive(:call)
+      .with("subscriptions/#{subscription_id}/items", price_data:, quantity: 1)
+      .and_return(item_data)
+
     allow(Fintoc::V2::Subscription).to receive(:new)
+    allow(Fintoc::V2::SubscriptionItem).to receive(:new)
   end
 
   describe '#list' do
@@ -117,6 +128,15 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:call).with("subscriptions/#{subscription_id}/cancel")
       expect(Fintoc::V2::Subscription)
         .to have_received(:new).with(**first_subscription_data, client:)
+    end
+  end
+  describe '#create_item' do
+    it 'posts to the items path and builds the subscription item' do
+      manager.create_item(subscription_id, price_data:, quantity: 1)
+      expect(post_proc)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/items", price_data:, quantity: 1)
+      expect(Fintoc::V2::SubscriptionItem)
+        .to have_received(:new).with(**item_data)
     end
   end
 end
