@@ -3,8 +3,10 @@ require 'fintoc/v2/managers/subscriptions_manager'
 RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
   let(:client) { instance_double(Fintoc::BaseClient) }
   let(:get_proc) { instance_double(Proc) }
+  let(:post_proc) { instance_double(Proc) }
   let(:manager) { described_class.new(client) }
   let(:subscription_id) { 'sub_123' }
+  let(:items) { [{ price: 'price_123', quantity: 1 }] }
   let(:first_subscription_data) do
     {
       id: subscription_id,
@@ -42,6 +44,7 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
+    allow(client).to receive(:post).and_return(post_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -51,6 +54,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
     allow(get_proc)
       .to receive(:call)
       .with("subscriptions/#{subscription_id}")
+      .and_return(first_subscription_data)
+
+    allow(post_proc)
+      .to receive(:call)
+      .with('subscriptions', customer: 'cus_123', items:)
       .and_return(first_subscription_data)
 
     allow(Fintoc::V2::Subscription).to receive(:new)
@@ -68,6 +76,15 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
   describe '#get' do
     it 'calls build_subscription with the response' do
       manager.get(subscription_id)
+      expect(Fintoc::V2::Subscription)
+        .to have_received(:new).with(**first_subscription_data, client:)
+    end
+  end
+  describe '#create' do
+    it 'posts to subscriptions and builds the subscription' do
+      manager.create(customer: 'cus_123', items:)
+      expect(post_proc)
+        .to have_received(:call).with('subscriptions', customer: 'cus_123', items:)
       expect(Fintoc::V2::Subscription)
         .to have_received(:new).with(**first_subscription_data, client:)
     end
