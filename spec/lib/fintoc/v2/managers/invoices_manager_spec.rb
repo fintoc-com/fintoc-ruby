@@ -17,6 +17,7 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
       }
     ]
   end
+  let(:line_ids) { ['il_123'] }
   let(:first_invoice_data) do
     {
       id: invoice_id,
@@ -69,6 +70,11 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
       .with("invoices/#{invoice_id}/add_lines", lines:)
       .and_return(first_invoice_data)
 
+    allow(post_proc)
+      .to receive(:call)
+      .with("invoices/#{invoice_id}/remove_lines", lines: line_ids)
+      .and_return(first_invoice_data)
+
     allow(Fintoc::V2::Invoice).to receive(:new)
   end
 
@@ -95,6 +101,16 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
       manager.add_lines(invoice_id, lines:)
       expect(post_proc)
         .to have_received(:call).with("invoices/#{invoice_id}/add_lines", lines:)
+      expect(Fintoc::V2::Invoice)
+        .to have_received(:new).with(**first_invoice_data, client:)
+    end
+  end
+
+  describe '#remove_lines' do
+    it 'posts to the remove_lines path and builds the invoice' do
+      manager.remove_lines(invoice_id, lines: line_ids)
+      expect(post_proc)
+        .to have_received(:call).with("invoices/#{invoice_id}/remove_lines", lines: line_ids)
       expect(Fintoc::V2::Invoice)
         .to have_received(:new).with(**first_invoice_data, client:)
     end

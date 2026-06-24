@@ -22,6 +22,11 @@ module Fintoc
           build_invoice(data)
         end
 
+        def remove_lines(invoice_id, lines:, idempotency_key: nil)
+          data = _remove_lines(invoice_id, lines:, idempotency_key:)
+          build_invoice(data)
+        end
+
         private
 
         def _list_invoices(**params)
@@ -35,6 +40,11 @@ module Fintoc
         def _add_lines(invoice_id, lines:, idempotency_key: nil)
           @client.post(version: :v2, idempotency_key:)
                  .call("invoices/#{invoice_id}/add_lines", lines:)
+        end
+
+        def _remove_lines(invoice_id, lines:, idempotency_key: nil)
+          @client.post(version: :v2, idempotency_key:)
+                 .call("invoices/#{invoice_id}/remove_lines", lines:)
         end
 
         def build_invoice(data)
