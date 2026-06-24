@@ -5,6 +5,7 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
   let(:get_proc) { instance_double(Proc) }
   let(:post_proc) { instance_double(Proc) }
   let(:patch_proc) { instance_double(Proc) }
+  let(:delete_proc) { instance_double(Proc) }
   let(:manager) { described_class.new(client) }
   let(:subscription_id) { 'sub_123' }
   let(:item_id) { 'si_123' }
@@ -50,8 +51,8 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
-    allow(client).to receive(:post).and_return(post_proc)
-    allow(client).to receive(:patch).and_return(patch_proc)
+    allow(client).to receive_messages(post: post_proc, patch: patch_proc)
+    allow(client).to receive(:delete).with(version: :v2).and_return(delete_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -89,6 +90,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       .with("subscriptions/#{subscription_id}/items/#{item_id}", quantity: 2)
       .and_return(item_data)
 
+    allow(delete_proc)
+      .to receive(:call)
+      .with("subscriptions/#{subscription_id}/items/#{item_id}")
+      .and_return(item_data)
+
     allow(Fintoc::V2::SubscriptionItem).to receive(:new)
   end
 
@@ -101,6 +107,7 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:new).with(**second_subscription_data, client:)
     end
   end
+
   describe '#get' do
     it 'calls build_subscription with the response' do
       manager.get(subscription_id)
@@ -108,6 +115,7 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:new).with(**first_subscription_data, client:)
     end
   end
+
   describe '#create' do
     it 'posts to subscriptions and builds the subscription' do
       manager.create(customer: 'cus_123', items:)
@@ -117,15 +125,18 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:new).with(**first_subscription_data, client:)
     end
   end
+
   describe '#update' do
     it 'patches the subscription and builds it' do
       manager.update(subscription_id, trial_end: '2026-12-31T00:00:00Z')
       expect(patch_proc)
-        .to have_received(:call).with("subscriptions/#{subscription_id}", trial_end: '2026-12-31T00:00:00Z')
+        .to have_received(:call).with("subscriptions/#{subscription_id}",
+                                      trial_end: '2026-12-31T00:00:00Z')
       expect(Fintoc::V2::Subscription)
         .to have_received(:new).with(**first_subscription_data, client:)
     end
   end
+
   describe '#cancel' do
     it 'posts to the cancel path and builds the subscription' do
       manager.cancel(subscription_id)
@@ -135,20 +146,34 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
         .to have_received(:new).with(**first_subscription_data, client:)
     end
   end
+
   describe '#create_item' do
     it 'posts to the items path and builds the subscription item' do
       manager.create_item(subscription_id, price_data:, quantity: 1)
       expect(post_proc)
-        .to have_received(:call).with("subscriptions/#{subscription_id}/items", price_data:, quantity: 1)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/items", price_data:,
+                                                                                quantity: 1)
       expect(Fintoc::V2::SubscriptionItem)
         .to have_received(:new).with(**item_data)
     end
   end
+
   describe '#update_item' do
     it 'patches the item path and builds the subscription item' do
       manager.update_item(subscription_id, item_id, quantity: 2)
       expect(patch_proc)
-        .to have_received(:call).with("subscriptions/#{subscription_id}/items/#{item_id}", quantity: 2)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/items/#{item_id}",
+                                      quantity: 2)
+      expect(Fintoc::V2::SubscriptionItem)
+        .to have_received(:new).with(**item_data)
+    end
+  end
+
+  describe '#delete_item' do
+    it 'deletes the item path and builds the subscription item' do
+      manager.delete_item(subscription_id, item_id)
+      expect(delete_proc)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/items/#{item_id}")
       expect(Fintoc::V2::SubscriptionItem)
         .to have_received(:new).with(**item_data)
     end
