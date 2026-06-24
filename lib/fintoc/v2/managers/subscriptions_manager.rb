@@ -27,6 +27,11 @@ module Fintoc
           build_subscription(data)
         end
 
+        def cancel(subscription_id, idempotency_key: nil)
+          data = _cancel_subscription(subscription_id, idempotency_key:)
+          build_subscription(data)
+        end
+
         private
 
         def _list_subscriptions(**params)
@@ -45,6 +50,11 @@ module Fintoc
         def _update_subscription(subscription_id, idempotency_key: nil, **params)
           @client.patch(version: :v2, idempotency_key:)
                  .call("subscriptions/#{subscription_id}", **params)
+        end
+
+        def _cancel_subscription(subscription_id, idempotency_key: nil)
+          @client.post(version: :v2, idempotency_key:)
+                 .call("subscriptions/#{subscription_id}/cancel")
         end
 
         def build_subscription(data)

@@ -68,6 +68,11 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       .with("subscriptions/#{subscription_id}", trial_end: '2026-12-31T00:00:00Z')
       .and_return(first_subscription_data)
 
+    allow(post_proc)
+      .to receive(:call)
+      .with("subscriptions/#{subscription_id}/cancel")
+      .and_return(first_subscription_data)
+
     allow(Fintoc::V2::Subscription).to receive(:new)
   end
 
@@ -101,6 +106,15 @@ RSpec.describe Fintoc::V2::Managers::SubscriptionsManager do
       manager.update(subscription_id, trial_end: '2026-12-31T00:00:00Z')
       expect(patch_proc)
         .to have_received(:call).with("subscriptions/#{subscription_id}", trial_end: '2026-12-31T00:00:00Z')
+      expect(Fintoc::V2::Subscription)
+        .to have_received(:new).with(**first_subscription_data, client:)
+    end
+  end
+  describe '#cancel' do
+    it 'posts to the cancel path and builds the subscription' do
+      manager.cancel(subscription_id)
+      expect(post_proc)
+        .to have_received(:call).with("subscriptions/#{subscription_id}/cancel")
       expect(Fintoc::V2::Subscription)
         .to have_received(:new).with(**first_subscription_data, client:)
     end
