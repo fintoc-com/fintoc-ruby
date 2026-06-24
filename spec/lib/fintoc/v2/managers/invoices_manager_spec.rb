@@ -4,8 +4,10 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
   let(:client) { instance_double(Fintoc::BaseClient) }
   let(:get_proc) { instance_double(Proc) }
   let(:post_proc) { instance_double(Proc) }
+  let(:patch_proc) { instance_double(Proc) }
   let(:manager) { described_class.new(client) }
   let(:invoice_id) { 'inv_123' }
+  let(:line_id) { 'il_123' }
   let(:lines) do
     [
       {
@@ -18,6 +20,17 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
     ]
   end
   let(:line_ids) { ['il_123'] }
+  let(:line_data) do
+    {
+      id: line_id,
+      object: 'line_item',
+      amount: 10_000,
+      currency: 'CLP',
+      period_end: '2026-02-01',
+      period_start: '2026-01-01',
+      quantity: 2
+    }
+  end
   let(:first_invoice_data) do
     {
       id: invoice_id,
@@ -53,7 +66,7 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
 
   before do
     allow(client).to receive(:get).with(version: :v2).and_return(get_proc)
-    allow(client).to receive(:post).and_return(post_proc)
+    allow(client).to receive_messages(post: post_proc, patch: patch_proc)
 
     allow(get_proc)
       .to receive(:call)
@@ -75,7 +88,13 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
       .with("invoices/#{invoice_id}/remove_lines", lines: line_ids)
       .and_return(first_invoice_data)
 
+    allow(patch_proc)
+      .to receive(:call)
+      .with("invoices/#{invoice_id}/lines/#{line_id}", quantity: 2)
+      .and_return(line_data)
+
     allow(Fintoc::V2::Invoice).to receive(:new)
+    allow(Fintoc::V2::Line).to receive(:new)
   end
 
   describe '#list' do
@@ -113,6 +132,16 @@ RSpec.describe Fintoc::V2::Managers::InvoicesManager do
         .to have_received(:call).with("invoices/#{invoice_id}/remove_lines", lines: line_ids)
       expect(Fintoc::V2::Invoice)
         .to have_received(:new).with(**first_invoice_data, client:)
+    end
+  end
+
+  describe '#update_line' do
+    it 'patches the line path and builds the line' do
+      manager.update_line(invoice_id, line_id, quantity: 2)
+      expect(patch_proc)
+        .to have_received(:call).with("invoices/#{invoice_id}/lines/#{line_id}", quantity: 2)
+      expect(Fintoc::V2::Line)
+        .to have_received(:new).with(**line_data)
     end
   end
 end

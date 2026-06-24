@@ -1,4 +1,5 @@
 require 'fintoc/v2/resources/invoice'
+require 'fintoc/v2/resources/line'
 
 module Fintoc
   module V2
@@ -27,6 +28,11 @@ module Fintoc
           build_invoice(data)
         end
 
+        def update_line(invoice_id, line_id, idempotency_key: nil, **params)
+          data = _update_line(invoice_id, line_id, idempotency_key:, **params)
+          build_line(data)
+        end
+
         private
 
         def _list_invoices(**params)
@@ -47,8 +53,17 @@ module Fintoc
                  .call("invoices/#{invoice_id}/remove_lines", lines:)
         end
 
+        def _update_line(invoice_id, line_id, idempotency_key: nil, **params)
+          @client.patch(version: :v2, idempotency_key:)
+                 .call("invoices/#{invoice_id}/lines/#{line_id}", **params)
+        end
+
         def build_invoice(data)
           Fintoc::V2::Invoice.new(**data, client: @client)
+        end
+
+        def build_line(data)
+          Fintoc::V2::Line.new(**data)
         end
       end
     end
