@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.0 - 2026-07-07
+
+### 🚀 New Features
+
+- **Entity Onboardings**: Added `onboardings` resource under v2 entities to manage the onboarding process
+  - `list`, `get`, `create` and `submit` methods for onboardings
+  - `upload_document` to upload a document to a specific slot
+  - `upload_shareholder_document` to upload a shareholder's document
+  - `upload_legal_representative_document` to upload a legal representative's document
+- **Entity Creation**: Added `create` method for entities in the v2 API
+- **Webhook Endpoints**: Added `webhook_endpoints` manager to create, retrieve, list, update, delete and test webhook endpoints
+- **Multipart Uploads**: The HTTP client now supports `multipart/form-data` requests, used for document uploads
+
 ## 1.2.0 - 2026-04-08
 
 ### 🚀 New Features
