@@ -8,6 +8,7 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
   let(:entity_id) { 'ent_12345' }
   let(:onboarding_id) { 'onbprc_0ujs' }
   let(:shareholder_id) { 'onbsh_123' }
+  let(:legal_representative_id) { 'onblr_123' }
   let(:base_path) { "entities/#{entity_id}/onboardings" }
   let(:manager) { described_class.new(client, entity_id) }
 
@@ -39,6 +40,7 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
     first_onboarding_data.merge(
       submittable: true,
       data: {},
+      legal_representatives: [],
       shareholders: [],
       documents: []
     )
@@ -47,7 +49,7 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
   let(:create_params) do
     {
       company_information: { legal_name: 'ACME Inc.' },
-      legal_representative: { first_name: 'Jane', last_name: 'Doe' },
+      legal_representatives: [{ first_name: 'Jane', last_name: 'Doe' }],
       transactional_profile: { monthly_amount_range: '0-1000' },
       shareholders: [{ type: 'natural_person', name: 'Jane', percentage: 100 }]
     }
@@ -211,6 +213,41 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
       it 'passes idempotency_key to the PUT method' do
         manager.upload_shareholder_document(
           onboarding_id, shareholder_id, file: file_path, idempotency_key:
+        )
+
+        expect(client).to have_received(:put).with(version: :v2, idempotency_key:)
+      end
+    end
+  end
+
+  describe '#upload_legal_representative_document' do
+    let(:slot_key) { 'identification' }
+    let(:file_path) { 'spec/support/fixtures/sample_document.pdf' }
+
+    it 'puts a multipart file to the legal representative document slot path' do
+      manager.upload_legal_representative_document(
+        onboarding_id, legal_representative_id, slot_key, file: file_path
+      )
+
+      expect(client).to have_received(:put).with(version: :v2, idempotency_key: nil)
+      expect(put_proc).to have_received(:call).with(
+        "#{base_path}/#{onboarding_id}/legal_representatives" \
+        "/#{legal_representative_id}/documents/#{slot_key}",
+        form: { file: file_path }
+      )
+      expect(Fintoc::V2::Onboarding).to have_received(:new).with(**full_onboarding_data, client:)
+    end
+
+    context 'when idempotency_key is provided' do
+      let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
+
+      before do
+        allow(client).to receive(:put).with(version: :v2, idempotency_key:).and_return(put_proc)
+      end
+
+      it 'passes idempotency_key to the PUT method' do
+        manager.upload_legal_representative_document(
+          onboarding_id, legal_representative_id, slot_key, file: file_path, idempotency_key:
         )
 
         expect(client).to have_received(:put).with(version: :v2, idempotency_key:)

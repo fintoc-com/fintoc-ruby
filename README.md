@@ -407,11 +407,13 @@ entity = client.v2.entities.get('entity_id')
 # List the onboardings of an entity (cursor-paginated, light shape)
 onboardings = entity.onboardings.list
 
-# Retrieve a single onboarding (full shape, includes shareholders and documents)
+# Retrieve a single onboarding (full shape, includes legal representatives,
+# shareholders and documents)
 onboarding = entity.onboardings.get('onboarding_id')
-puts onboarding            # 📋 Onboarding onbprc_0ujs... (in_progress)
-onboarding.shareholders    # => array of shareholder hashes
-onboarding.documents       # => array of document hashes
+puts onboarding                     # 📋 Onboarding onbprc_0ujs... (in_progress)
+onboarding.legal_representatives    # => array of legal representative hashes
+onboarding.shareholders             # => array of shareholder hashes
+onboarding.documents                # => array of document hashes
 
 # Create an onboarding. The nested structures are passed through as-is and
 # validated by the API.
@@ -425,14 +427,16 @@ onboarding = entity.onboardings.create(
     settlement_account: '1234567890',
     phone: '+56912345678'
   },
-  legal_representative: {
-    first_name: 'Jane',
-    last_name: 'Doe',
-    email: 'jane@acme.com',
-    nationality: 'CL',
-    identification_number: '12345678-9',
-    position: 'CEO'
-  },
+  legal_representatives: [
+    {
+      first_name: 'Jane',
+      last_name: 'Doe',
+      email: 'jane@acme.com',
+      nationality: 'CL',
+      identification_number: '12345678-9',
+      position: 'CEO'
+    }
+  ],
   transactional_profile: {
     resource_origins: ['sales'],
     monthly_amount_range: '0-1000000',
@@ -456,6 +460,12 @@ entity.onboardings.upload_document('onboarding_id', 'slot_key', file: 'path/to/f
 # Upload a document for a specific shareholder (multipart).
 entity.onboardings.upload_shareholder_document(
   'onboarding_id', 'shareholder_id', file: 'path/to/file.pdf'
+)
+
+# Upload a document for a specific legal representative (multipart).
+# Slots: `identification` and `power_of_attorney`.
+entity.onboardings.upload_legal_representative_document(
+  'onboarding_id', 'legal_representative_id', 'identification', file: 'path/to/file.pdf'
 )
 
 # Submit the onboarding for review.

@@ -40,6 +40,15 @@ module Fintoc
           build_onboarding(data)
         end
 
+        def upload_legal_representative_document(
+          onboarding_id, legal_representative_id, slot_key, file:, idempotency_key: nil
+        )
+          data = _upload_legal_representative_document(
+            onboarding_id, legal_representative_id, slot_key, file:, idempotency_key:
+          )
+          build_onboarding(data)
+        end
+
         private
 
         def base_path
@@ -73,6 +82,16 @@ module Fintoc
         def _upload_shareholder_document(onboarding_id, shareholder_id, file:, idempotency_key: nil)
           @client.put(version: :v2, idempotency_key:).call(
             "#{base_path}/#{onboarding_id}/shareholders/#{shareholder_id}/document",
+            form: { file: }
+          )
+        end
+
+        def _upload_legal_representative_document(
+          onboarding_id, legal_representative_id, slot_key, file:, idempotency_key: nil
+        )
+          @client.put(version: :v2, idempotency_key:).call(
+            "#{base_path}/#{onboarding_id}/legal_representatives" \
+            "/#{legal_representative_id}/documents/#{slot_key}",
             form: { file: }
           )
         end
