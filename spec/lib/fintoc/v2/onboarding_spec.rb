@@ -4,6 +4,28 @@ RSpec.describe Fintoc::V2::Onboarding do
   let(:api_key) { 'sk_test_SeCreT-aPi_KeY' }
   let(:client) { Fintoc::V2::Client.new(api_key) }
 
+  let(:legal_representative_data) do
+    {
+      id: 'onblr_123',
+      object: 'onboarding_legal_representative',
+      first_name: 'Jane',
+      last_name: 'Doe',
+      email: 'jane@acme.com',
+      nationality: 'mx',
+      identification_number: 'AAAA010101HDFAAA01',
+      position: 'Director General',
+      documents: [
+        {
+          slot_key: 'identification',
+          status: 'uploaded',
+          filename: 'id.pdf',
+          uploaded_at: '2026-01-15T14:30:00Z'
+        },
+        { slot_key: 'power_of_attorney', status: 'missing' }
+      ]
+    }
+  end
+
   let(:shareholder_data) do
     {
       id: 'onbsh_123',
@@ -38,6 +60,7 @@ RSpec.describe Fintoc::V2::Onboarding do
       reviewed_at: nil,
       submittable: false,
       data: { company_information: { legal_name: 'ACME Inc.' } },
+      legal_representatives: [legal_representative_data],
       shareholders: [shareholder_data],
       documents: [document_data],
       client: client
@@ -62,9 +85,14 @@ RSpec.describe Fintoc::V2::Onboarding do
         reviewed_at: nil,
         submittable: false,
         data: { company_information: { legal_name: 'ACME Inc.' } },
+        legal_representatives: [legal_representative_data],
         shareholders: [shareholder_data],
         documents: [document_data]
       )
+    end
+
+    it 'keeps legal representatives as raw hashes' do
+      expect(onboarding.legal_representatives.first).to eq(legal_representative_data)
     end
 
     it 'keeps shareholders as raw hashes' do
@@ -98,6 +126,7 @@ RSpec.describe Fintoc::V2::Onboarding do
         source: 'dashboard',
         submittable: nil,
         data: nil,
+        legal_representatives: nil,
         shareholders: nil,
         documents: nil
       )

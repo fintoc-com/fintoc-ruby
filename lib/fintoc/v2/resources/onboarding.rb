@@ -2,7 +2,7 @@ module Fintoc
   module V2
     class Onboarding
       attr_reader :object, :id, :entity_id, :status, :source, :submitted_at, :reviewed_at,
-                  :submittable, :data, :shareholders, :documents
+                  :submittable, :data, :legal_representatives, :shareholders, :documents
 
       def initialize(
         object:,
@@ -14,6 +14,7 @@ module Fintoc
         reviewed_at: nil,
         submittable: nil,
         data: nil,
+        legal_representatives: nil,
         shareholders: nil,
         documents: nil,
         client: nil,
@@ -28,6 +29,7 @@ module Fintoc
         @reviewed_at = reviewed_at
         @submittable = submittable
         @data = data
+        @legal_representatives = legal_representatives
         @shareholders = shareholders
         @documents = documents
         @client = client
