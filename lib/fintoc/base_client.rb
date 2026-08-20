@@ -122,7 +122,7 @@ module Fintoc
         request_client = request_client.headers('Idempotency-Key' => idempotency_key)
       end
 
-      request_client.send(method, url, parameters)
+      request_client.send(method, url, **parameters)
     end
 
     def params(method, **kwargs)
