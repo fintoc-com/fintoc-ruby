@@ -411,47 +411,51 @@ onboardings = entity.onboardings.list
 # shareholders and documents)
 onboarding = entity.onboardings.get('onboarding_id')
 puts onboarding                     # 📋 Onboarding onbprc_0ujs... (in_progress)
+onboarding.type                     # => 'account_holder'
 onboarding.legal_representatives    # => array of legal representative hashes
 onboarding.shareholders             # => array of shareholder hashes
 onboarding.documents                # => array of document hashes
 
-# Create an onboarding. The nested structures are passed through as-is and
-# validated by the API.
+# Create an onboarding. `type` selects the onboarding to run (`account_holder` or
+# `settlement_recipient`) and `data` holds the nested structures, which are passed
+# through as-is and validated by the API.
 onboarding = entity.onboardings.create(
-  company_information: {
-    incorporation_date: '2020-01-01',
-    business_activity: 'Software',
-    legal_name: 'ACME Inc.',
-    fiscal_address: 'Av. Siempre Viva 123',
-    business_address: 'Av. Siempre Viva 123',
-    settlement_account: '1234567890',
-    phone: '+56912345678'
-  },
-  legal_representatives: [
-    {
-      first_name: 'Jane',
-      last_name: 'Doe',
-      email: 'jane@acme.com',
-      nationality: 'CL',
-      identification_number: '12345678-9',
-      position: 'CEO'
-    }
-  ],
-  transactional_profile: {
-    resource_origins: ['sales'],
-    monthly_amount_range: '0-1000000',
-    monthly_operations_range: '0-100'
-  },
-  shareholders: [
-    {
-      type: 'natural_person',
-      name: 'Jane',
-      last_name: 'Doe',
-      holder_id: '12345678-9',
-      nationality: 'CL',
-      percentage: 100
-    }
-  ]
+  type: 'account_holder',
+  data: {
+    company_information: {
+      incorporation_date: '2020-01-15',
+      business_activity: 'Servicios financieros',
+      fiscal_address: 'Av. Reforma 123, CDMX',
+      business_address: 'Av. Insurgentes 456, CDMX',
+      settlement_account: '646180357600000013',
+      phone: '+521111111111'
+    },
+    legal_representatives: [
+      {
+        first_name: 'Jane',
+        last_name: 'Doe',
+        email: 'jane@acme.com',
+        nationality: 'mx',
+        identification_number: 'AAAA010101HDFAAA01',
+        position: 'Director General'
+      }
+    ],
+    transactional_profile: {
+      resource_origins: %w[trusts investments],
+      monthly_amount_range: '1_500000',
+      monthly_operations_range: '1_15000'
+    },
+    shareholders: [
+      {
+        type: 'natural_person',
+        name: 'Jane',
+        last_name: 'Doe',
+        holder_id: 'AAAA010101AAA',
+        nationality: 'mx',
+        percentage: 100
+      }
+    ]
+  }
 )
 
 # Upload a document for a given slot (multipart). `file:` accepts a path or an IO.
