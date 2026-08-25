@@ -31,6 +31,9 @@ jobs:
 
       - run: bundle exec rspec
 
+      # setup-ruby's bundler-cache sets BUNDLE_FROZEN; prepare needs to refresh Gemfile.lock
+      - run: bundle config unset --local deployment && bundle config unset --local frozen
+
       - uses: fintoc-com/release-action/prepare@main
         id: prep
         with:
