@@ -54,6 +54,7 @@ RSpec.describe Fintoc::V2::Onboarding do
       id: 'onbprc_0ujs',
       object: 'onboarding',
       entity_id: 'ent_12345',
+      type: 'account_holder',
       status: 'in_progress',
       source: 'api',
       submitted_at: nil,
@@ -79,6 +80,7 @@ RSpec.describe Fintoc::V2::Onboarding do
         id: 'onbprc_0ujs',
         object: 'onboarding',
         entity_id: 'ent_12345',
+        type: 'account_holder',
         status: 'in_progress',
         source: 'api',
         submitted_at: nil,
@@ -110,6 +112,7 @@ RSpec.describe Fintoc::V2::Onboarding do
         id: 'onbprc_0ujs',
         object: 'onboarding',
         entity_id: 'ent_12345',
+        type: 'account_holder',
         status: 'pending',
         source: 'dashboard',
         submitted_at: nil,
@@ -119,9 +122,10 @@ RSpec.describe Fintoc::V2::Onboarding do
 
     let(:light_onboarding) { described_class.new(**light_data) }
 
-    it 'builds without full attributes' do
+    it 'builds without full attributes' do # rubocop:disable RSpec/ExampleLength
       expect(light_onboarding).to have_attributes(
         id: 'onbprc_0ujs',
+        type: 'account_holder',
         status: 'pending',
         source: 'dashboard',
         submittable: nil,

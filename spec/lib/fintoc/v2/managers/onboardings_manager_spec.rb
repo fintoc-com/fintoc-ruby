@@ -17,6 +17,7 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
       id: onboarding_id,
       object: 'onboarding',
       entity_id: entity_id,
+      type: 'account_holder',
       status: 'in_progress',
       source: 'api',
       submitted_at: nil,
@@ -29,6 +30,7 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
       id: 'onbprc_other',
       object: 'onboarding',
       entity_id: entity_id,
+      type: 'settlement_recipient',
       status: 'submitted',
       source: 'dashboard',
       submitted_at: '2026-06-22T00:00:00Z',
@@ -48,10 +50,13 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
 
   let(:create_params) do
     {
-      company_information: { legal_name: 'ACME Inc.' },
-      legal_representatives: [{ first_name: 'Jane', last_name: 'Doe' }],
-      transactional_profile: { monthly_amount_range: '0-1000' },
-      shareholders: [{ type: 'natural_person', name: 'Jane', percentage: 100 }]
+      type: 'account_holder',
+      data: {
+        company_information: { business_activity: 'Servicios financieros' },
+        legal_representatives: [{ first_name: 'Jane', last_name: 'Doe' }],
+        transactional_profile: { monthly_amount_range: '1_500000' },
+        shareholders: [{ type: 'natural_person', name: 'Jane', percentage: 100 }]
+      }
     }
   end
 
