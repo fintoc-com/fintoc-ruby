@@ -1,0 +1,50 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Tipo de bump'
+        type: choice
+        required: true
+        default: minor
+        options: [patch, minor, major]
+      release-notes:
+        description: 'Release notes (markdown, opcional)'
+        type: string
+        required: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
+          bundler-cache: true
+
+      - run: bundle exec rspec
+
+      - uses: fintoc-com/release-action/prepare@main
+        id: prep
+        with:
+          bump: ${{ inputs.bump }}
+          version-format: ruby
+          tag-prefix: v
+          app-id: ${{ vars.FIN_RELEASES_APP_ID }}
+          app-private-key: ${{ secrets.FIN_RELEASES_PRIVATE_KEY }}
+
+      - uses: rubygems/release-gem@v1
+
+      - uses: fintoc-com/release-action/finalize@main
+        with:
+          tag: ${{ steps.prep.outputs.tag }}
+          release-notes: ${{ inputs.release-notes }}
+          app-id: ${{ vars.FIN_RELEASES_APP_ID }}
+          app-private-key: ${{ secrets.FIN_RELEASES_PRIVATE_KEY }}

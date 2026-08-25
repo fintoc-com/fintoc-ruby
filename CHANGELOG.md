@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0 - 2026-08-25
+
+### 🚀 New Features
+
+- **Entity Onboardings**: Added `entities` resource with `create`, and `onboardings` under entities, including legal representative document upload
+- **Webhook Endpoints**: Added `webhook_endpoints` manager
+- **Multipart Uploads**: HTTP client now supports `multipart/form-data` requests
+
+### 🐛 Bug Fixes
+
+- **HTTP 6 Compatibility**: Request options are passed as keyword arguments
+
 ## 1.2.0 - 2026-04-08
 
 ### 🚀 New Features
