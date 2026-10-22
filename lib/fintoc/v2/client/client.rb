@@ -3,6 +3,7 @@ require 'fintoc/v2/managers/entities_manager'
 require 'fintoc/v2/managers/accounts_manager'
 require 'fintoc/v2/managers/account_numbers_manager'
 require 'fintoc/v2/managers/transfers_manager'
+require 'fintoc/v2/managers/transfer_batches_manager'
 require 'fintoc/v2/managers/simulate_manager'
 require 'fintoc/v2/managers/account_verifications_manager'
 
@@ -23,6 +24,10 @@ module Fintoc
 
       def transfers
         @transfers ||= Managers::TransfersManager.new(self)
+      end
+
+      def transfer_batches
+        @transfer_batches ||= Managers::TransferBatchesManager.new(self)
       end
 
       def simulate
