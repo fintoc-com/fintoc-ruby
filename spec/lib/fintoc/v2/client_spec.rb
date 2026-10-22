@@ -27,6 +27,8 @@ RSpec.describe Fintoc::V2::Client do
 
   it_behaves_like 'a client with transfers manager'
 
+  it_behaves_like 'a client with transfer batches manager'
+
   it_behaves_like 'a client with simulate manager'
 
   it_behaves_like 'a client with account verifications manager'
