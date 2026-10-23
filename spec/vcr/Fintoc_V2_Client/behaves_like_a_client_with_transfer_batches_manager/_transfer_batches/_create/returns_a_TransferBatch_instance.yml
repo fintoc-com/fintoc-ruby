@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.fintoc.com/v2/transfer_batches
+    body:
+      encoding: UTF-8
+      string: '{"description":"Pago proveedores","currency":"MXN","transfers":[{"account_id":"acc_31yYL7h9LVPg121AgFtCyJPDsgM","amount":50000,"counterparty":{"account_number":"735969000000203297"},"comment":"Test
+        payment","reference_id":"123456"}]}'
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/1.4.0
+      Fintoc-Jws-Signature:
+      - eyJhbGciOiJSUzI1NiIsIm5vbmNlIjoiYjM1ZDI5MjlmMWRiMDdkMzQ5N2MyNWUxYWUzMTNlYTciLCJ0cyI6MTc5MjY5NjQ0OSwiY3JpdCI6WyJ0cyIsIm5vbmNlIl19.snNz8_RzVrzBHy6h1A_LEpUZNjesXFZkaqa0POxtfcFbqPgdGvbdEk_J5s4yYeJBu9toGF3aEbBm2exd7aZfFtFNLiwxQ_hUGMgEZK1Z5ngVI8nDFiksRH-40ctC5CqEYfDN_UiRXS7OcFgZ0GSrE7_3h4AZmCo281MzvbxBA50zdsWodtC6nC-5BV8mzthcuaJYs90x2BC-uuwjA1Lk0E43enxHUn2WamGS5LQRg-1GnbqIcVh1v7O1yjx_jzRV9eSH4-tLnYh8H7igql0zTA7zhR3iRl5VK8b2fOw-BQaFf13cnDg9cS2mUjvoPJwgn4XOhXkV9mNKzNhDrks4-w
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 22 Oct 2026 19:14:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '345'
+      Connection:
+      - close
+      Cf-Ray:
+      - 978e36138f38b861-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"3bcd22908f94497674e96ead614e8a01"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7f91b9f0-fd13-4d51-8b88-16f0122f5ea3
+      X-Runtime:
+      - '0.293159'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=Iv7AS7YO%2FSvC6uTUZgyWC2%2BaUfgdXl7xakqe1BSg2PGNCHtalgXnlviJpWj1wQJK3dsFWG9U6L0AuPx2E0tMdXKTtuVH8gXuCvBOmscmnic9ljwLzFlpxqN0l1IZeAL4"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=30125&min_rtt=30083&rtt_var=11366&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=2641&delivery_rate=140016&cwnd=252&unsent_bytes=0&cid=b848458890c32a83&ts=558&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"object":"transfer_batch","id":"trbatch_3AhQ8iLzUuJ9n6YbX1xH4CfQwTe","mode":"test","description":"Pago
+        proveedores","status":"pending_authorization","currency":"MXN","transfer_count":1,"amount":50000,"succeeded_count":0,"settled_amount":0,"created_at":"2026-10-22T19:14:09Z","authorized_at":null,"rejected_at":null,"expired_at":null,"succeeded_at":null,"partially_succeeded_at":null}'
+  recorded_at: Thu, 22 Oct 2026 19:14:09 GMT
+recorded_with: VCR 6.3.1

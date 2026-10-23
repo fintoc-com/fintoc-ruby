@@ -66,6 +66,9 @@ module Fintoc
     class InvalidInstallmentsCurrencyError < FintocError; end
     class InvalidClabeError < FintocError; end
     class MismatchTransferAccountCurrencyError < FintocError; end
+    class InvalidTransfersError < FintocError; end
+    class InvalidTransfersSizeError < FintocError; end
+    class InvalidDescriptionSizeError < FintocError; end
 
     # 401 Unauthorized Errors
     class AuthenticationError < FintocError; end
@@ -124,6 +127,7 @@ module Fintoc
     class InvalidTransferDirectionError < FintocError; end
     class AccountNumberLimitReachedError < FintocError; end
     class AccountCannotBeBlockedError < FintocError; end
+    class InvalidSenderAccountsError < FintocError; end
 
     # 422 Unprocessable Entity Errors
     class InvalidOtpCodeError < FintocError; end
@@ -149,6 +153,9 @@ module Fintoc
     class InternalServerError < FintocError; end
     class UnrecognizedRequestError < FintocError; end
     class CoreResponseError < FintocError; end
+
+    # 501 Not Implemented Errors
+    class OperationNotImplementedError < FintocError; end
 
     # Webhook Errors
     class WebhookSignatureError < FintocError; end

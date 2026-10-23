@@ -31,6 +31,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Accounts](#accounts)
       - [Account Numbers](#account-numbers)
       - [Transfers](#transfers)
+      - [Transfer Batches](#transfer-batches)
       - [Simulate](#simulate)
       - [Account Verifications](#account-verifications)
     - [Entity onboardings API Examples](#entity-onboardings-api-examples)
@@ -138,6 +139,15 @@ transfer = client.v2.transfers.create(
   counterparty: {...}
 )
 client.v2.transfers.return('transfer_id')
+
+# Transfer Batches
+transfer_batches = client.v2.transfer_batches.list
+transfer_batch = client.v2.transfer_batches.get('transfer_batch_id')
+transfer_batch = client.v2.transfer_batches.create(
+  description: 'Supplier payments',
+  currency: 'MXN',
+  transfers: [{...}]
+)
 
 # Simulate
 simulated_transfer = client.v2.simulate.receive_transfer(
@@ -358,6 +368,42 @@ transfers = client.v2.transfers.list
 
 # Return a transfer
 returned_transfer = client.v2.transfers.return('transfer_id')
+```
+
+#### Transfer Batches
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
+
+# Create a transfer batch. Each transfer has the same shape as `transfers.create`, without `currency`
+transfer_batch = client.v2.transfer_batches.create(
+  description: 'Supplier payments',
+  currency: 'MXN',
+  transfers: [
+    {
+      account_id: 'account_id',
+      amount: 10000,
+      comment: 'Invoice 1234',
+      reference_id: '123456',
+      counterparty: { account_number: '735969000000203297' }
+    }
+  ]
+)
+
+# Get a specific transfer batch
+transfer_batch = client.v2.transfer_batches.get('transfer_batch_id')
+
+# List transfer batches, optionally filtered by status and creation date
+transfer_batches = client.v2.transfer_batches.list(
+  'status[]': %w[succeeded partially_succeeded],
+  since: '2026-10-01T00:00:00Z',
+  until: '2026-10-31T23:59:59Z'
+)
+
+# List the transfers of a batch
+transfers = client.v2.transfers.list(transfer_batch_id: 'transfer_batch_id')
 ```
 
 #### Simulate

@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.fintoc.com/v2/transfer_batches
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Authorization:
+      - Bearer sk_test_SeCreT-aPi_KeY
+      User-Agent:
+      - fintoc-ruby/1.4.0
+      Connection:
+      - close
+      Host:
+      - api.fintoc.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 22 Oct 2026 19:14:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '721'
+      Connection:
+      - close
+      Cf-Ray:
+      - 978e36a3cd4e0ba0-EZE
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Link:
+      - ''
+      Etag:
+      - W/"c44d2930120083fb1fcfe202e1d2c7c5"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a6572b4c-f53d-4934-aa11-5453c24e695c
+      X-Runtime:
+      - '0.123093'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=dGWez9dCHhHPY3gIOowmzhSbR5PjvTHLFLD2kGv8rpM2Aopvl00MqFrSvjwLfv0b8SN7sBFSRqHfTLsqRSAr0RyMm2v3L1WRrkg3IJHXnMcfpFPH9msZJiFM8Ch1a3pC"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=31982&min_rtt=31972&rtt_var=12010&sent=7&recv=8&lost=0&retrans=0&sent_bytes=3879&recv_bytes=1792&delivery_rate=132896&cwnd=253&unsent_bytes=0&cid=cc7a1dbdbfbf7d50&ts=384&x=0"
+    body:
+      encoding: UTF-8
+      string: '[{"object":"transfer_batch","id":"trbatch_32jqKMMm1XFaPPxmdk5xg7Q1yHd","mode":"test","description":"Pago
+        proveedores","status":"succeeded","currency":"MXN","transfer_count":2,"amount":100000,"succeeded_count":2,"settled_amount":100000,"created_at":"2026-10-15T13:51:03Z","authorized_at":"2026-10-15T13:55:12Z","rejected_at":null,"expired_at":null,"succeeded_at":"2026-10-15T14:55:12Z","partially_succeeded_at":null},{"object":"transfer_batch","id":"trbatch_32k1Fh3eOqLrA8sVnD2wZy6TxPu","mode":"test","description":"Pago
+        sueldos","status":"partially_succeeded","currency":"MXN","transfer_count":2,"amount":80000,"succeeded_count":1,"settled_amount":30000,"created_at":"2026-10-14T10:02:41Z","authorized_at":"2026-10-14T10:10:05Z","rejected_at":null,"expired_at":null,"succeeded_at":null,"partially_succeeded_at":"2026-10-14T11:10:05Z"}]'
+  recorded_at: Thu, 22 Oct 2026 19:14:11 GMT
+recorded_with: VCR 6.3.1
