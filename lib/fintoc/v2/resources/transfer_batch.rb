@@ -4,10 +4,10 @@ module Fintoc
   module V2
     class TransferBatch
       attr_reader :id, :object, :mode, :description, :status, :currency, :transfer_count,
-                  :amount, :succeeded_count, :settled_amount, :created_at,
-                  :authorized_at, :rejected_at, :expired_at
+                  :amount, :succeeded_count, :settled_amount, :created_at, :authorized_at,
+                  :rejected_at, :expired_at, :succeeded_at, :partially_succeeded_at
 
-      def initialize(
+      def initialize( # rubocop:disable Metrics/MethodLength
         id:,
         object:,
         mode:,
@@ -22,6 +22,8 @@ module Fintoc
         authorized_at: nil,
         rejected_at: nil,
         expired_at: nil,
+        succeeded_at: nil,
+        partially_succeeded_at: nil,
         client: nil,
         **
       )
@@ -39,6 +41,8 @@ module Fintoc
         @authorized_at = authorized_at
         @rejected_at = rejected_at
         @expired_at = expired_at
+        @succeeded_at = succeeded_at
+        @partially_succeeded_at = partially_succeeded_at
         @client = client
       end
 
@@ -100,6 +104,8 @@ module Fintoc
         @authorized_at = transfer_batch.authorized_at
         @rejected_at = transfer_batch.rejected_at
         @expired_at = transfer_batch.expired_at
+        @succeeded_at = transfer_batch.succeeded_at
+        @partially_succeeded_at = transfer_batch.partially_succeeded_at
 
         self
       end

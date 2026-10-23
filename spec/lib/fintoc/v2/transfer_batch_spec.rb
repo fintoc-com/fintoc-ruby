@@ -20,6 +20,8 @@ RSpec.describe Fintoc::V2::TransferBatch do
       authorized_at: '2026-10-22T13:55:12Z',
       rejected_at: nil,
       expired_at: nil,
+      succeeded_at: nil,
+      partially_succeeded_at: nil,
       client: client
     }
   end
@@ -46,7 +48,9 @@ RSpec.describe Fintoc::V2::TransferBatch do
         created_at: '2026-10-22T13:51:03Z',
         authorized_at: '2026-10-22T13:55:12Z',
         rejected_at: nil,
-        expired_at: nil
+        expired_at: nil,
+        succeeded_at: nil,
+        partially_succeeded_at: nil
       )
     end
   end
