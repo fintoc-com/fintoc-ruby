@@ -4,7 +4,7 @@ module Fintoc
   module V2
     class TransferBatch
       attr_reader :id, :object, :mode, :description, :status, :currency, :transfer_count,
-                  :transfer_amount, :succeeded_count, :succeeded_amount, :created_at,
+                  :amount, :succeeded_count, :settled_amount, :created_at,
                   :authorized_at, :rejected_at, :expired_at
 
       def initialize(
@@ -14,10 +14,10 @@ module Fintoc
         status:,
         currency:,
         transfer_count:,
-        transfer_amount:,
+        amount:,
         description: nil,
         succeeded_count: nil,
-        succeeded_amount: nil,
+        settled_amount: nil,
         created_at: nil,
         authorized_at: nil,
         rejected_at: nil,
@@ -32,9 +32,9 @@ module Fintoc
         @status = status
         @currency = currency
         @transfer_count = transfer_count
-        @transfer_amount = transfer_amount
+        @amount = amount
         @succeeded_count = succeeded_count
-        @succeeded_amount = succeeded_amount
+        @settled_amount = settled_amount
         @created_at = created_at
         @authorized_at = authorized_at
         @rejected_at = rejected_at
@@ -43,7 +43,7 @@ module Fintoc
       end
 
       def to_s
-        amount_str = Money.from_cents(@transfer_amount, @currency).format
+        amount_str = Money.from_cents(@amount, @currency).format
         "📦 #{amount_str} (#{@id}) - #{@status}"
       end
 
@@ -93,9 +93,9 @@ module Fintoc
         @status = transfer_batch.status
         @currency = transfer_batch.currency
         @transfer_count = transfer_batch.transfer_count
-        @transfer_amount = transfer_batch.transfer_amount
+        @amount = transfer_batch.amount
         @succeeded_count = transfer_batch.succeeded_count
-        @succeeded_amount = transfer_batch.succeeded_amount
+        @settled_amount = transfer_batch.settled_amount
         @created_at = transfer_batch.created_at
         @authorized_at = transfer_batch.authorized_at
         @rejected_at = transfer_batch.rejected_at

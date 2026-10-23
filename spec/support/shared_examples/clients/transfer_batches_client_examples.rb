@@ -70,7 +70,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
             description: 'Pago proveedores',
             currency: 'MXN',
             transfer_count: 1,
-            transfer_amount: 50000,
+            amount: 50000,
             status: 'pending_authorization'
           )
       end
@@ -87,7 +87,7 @@ draAAQ5iJEb5BR8AmL6tAQ==
               description: 'Pago proveedores',
               currency: 'MXN',
               transfer_count: 1,
-              transfer_amount: 50000,
+              amount: 50000,
               status: 'pending_authorization'
             )
         end

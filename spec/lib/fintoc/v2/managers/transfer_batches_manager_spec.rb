@@ -25,7 +25,7 @@ RSpec.describe Fintoc::V2::Managers::TransferBatchesManager do
       status: 'pending_authorization',
       currency: 'MXN',
       transfer_count: 1,
-      transfer_amount: 10000
+      amount: 10000
     }
   end
   let(:second_transfer_batch_data) do
@@ -37,7 +37,7 @@ RSpec.describe Fintoc::V2::Managers::TransferBatchesManager do
       status: 'succeeded',
       currency: 'MXN',
       transfer_count: 2,
-      transfer_amount: 50000
+      amount: 50000
     }
   end
 

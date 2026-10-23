@@ -71,7 +71,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"object":"transfer_batch","id":"trbatch_32jqKMMm1XFaPPxmdk5xg7Q1yHd","mode":"test","description":"Pago
-        proveedores","status":"succeeded","currency":"MXN","transfer_count":2,"transfer_amount":100000,"succeeded_count":2,"succeeded_amount":100000,"created_at":"2026-10-15T13:51:03Z","authorized_at":"2026-10-15T13:55:12Z","rejected_at":null,"expired_at":null},{"object":"transfer_batch","id":"trbatch_32k1Fh3eOqLrA8sVnD2wZy6TxPu","mode":"test","description":"Pago
-        sueldos","status":"partially_succeeded","currency":"MXN","transfer_count":2,"transfer_amount":80000,"succeeded_count":1,"succeeded_amount":30000,"created_at":"2026-10-14T10:02:41Z","authorized_at":"2026-10-14T10:10:05Z","rejected_at":null,"expired_at":null}]'
+        proveedores","status":"succeeded","currency":"MXN","transfer_count":2,"amount":100000,"succeeded_count":2,"settled_amount":100000,"created_at":"2026-10-15T13:51:03Z","authorized_at":"2026-10-15T13:55:12Z","rejected_at":null,"expired_at":null},{"object":"transfer_batch","id":"trbatch_32k1Fh3eOqLrA8sVnD2wZy6TxPu","mode":"test","description":"Pago
+        sueldos","status":"partially_succeeded","currency":"MXN","transfer_count":2,"amount":80000,"succeeded_count":1,"settled_amount":30000,"created_at":"2026-10-14T10:02:41Z","authorized_at":"2026-10-14T10:10:05Z","rejected_at":null,"expired_at":null}]'
   recorded_at: Thu, 22 Oct 2026 19:14:11 GMT
 recorded_with: VCR 6.3.1
