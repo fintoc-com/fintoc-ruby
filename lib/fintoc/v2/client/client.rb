@@ -1,5 +1,6 @@
 require 'fintoc/base_client'
 require 'fintoc/v2/managers/entities_manager'
+require 'fintoc/v2/managers/recipients_manager'
 require 'fintoc/v2/managers/accounts_manager'
 require 'fintoc/v2/managers/account_numbers_manager'
 require 'fintoc/v2/managers/transfers_manager'
@@ -12,6 +13,10 @@ module Fintoc
     class Client < BaseClient
       def entities
         @entities ||= Managers::EntitiesManager.new(self)
+      end
+
+      def recipients
+        @recipients ||= Managers::RecipientsManager.new(self)
       end
 
       def accounts
