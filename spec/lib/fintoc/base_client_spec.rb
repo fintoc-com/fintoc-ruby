@@ -147,7 +147,7 @@ RSpec.describe Fintoc::BaseClient do
 
   describe '#request' do
     let(:mock_response) { instance_double(HTTP::Response) }
-    let(:mock_status) { instance_double(HTTP::Response::Status) }
+    let(:mock_status) { instance_double(HTTP::Response::Status, no_content?: false) }
     let(:mock_headers) { instance_double(HTTP::Headers) }
 
     context 'when HTTP request is successful' do

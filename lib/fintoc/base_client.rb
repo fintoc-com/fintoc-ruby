@@ -46,6 +46,8 @@ module Fintoc
       proc do |resource, form: nil, **kwargs|
         parameters = form ? { form: build_form(form) } : params(method, **kwargs)
         response = make_request(method, resource, parameters, version:, use_jws:, idempotency_key:)
+        next nil if response.status.no_content?
+
         content = JSON.parse(response.body, symbolize_names: true)
 
         if response.status.client_error? || response.status.server_error?
