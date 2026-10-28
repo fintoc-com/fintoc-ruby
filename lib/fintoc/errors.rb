@@ -69,6 +69,21 @@ module Fintoc
     class InvalidTransfersError < FintocError; end
     class InvalidTransfersSizeError < FintocError; end
     class InvalidDescriptionSizeError < FintocError; end
+    class InvalidBillingCycleAnchorError < FintocError; end
+    class InvalidCountryCodeError < FintocError; end
+    class InvalidEmailError < FintocError; end
+    class InvalidInvoiceStatusError < FintocError; end
+    class InvalidMetadataError < FintocError; end
+    class InvalidPeriodError < FintocError; end
+    class InvalidReferenceIdFormatError < FintocError; end
+    class InvalidRefundToGetVoucherError < FintocError; end
+    class InvalidRutError < FintocError; end
+    class InvalidShareholderStructureError < FintocError; end
+    class InvalidWebhookEventTypeError < FintocError; end
+    class MinimumAmountError < FintocError; end
+    class MutuallyExclusiveParamsError < FintocError; end
+    class NotSupportedRefundableResourceTypeError < FintocError; end
+    class SplitSumMismatchError < FintocError; end
 
     # 401 Unauthorized Errors
     class AuthenticationError < FintocError; end
@@ -106,11 +121,14 @@ module Fintoc
     class MissingAllowedCidrBlocksError < FintocError; end
     class AllowedCidrBlocksDoesNotContainIpError < FintocError; end
     class RecipientBlockedAccountError < FintocError; end
+    class InvalidAccountVerificationError < FintocError; end
+    class PaymentMethodNotRefundableError < FintocError; end
 
     # 404 Not Found Errors
     class MissingResourceError < FintocError; end
     class InvalidUrlError < FintocError; end
     class OrganizationWithoutEntitiesError < FintocError; end
+    class ResourceNotFoundError < FintocError; end
 
     # 405 Method Not Allowed Errors
     class OperationNotAllowedError < FintocError; end
@@ -128,6 +146,23 @@ module Fintoc
     class AccountNumberLimitReachedError < FintocError; end
     class AccountCannotBeBlockedError < FintocError; end
     class InvalidSenderAccountsError < FintocError; end
+    class AccountNumberCouldNotBeAssignedError < FintocError; end
+    class AccountNumberTakenError < FintocError; end
+    class BlockedAccountNumberError < FintocError; end
+    class ConflictedRequestError < FintocError; end
+    class DisputeDeadlineExceededError < FintocError; end
+    class DisputeNotOpenForDocumentsError < FintocError; end
+    class DuplicateRecipientError < FintocError; end
+    class EntityHolderIdAlreadyExistsForOrganizationError < FintocError; end
+    class InvalidEmptySubscriptionError < FintocError; end
+    class InvoiceNotEditableError < FintocError; end
+    class InvoiceNotFinalizableError < FintocError; end
+    class InvoiceNotMarkableUncollectibleError < FintocError; end
+    class NoDocumentsToSubmitError < FintocError; end
+    class PaymentMethodNonCancelableError < FintocError; end
+    class PaymentNonCancelableError < FintocError; end
+    class PaymentNonExpirableError < FintocError; end
+    class SubscriptionNotEditableError < FintocError; end
 
     # 422 Unprocessable Entity Errors
     class InvalidOtpCodeError < FintocError; end
@@ -145,6 +180,38 @@ module Fintoc
     class RefreshIntentInProgressError < FintocError; end
     class RejectedRefreshIntentError < FintocError; end
     class SenderBlockedAccountError < FintocError; end
+    class AmountOutOfRangeError < FintocError; end
+    class CountryNotSupportedError < FintocError; end
+    class DirectDebitSuspendedError < FintocError; end
+    class FileTooLargeError < FintocError; end
+    class FileTooSmallError < FintocError; end
+    class InvalidAccountForDirectDebitError < FintocError; end
+    class InvalidPaymentMethodStateError < FintocError; end
+    class InvoiceHasPendingPaymentError < FintocError; end
+    class InvoiceNotPayableError < FintocError; end
+    class InvoiceNotVoidableError < FintocError; end
+    class LegalRepresentativeRequiredError < FintocError; end
+    class MerchantChargeLimitExceededError < FintocError; end
+    class MerchantVolumeLimitExceededError < FintocError; end
+    class NotOneDayCompanyError < FintocError; end
+    class OnboardingImmutableError < FintocError; end
+    class OnboardingNotAvailableError < FintocError; end
+    class OrganizationWithoutOperationalRootEntityError < FintocError; end
+    class PaymentCancellationNotSupportedError < FintocError; end
+    class PaymentMethodInactiveError < FintocError; end
+    class PaymentMethodTypeNotAvailableError < FintocError; end
+    class PaymentMethodTypeNotSupportedError < FintocError; end
+    class PaymentMethodUnavailableError < FintocError; end
+    class RecipientAccountNotAllowedError < FintocError; end
+    class RequiredDocumentMissingError < FintocError; end
+    class RootEntityNotSupportedViaApiError < FintocError; end
+    class ShareholderDocumentNotRequiredError < FintocError; end
+    class SingleFileDocumentSlotError < FintocError; end
+    class SubscriptionCanceledError < FintocError; end
+    class UnknownDocumentSlotError < FintocError; end
+    class UnsupportedContentTypeError < FintocError; end
+    class UnsupportedInstitutionError < FintocError; end
+    class UnsupportedPaymentTypeError < FintocError; end
 
     # 429 Too Many Requests Errors
     class RateLimitExceededError < FintocError; end
