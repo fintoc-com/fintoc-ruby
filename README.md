@@ -20,6 +20,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
   - [Client Architecture](#client-architecture)
     - [**API V1 Client**](#api-v1-client)
     - [**API V2 Client**](#api-v2-client)
+    - [**Pagination**](#pagination)
     - [**Backward compatibility**](#backward-compatibility)
   - [Documentation](#documentation)
   - [Examples](#examples)
@@ -92,7 +93,7 @@ The Fintoc Ruby client is organized into separate clients that mirror the offici
 
 ### **API V1 Client**
 
-The API client currently provides access to part of the Movements API:
+The API V1 client provides access to the Movements, Payments and Webhooks APIs:
 
 ```ruby
 client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
@@ -100,15 +101,58 @@ client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 # Link management
 links = client.v1.links.list
 link = client.v1.links.get('link_token')
+link = client.v1.links.exchange(exchange_token: 'exchange_token')
+client.v1.links.update('link_token', active: false)
 client.v1.links.delete('link_id')
+link_intent = client.v1.link_intents.create(country: 'cl', holder_type: 'business', product: 'movements')
+institutions = client.v1.institutions.list(country: 'cl')
 
 # Account access
 account = link.find(id: account_id)
+accounts = client.v1.accounts.list(link_token: 'link_token')
+account = client.v1.accounts.get('account_id', link_token: 'link_token')
+movement = client.v1.movements.get('account_id', 'movement_id', link_token: 'link_token')
+
+# Refresh intents
+refresh_intent = client.v1.refresh_intents.create(link_token: 'link_token', refresh_type: 'only_last')
+refresh_intents = client.v1.refresh_intents.list(link_token: 'link_token')
+
+# Fiscal data (invoices, tax returns and tax statements) of a link
+invoices = client.v1.invoices.list(link_token: 'link_token', since: '2026-01-01')
+tax_return = client.v1.tax_returns.get('tax_return_id', link_token: 'link_token')
+tax_statements = client.v1.tax_statements.list(link_token: 'link_token')
+
+# Payment intents and payment links
+payment_intent = client.v1.payment_intents.create(amount: 1000, currency: 'CLP')
+client.v1.payment_intents.expire('payment_intent_id')
+payment_link = client.v1.payment_links.create(amount: 1000, currency: 'CLP')
+client.v1.payment_links.cancel('payment_link_id')
+
+# Subscriptions and charges
+subscription_intent = client.v1.subscription_intents.create(customer_email: 'payer@example.com')
+subscriptions = client.v1.subscriptions.list
+charge = client.v1.charges.create(amount: 1000, currency: 'CLP', subscription_id: 'sub_id')
+client.v1.charges.update('charge_id', amount: 2000)
+client.v1.charges.cancel('charge_id')
+
+# Refunds
+refund = client.v1.refunds.create(resource_id: 'pi_id', resource_type: 'payment_intent')
+client.v1.refunds.cancel('refund_id')
+voucher = client.v1.refunds.voucher_url('refund_id') # => { url: '...' }
+
+# Payouts. `list_resources` returns payment intents, charges or refunds
+payouts = client.v1.payouts.list(status: 'succeeded')
+resources = client.v1.payouts.list_resources('payout_id', resource_type: 'payment_intent')
+
+# Disputes
+disputes = client.v1.disputes.list(status: 'needs_response')
+client.v1.disputes.create_document('dispute_id', file: 'path/to/evidence.pdf')
+client.v1.disputes.submit_for_review('dispute_id')
 ```
 
 ### **API V2 Client**
 
-The API V2 client currently provides access to part of the Transfers API:
+The API V2 client provides access to the Transfers, Payments and Billing APIs:
 
 ```ruby
 client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
@@ -166,8 +210,63 @@ entity = client.v2.entities.get('entity_id')
 onboardings = entity.onboardings.list
 onboarding = entity.onboardings.get('onboarding_id')
 
-# TODO: Movements
+# Settlement account of an entity
+settlement_account = client.v2.entities.settlement_account('entity_id')
+
+# Transfer receipts
+receipt = client.v2.transfers.receipt('transfer_id') # => { download_url: '...', ... }
+
+# Customers and payment methods
+customer = client.v2.customers.create(email: 'customer@example.com', name: 'Jon Snow')
+payment_methods = client.v2.payment_methods.list(customer: 'customer_id')
+client.v2.payment_methods.cancel('payment_method_id')
+mandate = client.v2.payment_methods.mandate_document('payment_method_id')
+# Mexican direct debit mandates are sent as multipart. Nested fields are sent in
+# bracket notation and consent documents accept a path or an IO.
+payment_method = client.v2.payment_methods.create(
+  type: 'mx_direct_debit',
+  customer: 'customer_id',
+  mx_direct_debit: {
+    account_number: '000000000000000000',
+    account_type: 'clabe',
+    interval: 'month',
+    max_amount: 100000,
+    consent_documents: {
+      contract: 'contract.pdf', selfie: 'selfie.jpg', id_front: 'front.jpg', id_back: 'back.jpg'
+    }
+  }
+)
+
+# Payment intents, checkout sessions and setup intents
+payment_intent = client.v2.payment_intents.create(
+  amount: 5000, currency: 'CLP', payment_method: 'payment_method_id'
+)
+client.v2.payment_intents.cancel('payment_intent_id')
+eligibility = client.v2.payment_intents.check_eligibility(
+  amount: 5000, currency: 'CLP', sender_account: { institution_id: 'cl_banco_de_chile' }
+)
+checkout_session = client.v2.checkout_sessions.create(currency: 'CLP', flow: 'payment', amount: 5000)
+client.v2.checkout_sessions.expire('checkout_session_id')
+setup_intent = client.v2.setup_intents.get('setup_intent_id')
+
+# Products, subscriptions and invoices
+product = client.v2.products.create(name: 'Gym membership')
+subscription = client.v2.subscriptions.create(customer: 'customer_id', items: [{...}])
+subscription.subscription_items.create(price_data: {...}, quantity: 1)
+client.v2.subscriptions.cancel('subscription_id')
+invoice = client.v2.invoices.create(customer: 'customer_id', lines: [{...}])
+client.v2.invoices.finalize('invoice_id')
+client.v2.invoices.pay('invoice_id', external_payment: true)
+invoice.invoice_lines.update('invoice_line_id', quantity: 2)
+
+# Events
+events = client.v2.events.list(type: 'payment_intent.succeeded')
+event = client.v2.events.get('event_id')
 ```
+
+### **Pagination**
+
+Manager `list` methods (`client.v1.*`, `client.v2.*`) return a single page. Pass the pagination params to fetch the next one: `page` and `per_page` in V1, and `limit` and `starting_after` in V2.
 
 ### **Backward compatibility**
 
@@ -184,7 +283,7 @@ account = client.get_account('link_token', 'account_id')
 
 ## Documentation
 
-This client does not support all Fintoc API endpoints yet. For complete information about the API, head to the [docs](https://docs.fintoc.com/reference).
+This client covers the public `v1` and `v2` endpoints of the Fintoc API. For complete information about the API, head to the [docs](https://docs.fintoc.com/reference).
 
 ## Examples
 
@@ -517,6 +616,12 @@ entity.onboardings.upload_shareholder_document(
 entity.onboardings.upload_legal_representative_document(
   'onboarding_id', 'legal_representative_id', 'identification', file: 'path/to/file.pdf'
 )
+
+# Add another document to a slot that accepts several documents (multipart).
+entity.onboardings.append_document('onboarding_id', 'slot_key', file: 'path/to/file.pdf')
+
+# Delete a document from a slot.
+entity.onboardings.delete_document('onboarding_id', 'slot_key', 'document_id')
 
 # Submit the onboarding for review.
 onboarding = entity.onboardings.submit('onboarding_id')
