@@ -35,7 +35,7 @@ module Fintoc
                     else
                       accounts.map { |data| Fintoc::V1::Account.new(**data, client:) }
                     end
-        @token = link_token
+        @link_token = link_token
         @client = client
       end
 
