@@ -9,6 +9,14 @@ require 'fintoc/v1/managers/refresh_intents_manager'
 require 'fintoc/v1/managers/tax_returns_manager'
 require 'fintoc/v1/managers/tax_statements_manager'
 require 'fintoc/v1/managers/invoices_manager'
+require 'fintoc/v1/managers/payment_intents_manager'
+require 'fintoc/v1/managers/payment_links_manager'
+require 'fintoc/v1/managers/subscription_intents_manager'
+require 'fintoc/v1/managers/subscriptions_manager'
+require 'fintoc/v1/managers/charges_manager'
+require 'fintoc/v1/managers/refunds_manager'
+require 'fintoc/v1/managers/payouts_manager'
+require 'fintoc/v1/managers/disputes_manager'
 
 module Fintoc
   module V1
@@ -51,6 +59,38 @@ module Fintoc
 
       def invoices
         @invoices ||= Managers::InvoicesManager.new(self)
+      end
+
+      def payment_intents
+        @payment_intents ||= Managers::PaymentIntentsManager.new(self)
+      end
+
+      def payment_links
+        @payment_links ||= Managers::PaymentLinksManager.new(self)
+      end
+
+      def subscription_intents
+        @subscription_intents ||= Managers::SubscriptionIntentsManager.new(self)
+      end
+
+      def subscriptions
+        @subscriptions ||= Managers::SubscriptionsManager.new(self)
+      end
+
+      def charges
+        @charges ||= Managers::ChargesManager.new(self)
+      end
+
+      def refunds
+        @refunds ||= Managers::RefundsManager.new(self)
+      end
+
+      def payouts
+        @payouts ||= Managers::PayoutsManager.new(self)
+      end
+
+      def disputes
+        @disputes ||= Managers::DisputesManager.new(self)
       end
     end
   end
