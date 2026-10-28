@@ -137,6 +137,8 @@ module Fintoc
 
     def build_form(form)
       form.transform_values do |value|
+        next value if value.is_a?(HTTP::FormData::Part)
+
         file?(value) ? HTTP::FormData::File.new(value) : value
       end
     end

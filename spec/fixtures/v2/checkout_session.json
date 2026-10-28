@@ -1,0 +1,32 @@
+{
+  "id": "cs_li5531onlFDi235",
+  "object": "checkout_session",
+  "amount": 350000,
+  "business_profile": null,
+  "cancel_url": "https://merchant.com/cancel",
+  "created_at": "2026-01-13T18:48:25Z",
+  "currency": "CLP",
+  "customer_email": "customer@example.com",
+  "expires_at": "2026-01-14T18:48:25Z",
+  "flow": "payment",
+  "line_items": null,
+  "metadata": {},
+  "mode": "live",
+  "payment_method": null,
+  "payment_method_options": {
+    "bank_transfer": {}
+  },
+  "payment_method_types": [
+    "bank_transfer"
+  ],
+  "payment_resource": null,
+  "redirect_url": "https://pay.fintoc.com/cs_li5531onlFDi235",
+  "save_payment_method": null,
+  "session_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImNzX2xpNTUzMSJ9.iV2qAVrqYLuqxF4",
+  "setup_intent": null,
+  "split": null,
+  "split_applied": null,
+  "status": "created",
+  "subscription": null,
+  "success_url": "https://merchant.com/success"
+}

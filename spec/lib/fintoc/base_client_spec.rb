@@ -361,6 +361,12 @@ RSpec.describe Fintoc::BaseClient do
       expect(result[:file]).to be_a(HTTP::FormData::File)
       expect(result[:text]).to eq('x')
     end
+
+    it 'keeps prebuilt form parts as they are' do
+      part = HTTP::FormData::Part.new('spec/support/fixtures/sample_document.pdf')
+
+      expect(client.send(:build_form, text: part)[:text]).to be(part)
+    end
   end
 
   describe '#error_class' do

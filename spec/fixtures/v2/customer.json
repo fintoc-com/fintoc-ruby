@@ -1,0 +1,24 @@
+{
+  "id": "cus_0ujsswThIGTUYm2K8FjOOfXtY1K",
+  "object": "customer",
+  "address": {
+    "city": "Santiago",
+    "country": "cl",
+    "line1": "Av. Providencia 123",
+    "line2": "Depto 45",
+    "postal_code": "7500000",
+    "state": "RM"
+  },
+  "created_at": "2026-01-15T14:30:00Z",
+  "email": "jared@piedpiper.com",
+  "metadata": {
+    "order_id": "12345"
+  },
+  "mode": "live",
+  "name": "Test Customer 1",
+  "phone": "+56911111111",
+  "tax_id": {
+    "type": "cl_rut",
+    "value": "111111111"
+  }
+}
