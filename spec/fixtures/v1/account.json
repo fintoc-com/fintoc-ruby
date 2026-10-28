@@ -1,0 +1,20 @@
+{
+  "id": "acc_nMNejK7BT8oGbvO4",
+  "object": "account",
+  "balance": {
+    "available": 500000,
+    "current": 500000,
+    "limit": 500000
+  },
+  "currency": "CLP",
+  "holder_id": "111111111",
+  "holder_name": "Jon Snow",
+  "name": "Cuenta Corriente",
+  "next_refresh": "2023-04-06T13:30:00.000Z",
+  "number": "9530516286",
+  "official_name": "Cuenta Corriente Moneda Local",
+  "refresh_status": "refreshing",
+  "refreshed_at": "2020-11-18T18:43:54.591Z",
+  "removed_from_link": false,
+  "type": "checking_account"
+}

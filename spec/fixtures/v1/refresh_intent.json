@@ -1,0 +1,11 @@
+{
+  "id": "ri_2dXqkOKkS9mOvnaW",
+  "object": "refresh_intent",
+  "created_at": "2021-08-23T18:22:46.792Z",
+  "public_error": null,
+  "refreshed_object": "link",
+  "refreshed_object_id": "link_nzwA3XWYiZkg4ojK",
+  "requires_mfa": null,
+  "status": "succeeded",
+  "type": "only_last"
+}

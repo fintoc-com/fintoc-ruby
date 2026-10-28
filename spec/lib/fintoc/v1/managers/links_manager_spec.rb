@@ -73,5 +73,38 @@ RSpec.describe Fintoc::V1::Managers::LinksManager do
         expect(manager.delete(link_id)).to be true
       end
     end
+
+    describe '#update' do
+      let(:patch_proc) { instance_double(Proc) }
+      let(:updated_link_data) { first_link_data.merge(active: false) }
+
+      before do
+        allow(client).to receive(:patch).with(version: :v1, idempotency_key: 'idem-key')
+                                        .and_return(patch_proc)
+        allow(patch_proc).to receive(:call).with("links/#{link_token}", active: false)
+                                           .and_return(updated_link_data)
+      end
+
+      it 'patches the link and keeps its link_token' do
+        manager.update(link_token, active: false, idempotency_key: 'idem-key')
+        expect(Fintoc::V1::Link)
+          .to have_received(:new).with(**updated_link_data, link_token:, client:)
+      end
+    end
+
+    describe '#exchange' do
+      let(:exchange_token) { 'exchange_token_123' }
+
+      before do
+        allow(get_proc).to receive(:call).with('links/exchange', exchange_token:)
+                                         .and_return(first_link_data)
+      end
+
+      it 'exchanges the token and builds the link' do
+        manager.exchange(exchange_token:)
+        expect(Fintoc::V1::Link)
+          .to have_received(:new).with(**first_link_data, client:)
+      end
+    end
   end
 end

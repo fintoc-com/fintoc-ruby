@@ -1,0 +1,13 @@
+{
+  "id": "li_a6WUojQ2SjSSeFjH",
+  "object": "link_intent",
+  "country": "cl",
+  "created_at": "2022-12-01T01:50:12Z",
+  "exchange_token": null,
+  "exchange_token_expires_at": null,
+  "holder_type": "business",
+  "mode": "live",
+  "product": "movements",
+  "status": "created",
+  "widget_token": "li_a6WUojQ2SjSSeFjH_sec_Q802GD8ZLmMuK0Atl4ucJuLp"
+}

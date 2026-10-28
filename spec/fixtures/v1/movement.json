@@ -1,0 +1,18 @@
+{
+  "id": "mov_BO381oEATXonG6bj",
+  "object": "movement",
+  "amount": -1717,
+  "comment": "Pago arriendo",
+  "currency": "CLP",
+  "description": "Cargo Seguro Proteccion Bancaria",
+  "document_number": null,
+  "pending": false,
+  "post_date": "2020-04-06T00:00:00.000Z",
+  "recipient_account": null,
+  "reference_id": "123740123",
+  "sender_account": null,
+  "status": "confirmed",
+  "transaction_date": "2020-04-04T02:19:23.000Z",
+  "transfer_id": "123740123",
+  "type": "transfer"
+}
