@@ -3,7 +3,8 @@ require 'fintoc/v2/managers/onboardings_manager'
 module Fintoc
   module V2
     class Entity
-      attr_reader :object, :mode, :id, :holder_name, :holder_id, :is_root, :status, :country_code
+      attr_reader :object, :mode, :id, :holder_name, :holder_id, :is_root, :status, :country_code,
+                  :capabilities
 
       def initialize(
         object:,
@@ -14,6 +15,7 @@ module Fintoc
         is_root:,
         status: nil,
         country_code: nil,
+        capabilities: nil,
         client: nil,
         **
       )
@@ -25,6 +27,7 @@ module Fintoc
         @is_root = is_root
         @status = status
         @country_code = country_code
+        @capabilities = capabilities
         @client = client
       end
 
@@ -55,6 +58,7 @@ module Fintoc
         @is_root = entity.is_root
         @status = entity.status
         @country_code = entity.country_code
+        @capabilities = entity.capabilities
 
         self
       end

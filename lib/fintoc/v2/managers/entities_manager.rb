@@ -1,4 +1,5 @@
 require 'fintoc/v2/resources/entity'
+require 'fintoc/v2/resources/settlement_account'
 
 module Fintoc
   module V2
@@ -20,6 +21,11 @@ module Fintoc
 
         def list(**params)
           _list_entities(**params).map { |data| build_entity(data) }
+        end
+
+        def settlement_account(entity_id)
+          data = @client.get(version: :v2).call("entities/#{entity_id}/settlement_account")
+          Fintoc::V2::SettlementAccount.new(**data)
         end
 
         private

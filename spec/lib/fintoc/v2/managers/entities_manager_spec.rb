@@ -1,3 +1,4 @@
+require 'json'
 require 'fintoc/v2/managers/entities_manager'
 
 RSpec.describe Fintoc::V2::Managers::EntitiesManager do
@@ -92,6 +93,22 @@ RSpec.describe Fintoc::V2::Managers::EntitiesManager do
       manager.list(**params)
 
       expect(get_proc).to have_received(:call).with('entities', **params)
+    end
+  end
+
+  describe '#settlement_account' do
+    let(:settlement_account_data) do
+      JSON.parse(File.read('spec/fixtures/v2/settlement_account.json'), symbolize_names: true)
+    end
+
+    before do
+      allow(get_proc).to receive(:call).with("entities/#{entity_id}/settlement_account")
+                                       .and_return(settlement_account_data)
+    end
+
+    it 'fetches and builds the settlement account' do
+      expect(manager.settlement_account(entity_id))
+        .to be_a(Fintoc::V2::SettlementAccount).and have_attributes(settlement_account_data)
     end
   end
 end

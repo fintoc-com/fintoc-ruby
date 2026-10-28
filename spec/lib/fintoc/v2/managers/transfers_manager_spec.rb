@@ -144,6 +144,22 @@ RSpec.describe Fintoc::V2::Managers::TransfersManager do
     end
   end
 
+  describe '#receipt' do
+    let(:receipt_data) do
+      { object: 'transfer_receipt', download_url: 'https://example.com/receipt.pdf',
+        transfer_id: transfer_id }
+    end
+
+    before do
+      allow(get_proc).to receive(:call).with("transfers/#{transfer_id}/receipt")
+                                       .and_return(receipt_data)
+    end
+
+    it 'returns the receipt response' do
+      expect(manager.receipt(transfer_id)).to eq(receipt_data)
+    end
+  end
+
   describe '#return' do
     it 'calls build_transfer with the response' do
       manager.return('trf_123')
