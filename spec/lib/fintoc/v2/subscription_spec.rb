@@ -23,4 +23,10 @@ RSpec.describe Fintoc::V2::Subscription do
         .to be_a(Fintoc::V2::SubscriptionItem).and have_attributes(item)
     end
   end
+
+  describe '#to_s' do
+    it 'includes the resource ID and status' do
+      expect(subscription.to_s).to eq('Subscription (sub_2c4mDcMaVxDx7nT3o5GbPMQbS2v) - active')
+    end
+  end
 end

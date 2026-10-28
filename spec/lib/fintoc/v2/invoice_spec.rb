@@ -23,4 +23,10 @@ RSpec.describe Fintoc::V2::Invoice do
         .to be_a(Fintoc::V2::InvoiceLine).and have_attributes(line)
     end
   end
+
+  describe '#to_s' do
+    it 'includes the resource ID and status' do
+      expect(invoice.to_s).to eq('Invoice (inv_2bVdWxLpzXq8RkNcM3JtUv9AhTe) - open')
+    end
+  end
 end
