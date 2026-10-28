@@ -1,0 +1,41 @@
+{
+  "id": "sub_2c4mDcMaVxDx7nT3o5GbPMQbS2v",
+  "object": "subscription",
+  "billing_cycle_anchor": "2026-06-01T15:00:00Z",
+  "cancel_at": null,
+  "collection_method": "charge_automatically",
+  "created_at": "2026-06-01T15:00:00Z",
+  "customer": "cus_2c4mDe9NJyGmMzvCqLkXqAtjnRu",
+  "items": [
+    {
+      "id": "si_2c4mDfkPLLrLTCJ3wPCEHGYpkVf",
+      "object": "subscription_item",
+      "price": {
+        "currency": "CLP",
+        "product": {
+          "id": "prod_2c4mDgwQqkNwMHnXSc4DBjkbcWz",
+          "object": "product",
+          "created_at": "2026-06-01T15:00:00Z",
+          "description": "Access to every premium feature.",
+          "image_url": "https://example.com/image.png",
+          "metadata": {},
+          "mode": "live",
+          "name": "Premium plan"
+        },
+        "recurring": {
+          "interval": "month",
+          "interval_count": 1
+        },
+        "unit_amount": 10000
+      },
+      "quantity": 1
+    }
+  ],
+  "metadata": {
+    "order_id": "12345"
+  },
+  "mode": "live",
+  "payment_method": "pm_2c4mDhAbCdEfGhIjKlMnOpQrStu",
+  "status": "active",
+  "trial_end": null
+}

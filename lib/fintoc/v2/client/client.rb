@@ -14,6 +14,8 @@ require 'fintoc/v2/managers/payment_intents_manager'
 require 'fintoc/v2/managers/payment_methods_manager'
 require 'fintoc/v2/managers/setup_intents_manager'
 require 'fintoc/v2/managers/events_manager'
+require 'fintoc/v2/managers/invoices_manager'
+require 'fintoc/v2/managers/subscriptions_manager'
 
 module Fintoc
   module V2
@@ -76,6 +78,14 @@ module Fintoc
 
       def events
         @events ||= Managers::EventsManager.new(self)
+      end
+
+      def invoices
+        @invoices ||= Managers::InvoicesManager.new(self)
+      end
+
+      def subscriptions
+        @subscriptions ||= Managers::SubscriptionsManager.new(self)
       end
     end
   end
