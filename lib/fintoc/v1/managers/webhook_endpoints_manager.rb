@@ -34,8 +34,7 @@ module Fintoc
         end
 
         def test(webhook_endpoint_id, type:)
-          data = _test_webhook_endpoint(webhook_endpoint_id, type:)
-          build_webhook_endpoint(data)
+          _test_webhook_endpoint(webhook_endpoint_id, type:)
         end
 
         private
