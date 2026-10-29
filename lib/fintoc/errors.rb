@@ -191,6 +191,7 @@ module Fintoc
     class InvoiceNotPayableError < FintocError; end
     class InvoiceNotVoidableError < FintocError; end
     class LegalRepresentativeRequiredError < FintocError; end
+    class MandateLimitExceededError < FintocError; end
     class MerchantChargeLimitExceededError < FintocError; end
     class MerchantVolumeLimitExceededError < FintocError; end
     class NotOneDayCompanyError < FintocError; end

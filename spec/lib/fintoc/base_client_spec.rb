@@ -375,6 +375,11 @@ RSpec.describe Fintoc::BaseClient do
         .to eq(Fintoc::Errors::PaymentNonExpirableError)
     end
 
+    it 'resolves the mandate limit exceeded error' do
+      expect(client.send(:error_class, 'mandate_limit_exceeded'))
+        .to eq(Fintoc::Errors::MandateLimitExceededError)
+    end
+
     it 'keeps codes already ending in error' do
       expect(client.send(:error_class, 'internal_server_error'))
         .to eq(Fintoc::Errors::InternalServerError)
