@@ -530,6 +530,14 @@ client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
 # Create an account verification
 account_verification = client.v2.account_verifications.create(account_number: 'account_number')
 
+# Create an account verification for a Chilean account
+account_verification = client.v2.account_verifications.create(
+  account_number: '000000001',
+  institution_id: 'cl_banco_de_chile',
+  account_type: 'checking_account',
+  holder_id: '11.111.111-1'
+)
+
 # Get a specific account verification
 account_verification = client.v2.account_verifications.get('account_verification_id')
 
