@@ -1,0 +1,12 @@
+{
+  "id": "prod_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+  "object": "product",
+  "created_at": "2026-03-11T20:42:49Z",
+  "description": "Monthly membership with access to all branches.",
+  "image_url": "https://example.com/gym-membership.png",
+  "metadata": {
+    "internal_sku": "GYM-001"
+  },
+  "mode": "live",
+  "name": "Gym membership"
+}

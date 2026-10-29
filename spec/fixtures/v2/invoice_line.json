@@ -1,0 +1,11 @@
+{
+  "id": "il_2bVdX0PqJs6RhNu9FmZlTo2EyKq",
+  "object": "line_item",
+  "name": "Premium Plan",
+  "description": "A premium plan",
+  "amount": 80000,
+  "currency": "CLP",
+  "period_end": "2026-06-01T00:00:00Z",
+  "period_start": "2026-05-01T00:00:00Z",
+  "quantity": 2
+}

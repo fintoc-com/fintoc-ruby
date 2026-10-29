@@ -1,0 +1,25 @@
+{
+  "id": "sub_m7N9rAWJS9dWDKEe",
+  "object": "subscription",
+  "account": {
+    "id": "acc_nMNejK7BT8oGbvO4",
+    "object": "account",
+    "balance": null,
+    "currency": "CLP",
+    "holder_id": "111111111",
+    "holder_name": "Jon Snow",
+    "institution": {
+      "id": "cl_banco_estado",
+      "country": "cl",
+      "name": "Banco Estado"
+    },
+    "name": "Cuenta Corriente",
+    "number": "9530516286",
+    "official_name": "Cuenta Corriente Moneda Local",
+    "type": "checking_account"
+  },
+  "created_at": "2023-03-08T15:24:11Z",
+  "mode": "live",
+  "reference_id": "ABC12345",
+  "status": "active"
+}

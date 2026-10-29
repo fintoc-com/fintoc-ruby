@@ -1,12 +1,14 @@
 module Fintoc
   module V1
     class Institution
-      attr_reader :id, :name, :country
+      attr_reader :id, :name, :country, :type, :products
 
-      def initialize(id:, name:, country:, **)
+      def initialize(id:, name:, country:, type: nil, products: nil, **)
         @id = id
         @name = name
         @country = country
+        @type = type
+        @products = products
       end
 
       def to_s

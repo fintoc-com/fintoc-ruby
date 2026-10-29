@@ -29,6 +29,10 @@ module Fintoc
           build_transfer(data)
         end
 
+        def receipt(transfer_id)
+          @client.get(version: :v2).call("transfers/#{transfer_id}/receipt")
+        end
+
         private
 
         def _create_transfer(

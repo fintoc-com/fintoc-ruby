@@ -33,6 +33,20 @@ module Fintoc
           build_onboarding(data)
         end
 
+        def append_document(onboarding_id, slot_key, file:, idempotency_key: nil)
+          data = @client.post(version: :v2, idempotency_key:).call(
+            "#{base_path}/#{onboarding_id}/documents/#{slot_key}",
+            form: { file: }
+          )
+          build_onboarding(data)
+        end
+
+        def delete_document(onboarding_id, slot_key, document_id)
+          data = @client.delete(version: :v2)
+                        .call("#{base_path}/#{onboarding_id}/documents/#{slot_key}/#{document_id}")
+          build_onboarding(data)
+        end
+
         def upload_shareholder_document(onboarding_id, shareholder_id, file:, idempotency_key: nil)
           data = _upload_shareholder_document(
             onboarding_id, shareholder_id, file:, idempotency_key:

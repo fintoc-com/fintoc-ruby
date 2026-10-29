@@ -1,0 +1,31 @@
+{
+  "id": "inv_2bVdWxLpzXq8RkNcM3JtUv9AhTe",
+  "object": "invoice",
+  "collection_method": "charge_automatically",
+  "attempt_count": 0,
+  "hosted_invoice_url": "https://acme.billing.fintoc.com/invoices/inv_2bVdWxLpzXq8RkNcM3JtUv9AhTe",
+  "created_at": "2026-05-01T12:00:00Z",
+  "currency": "CLP",
+  "customer": "cus_2bVdWyTnGq4PfLs7DkXjRm0CwIo",
+  "default_payment_method": "pm_2bVdX3StMv9UkQxCIpCoWr5H1Nt",
+  "lines": [
+    {
+      "id": "il_2bVdX0PqJs6RhNu9FmZlTo2EyKq",
+      "object": "line_item",
+      "name": "Premium Plan",
+      "description": "A premium plan",
+      "amount": 30000,
+      "currency": "CLP",
+      "period_end": "2026-06-01T00:00:00Z",
+      "period_start": "2026-05-01T00:00:00Z",
+      "quantity": 1
+    }
+  ],
+  "metadata": null,
+  "mode": "live",
+  "next_payment_attempt_at": null,
+  "payments": [],
+  "status": "open",
+  "subscription": "sub_2bVdWzKfHr5QgMt8ElYkSn1DxJp",
+  "total": 30000
+}

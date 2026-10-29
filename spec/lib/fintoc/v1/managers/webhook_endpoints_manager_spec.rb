@@ -18,7 +18,7 @@ RSpec.describe Fintoc::V1::Managers::WebhookEndpointsManager do
       mode: 'test',
       enabled_events: enabled_events,
       secret: 'whsec_abc123',
-      disabled: false,
+      status: 'enabled',
       created_at: '2026-05-15T12:00:00.000Z'
     }
   end
@@ -30,8 +30,18 @@ RSpec.describe Fintoc::V1::Managers::WebhookEndpointsManager do
       mode: 'test',
       enabled_events: enabled_events,
       secret: 'whsec_def456',
-      disabled: false,
+      status: 'enabled',
       created_at: '2026-05-15T12:01:00.000Z'
+    }
+  end
+  let(:test_event_data) do
+    {
+      id: 'evt_123',
+      object: 'event',
+      type:,
+      mode: 'test',
+      created_at: '2026-05-15T12:02:00.000Z',
+      data: {}
     }
   end
   let(:updated_webhook_endpoint_data) do
@@ -59,7 +69,7 @@ RSpec.describe Fintoc::V1::Managers::WebhookEndpointsManager do
     allow(post_proc)
       .to receive(:call)
       .with("webhook_endpoints/#{webhook_endpoint_id}/test", type:)
-      .and_return(first_webhook_endpoint_data)
+      .and_return(test_event_data)
     allow(patch_proc)
       .to receive(:call)
       .with("webhook_endpoints/#{webhook_endpoint_id}", url: 'https://example.com/updated')
@@ -149,11 +159,9 @@ RSpec.describe Fintoc::V1::Managers::WebhookEndpointsManager do
   end
 
   describe '#test' do
-    it 'calls build_webhook_endpoint with the response' do
-      manager.test(webhook_endpoint_id, type:)
-
-      expect(Fintoc::V1::WebhookEndpoint)
-        .to have_received(:new).with(**first_webhook_endpoint_data, client:)
+    it 'returns the test event as a hash' do
+      expect(manager.test(webhook_endpoint_id, type:)).to eq(test_event_data)
+      expect(Fintoc::V1::WebhookEndpoint).not_to have_received(:new)
     end
   end
 end

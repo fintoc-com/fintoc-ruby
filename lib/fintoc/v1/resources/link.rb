@@ -33,9 +33,9 @@ module Fintoc
         @accounts = if accounts.nil?
                       []
                     else
-                      accounts.map { |data| Fintoc::V1::Account.new(**data, client:) }
+                      accounts.map { |data| Fintoc::V1::Account.new(**data, link_token:, client:) }
                     end
-        @token = link_token
+        @link_token = link_token
         @client = client
       end
 

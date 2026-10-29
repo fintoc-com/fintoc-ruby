@@ -21,6 +21,15 @@ module Fintoc
           _delete_link(link_id)
         end
 
+        def update(link_token, idempotency_key: nil, **params)
+          data = { **_update_link(link_token, idempotency_key:, **params), link_token: link_token }
+          build_link(data)
+        end
+
+        def exchange(exchange_token:)
+          build_link(_exchange_link(exchange_token))
+        end
+
         private
 
         def _get_link(link_token)
@@ -33,6 +42,14 @@ module Fintoc
 
         def _delete_link(link_id)
           @client.delete(version: :v1).call("links/#{link_id}")
+        end
+
+        def _update_link(link_token, idempotency_key: nil, **params)
+          @client.patch(version: :v1, idempotency_key:).call("links/#{link_token}", **params)
+        end
+
+        def _exchange_link(exchange_token)
+          @client.get(version: :v1).call('links/exchange', exchange_token:)
         end
 
         def build_link(data)

@@ -361,6 +361,29 @@ RSpec.describe Fintoc::BaseClient do
       expect(result[:file]).to be_a(HTTP::FormData::File)
       expect(result[:text]).to eq('x')
     end
+
+    it 'keeps prebuilt form parts as they are' do
+      part = HTTP::FormData::Part.new('spec/support/fixtures/sample_document.pdf')
+
+      expect(client.send(:build_form, text: part)[:text]).to be(part)
+    end
+  end
+
+  describe '#error_class' do
+    it 'resolves the error class for a known code' do
+      expect(client.send(:error_class, 'payment_non_expirable'))
+        .to eq(Fintoc::Errors::PaymentNonExpirableError)
+    end
+
+    it 'keeps codes already ending in error' do
+      expect(client.send(:error_class, 'internal_server_error'))
+        .to eq(Fintoc::Errors::InternalServerError)
+    end
+
+    it 'falls back to FintocError for unknown or missing codes' do
+      expect([client.send(:error_class, 'brand_new_code'), client.send(:error_class, nil)])
+        .to all(eq(Fintoc::Errors::FintocError))
+    end
   end
 
   describe '#to_s' do

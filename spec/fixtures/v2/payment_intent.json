@@ -1,0 +1,53 @@
+{
+  "id": "pi_2cKoy3PEXAuvkr4ofXC1KdMvCgZ",
+  "object": "payment_intent",
+  "amount": 5000,
+  "business_profile": {
+    "category": "retail",
+    "name": "Mi Comercio SpA",
+    "tax_id": "777777777"
+  },
+  "created_at": "2026-02-10T15:23:11Z",
+  "currency": "CLP",
+  "customer": {
+    "id": "cus_2bArifJWQ6CiZSofWxBNL1Hri2u",
+    "object": "customer",
+    "address": null,
+    "created_at": "2026-02-01T12:00:00Z",
+    "email": "customer@example.com",
+    "metadata": {},
+    "mode": "live",
+    "name": "Test Customer 1",
+    "phone": "+56911111111",
+    "tax_id": {
+      "type": "cl_rut",
+      "value": "111111111"
+    }
+  },
+  "customer_email": "customer@example.com",
+  "error_reason": null,
+  "expires_at": null,
+  "invoices": [],
+  "metadata": {},
+  "mode": "live",
+  "next_action": null,
+  "payment_method": null,
+  "payment_type": "bank_transfer",
+  "payment_type_options": {},
+  "recipient_account": {
+    "holder_id": "111111111",
+    "institution_id": "cl_banco_de_chile",
+    "number": "123456",
+    "type": "checking_account"
+  },
+  "reference_id": "90123712",
+  "sender_account": {
+    "holder_id": "222222222",
+    "institution_id": "cl_banco_estado",
+    "number": "123456",
+    "type": "checking_account"
+  },
+  "status": "succeeded",
+  "transaction_date": "2026-02-10T15:24:15Z",
+  "widget_token": null
+}

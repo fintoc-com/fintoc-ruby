@@ -1,0 +1,9 @@
+{
+  "id": "seta_2daFu0zqqDtZGJaSi2TGI2Mm1nN",
+  "object": "settlement_account",
+  "account_number": "012345678901234567",
+  "account_type": "clabe",
+  "entity_id": "ent_2daFu0zqqDtZGJaSi2TGI2Mm1nN",
+  "institution_id": "mx_banco_bbva",
+  "mode": "test"
+}

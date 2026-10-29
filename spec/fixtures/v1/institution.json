@@ -1,0 +1,21 @@
+{
+  "id": "cl_banco_de_chile",
+  "country": "cl",
+  "name": "Banco de Chile",
+  "object_name": "institution",
+  "products": [
+    {
+      "holder_type": "individual",
+      "name": "movements"
+    },
+    {
+      "holder_type": "business",
+      "name": "movements"
+    },
+    {
+      "holder_type": "individual",
+      "name": "payments"
+    }
+  ],
+  "type": "bank"
+}

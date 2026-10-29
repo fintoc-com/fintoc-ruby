@@ -1,0 +1,17 @@
+{
+  "id": "pm_1zXcVbNmAsDfGhJk",
+  "object": "payment_method",
+  "bank_transfer": {
+    "account_holder_id": "111111111",
+    "account_number": "001111111111",
+    "account_type": "checking_account",
+    "institution_id": "cl_banco_de_chile",
+    "institution_name": "Banco de Chile",
+    "mfa_type": "sms",
+    "status": "active"
+  },
+  "created_at": "2026-02-02T16:45:00.000Z",
+  "customer": "cus_oVgVqlnK0PdmGirH",
+  "mode": "live",
+  "type": "bank_transfer"
+}

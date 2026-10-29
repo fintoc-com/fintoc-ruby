@@ -1,0 +1,23 @@
+{
+  "id": "ref_8XzNbCv1LqKjWp4R",
+  "object": "refund",
+  "amount": 5000,
+  "created_at": "2026-03-04T17:04:10Z",
+  "currency": "CLP",
+  "failure_code": null,
+  "metadata": {
+    "order_id": "9182"
+  },
+  "mode": "live",
+  "recipient_account": {
+    "holder_id": "111111111",
+    "holder_name": "Jane Doe",
+    "institution_id": "cl_banco_de_chile",
+    "number": "123456789",
+    "type": "checking_account"
+  },
+  "resource_id": "pi_jsperFI9bnyM2RTo",
+  "resource_type": "payment_intent",
+  "status": "pending",
+  "updated_at": "2026-03-04T17:04:10Z"
+}

@@ -1,7 +1,8 @@
 module Fintoc
   module V1
     class WebhookEndpoint
-      attr_reader :id, :object, :url, :mode, :enabled_events, :secret, :disabled, :created_at
+      attr_reader :id, :object, :url, :mode, :enabled_events, :secret, :status, :description,
+                  :name, :created_at
 
       def initialize(
         id:,
@@ -10,8 +11,10 @@ module Fintoc
         mode:,
         enabled_events:,
         secret:,
-        disabled:,
+        status:,
         created_at:,
+        description: nil,
+        name: nil,
         client: nil,
         **
       )
@@ -21,7 +24,9 @@ module Fintoc
         @mode = mode
         @enabled_events = enabled_events
         @secret = secret
-        @disabled = disabled
+        @status = status
+        @description = description
+        @name = name
         @created_at = created_at
         @client = client
       end
@@ -31,8 +36,9 @@ module Fintoc
       end
 
       def disabled?
-        @disabled
+        @status == 'disabled'
       end
+      alias disabled disabled?
     end
   end
 end

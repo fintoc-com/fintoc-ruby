@@ -1,0 +1,66 @@
+{
+  "id": "taxret_nMNejK7BT8oGbvO4",
+  "object": "tax_return",
+  "currency": "CLP",
+  "document_number": "12345",
+  "fiscal_year": 2021,
+  "institution_id": "cl_fiscal_sii",
+  "institution_tax_return": {
+    "due_amount": 0,
+    "income": {
+      "fees": 5700000,
+      "fees_with_retention": 4500000,
+      "fees_without_retention": 1200000,
+      "salary": 12000000,
+      "withheld_fees": 562500
+    },
+    "refund_account": {
+      "holder_id": "111111111",
+      "holder_name": "Fintoc SpA",
+      "institution": {
+        "id": "cl_banco_de_chile",
+        "country": "cl",
+        "name": "Banco de Chile"
+      },
+      "number": 123123123
+    },
+    "refund_amount": 350000
+  },
+  "taxpayer": {
+    "id": "111111111",
+    "institution_tax_payer": {
+      "activities": [
+        {
+          "category": "1",
+          "code": "620200",
+          "description": "Servicios de tecnología",
+          "iva": false,
+          "started_at": "2020-04-16T04:00:00.000Z"
+        }
+      ],
+      "addresses": [
+        {
+          "apartment": null,
+          "city": "Santiago",
+          "code": "84345463",
+          "commune": "PROVIDENCIA",
+          "number": "2461",
+          "region": "REGION METROPOLITANA",
+          "street": "LOS CONQUISTADORES"
+        }
+      ],
+      "authorized_documents": [
+        {
+          "authorized_at": "2021-11-30T15:57:38.584Z",
+          "code": "33",
+          "description": "FACTURA ELECTRONICA",
+          "max_documents": 414
+        }
+      ],
+      "email": "hello@fintoc.com",
+      "institution_office": null,
+      "phone": "999999999"
+    },
+    "name": "Fintoc SpA"
+  }
+}

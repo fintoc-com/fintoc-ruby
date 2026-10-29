@@ -14,7 +14,9 @@ RSpec.describe Fintoc::V1::WebhookEndpoint do
       mode: 'test',
       enabled_events: ['account.refresh_intent.succeeded'],
       secret: 'whsec_abc123',
-      disabled: false,
+      status: 'enabled',
+      description: 'Pagos',
+      name: 'Webhook de pagos',
       created_at: '2026-05-15T12:00:00.000Z',
       client: client
     }
@@ -33,6 +35,12 @@ RSpec.describe Fintoc::V1::WebhookEndpoint do
         created_at: '2026-05-15T12:00:00.000Z'
       )
     end
+
+    it 'assigns status, description and name' do
+      expect(webhook_endpoint).to have_attributes(
+        status: 'enabled', description: 'Pagos', name: 'Webhook de pagos'
+      )
+    end
   end
 
   describe '#to_s' do
@@ -43,9 +51,9 @@ RSpec.describe Fintoc::V1::WebhookEndpoint do
   end
 
   describe '#disabled?' do
-    context 'when disabled is true' do
+    context 'when status is disabled' do
       let(:data) do
-        super().merge(disabled: true)
+        super().merge(status: 'disabled')
       end
 
       it 'returns true' do
@@ -53,7 +61,7 @@ RSpec.describe Fintoc::V1::WebhookEndpoint do
       end
     end
 
-    context 'when disabled is false' do
+    context 'when status is enabled' do
       it 'returns false' do
         expect(webhook_endpoint.disabled?).to be false
       end

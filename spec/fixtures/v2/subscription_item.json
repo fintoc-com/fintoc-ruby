@@ -1,0 +1,23 @@
+{
+  "id": "si_2c4mDfkPLLrLTCJ3wPCEHGYpkVf",
+  "object": "subscription_item",
+  "price": {
+    "currency": "CLP",
+    "product": {
+      "id": "prod_2c4mDgwQqkNwMHnXSc4DBjkbcWz",
+      "object": "product",
+      "created_at": "2026-06-01T15:00:00Z",
+      "description": null,
+      "image_url": null,
+      "metadata": {},
+      "mode": "live",
+      "name": "Extra seat"
+    },
+    "recurring": {
+      "interval": "month",
+      "interval_count": 1
+    },
+    "unit_amount": 5000
+  },
+  "quantity": 2
+}

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.fintoc.com/v1/accounts/Z6AwnGn4idL7DPj4
+    uri: https://api.fintoc.com/v1/accounts/Z6AwnGn4idL7DPj4?link_token=nMNejK7BT8oGbvO4_token_GLtktZX5SKphRtJFe_yJTDWT
     body:
       encoding: UTF-8
       string: ''
@@ -75,7 +75,7 @@ http_interactions:
   recorded_at: Fri, 18 Sep 2020 19:32:33 GMT
 - request:
     method: get
-    uri: https://api.fintoc.com/v1/accounts/Z6AwnGn4idL7DPj4/movements
+    uri: https://api.fintoc.com/v1/accounts/Z6AwnGn4idL7DPj4/movements?link_token=nMNejK7BT8oGbvO4_token_GLtktZX5SKphRtJFe_yJTDWT
     body:
       encoding: UTF-8
       string: ''

@@ -194,6 +194,47 @@ RSpec.describe Fintoc::V2::Managers::OnboardingsManager do
     end
   end
 
+  describe '#append_document' do
+    let(:slot_key) { 'other_documents' }
+    let(:file_path) { 'spec/support/fixtures/sample_document.pdf' }
+
+    before do
+      allow(post_proc).to receive(:call)
+        .with("#{base_path}/#{onboarding_id}/documents/#{slot_key}", form: { file: file_path })
+        .and_return(full_onboarding_data)
+    end
+
+    it 'posts a multipart file to the document slot path' do
+      manager.append_document(onboarding_id, slot_key, file: file_path)
+
+      expect(client).to have_received(:post).with(version: :v2, idempotency_key: nil)
+      expect(post_proc).to have_received(:call).with(
+        "#{base_path}/#{onboarding_id}/documents/#{slot_key}",
+        form: { file: file_path }
+      )
+      expect(Fintoc::V2::Onboarding).to have_received(:new).with(**full_onboarding_data, client:)
+    end
+  end
+
+  describe '#delete_document' do
+    let(:slot_key) { 'other_documents' }
+    let(:document_id) { 'onbdoc_123' }
+    let(:delete_proc) { instance_double(Proc) }
+    let(:document_path) { "#{base_path}/#{onboarding_id}/documents/#{slot_key}/#{document_id}" }
+
+    before do
+      allow(client).to receive(:delete).with(version: :v2).and_return(delete_proc)
+      allow(delete_proc).to receive(:call).with(document_path).and_return(full_onboarding_data)
+    end
+
+    it 'deletes the document and builds the onboarding' do
+      manager.delete_document(onboarding_id, slot_key, document_id)
+
+      expect(delete_proc).to have_received(:call).with(document_path)
+      expect(Fintoc::V2::Onboarding).to have_received(:new).with(**full_onboarding_data, client:)
+    end
+  end
+
   describe '#upload_shareholder_document' do
     let(:file_path) { 'spec/support/fixtures/sample_document.pdf' }
 

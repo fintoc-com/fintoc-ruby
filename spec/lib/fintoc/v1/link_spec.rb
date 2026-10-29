@@ -60,6 +60,12 @@ RSpec.describe Fintoc::V1::Link do
     end
   end
 
+  describe '#link_token' do
+    it 'returns the link token' do
+      expect(link.link_token).to eq(data[:link_token])
+    end
+  end
+
   describe '#to_s' do
     it 'returns the link as a string' do
       expect(link.to_s).to eq("<#{data[:username]}@#{data[:institution][:name]}> 🔗 <Fintoc>")

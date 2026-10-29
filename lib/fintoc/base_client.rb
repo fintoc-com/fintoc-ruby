@@ -137,6 +137,8 @@ module Fintoc
 
     def build_form(form)
       form.transform_values do |value|
+        next value if value.is_a?(HTTP::FormData::Part)
+
         file?(value) ? HTTP::FormData::File.new(value) : value
       end
     end
@@ -150,12 +152,12 @@ module Fintoc
     end
 
     def error_class(snake_code)
-      pascal_klass_name = Utils.snake_to_pascal(snake_code)
-      # this conditional klass_name is to handle InternalServerError custom error class
-      # without this the error class name would be like InternalServerErrorError (^-^)
+      pascal_klass_name = Utils.snake_to_pascal(snake_code.to_s)
       klass =
         pascal_klass_name.end_with?('Error') ? pascal_klass_name : "#{pascal_klass_name}Error"
-      Module.const_get("Fintoc::Errors::#{klass}")
+      Fintoc::Errors.const_get(klass, false)
+    rescue NameError
+      Fintoc::Errors::FintocError
     end
 
     # rubocop:disable Layout/LineLength

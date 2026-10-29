@@ -1,0 +1,37 @@
+{
+  "id": "pi_BO381oEATXonG6bj",
+  "object": "payment_intent",
+  "amount": 100000,
+  "business_profile": null,
+  "created_at": "2021-10-15T15:23:11.474Z",
+  "currency": "CLP",
+  "customer": null,
+  "customer_email": "jon.snow@example.com",
+  "error_reason": null,
+  "expires_at": null,
+  "invoices": [],
+  "metadata": {
+    "order_id": "9182"
+  },
+  "mode": "live",
+  "next_action": null,
+  "payment_method": null,
+  "payment_type": "bank_transfer",
+  "payment_type_options": {},
+  "recipient_account": {
+    "holder_id": "111111111",
+    "institution_id": "cl_banco_de_chile",
+    "number": "123456789",
+    "type": "checking_account"
+  },
+  "reference_id": "90123712",
+  "sender_account": {
+    "holder_id": "111111111",
+    "institution_id": "cl_banco_estado",
+    "number": "123456789",
+    "type": "checking_account"
+  },
+  "status": "succeeded",
+  "transaction_date": "2021-10-15T15:24:15.474Z",
+  "widget_token": null
+}

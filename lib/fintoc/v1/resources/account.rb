@@ -25,6 +25,7 @@ module Fintoc
         refreshed_at: nil,
         balance: nil,
         movements: nil,
+        link_token: nil,
         client: nil,
         **
       )
@@ -39,6 +40,7 @@ module Fintoc
         @refreshed_at = DateTime.iso8601(refreshed_at) if refreshed_at
         @balance = Fintoc::V1::Balance.new(**balance)
         @movements = movements || []
+        @link_token = link_token
         @client = client
       end
 
@@ -81,14 +83,19 @@ module Fintoc
       private
 
       def get_account
-        @client.get(version: :v1).call("accounts/#{@id}")
+        @client.get(version: :v1).call("accounts/#{@id}", **link_token_param)
       end
 
       def _get_movements(**params)
-        first = @client.get(version: :v1).call("accounts/#{@id}/movements", **params)
+        first = @client.get(version: :v1)
+                       .call("accounts/#{@id}/movements", **link_token_param, **params)
         return first if params.empty?
 
         first + Utils.flatten(@client.fetch_next)
+      end
+
+      def link_token_param
+        @link_token ? { link_token: @link_token } : {}
       end
     end
   end
