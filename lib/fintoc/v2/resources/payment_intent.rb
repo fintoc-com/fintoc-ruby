@@ -5,9 +5,9 @@ module Fintoc
                   :customer_email, :customer_phone, :error_reason, :expires_at, :invoices,
                   :metadata, :mode, :next_action, :payment_method, :payment_type,
                   :payment_type_options, :recipient_account, :reference_id, :sender_account,
-                  :status, :transaction_date, :widget_token
+                  :split, :split_applied, :status, :transaction_date, :widget_token
 
-      def initialize( # rubocop:disable Metrics/MethodLength
+      def initialize( # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         id:,
         object:,
         amount: nil,
@@ -29,6 +29,8 @@ module Fintoc
         recipient_account: nil,
         reference_id: nil,
         sender_account: nil,
+        split: nil,
+        split_applied: nil,
         status: nil,
         transaction_date: nil,
         widget_token: nil,
@@ -55,6 +57,8 @@ module Fintoc
         @recipient_account = recipient_account
         @reference_id = reference_id
         @sender_account = sender_account
+        @split = split
+        @split_applied = split_applied
         @status = status
         @transaction_date = transaction_date
         @widget_token = widget_token
