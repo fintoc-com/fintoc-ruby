@@ -385,6 +385,11 @@ RSpec.describe Fintoc::BaseClient do
         .to eq(Fintoc::Errors::InternalServerError)
     end
 
+    it 'resolves the maximum amount limit error' do
+      expect(client.send(:error_class, 'maximum_amount_limit_error'))
+        .to eq(Fintoc::Errors::MaximumAmountLimitError)
+    end
+
     it 'falls back to FintocError for unknown or missing codes' do
       expect([client.send(:error_class, 'brand_new_code'), client.send(:error_class, nil)])
         .to all(eq(Fintoc::Errors::FintocError))
