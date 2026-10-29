@@ -375,9 +375,19 @@ RSpec.describe Fintoc::BaseClient do
         .to eq(Fintoc::Errors::PaymentNonExpirableError)
     end
 
+    it 'resolves the mandate limit exceeded error' do
+      expect(client.send(:error_class, 'mandate_limit_exceeded'))
+        .to eq(Fintoc::Errors::MandateLimitExceededError)
+    end
+
     it 'keeps codes already ending in error' do
       expect(client.send(:error_class, 'internal_server_error'))
         .to eq(Fintoc::Errors::InternalServerError)
+    end
+
+    it 'resolves the maximum amount limit error' do
+      expect(client.send(:error_class, 'maximum_amount_limit_error'))
+        .to eq(Fintoc::Errors::MaximumAmountLimitError)
     end
 
     it 'falls back to FintocError for unknown or missing codes' do

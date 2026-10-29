@@ -54,6 +54,28 @@ RSpec.describe Fintoc::V2::Managers::AccountVerificationsManager do
         .to have_received(:new).with(**first_account_verification_data, client:)
     end
 
+    context 'when verifying a Chilean account' do
+      let(:chile_params) do
+        {
+          institution_id: 'cl_banco_de_chile',
+          account_type: 'checking_account',
+          holder_id: '11.111.111-1'
+        }
+      end
+
+      before do
+        allow(post_proc).to receive(:call).and_return(first_account_verification_data)
+      end
+
+      it 'forwards the Chilean account params' do
+        manager.create(account_number: '000000001', **chile_params)
+
+        expect(post_proc)
+          .to have_received(:call)
+          .with('account_verifications', account_number: '000000001', **chile_params)
+      end
+    end
+
     context 'when idempotency_key is provided' do
       let(:idempotency_key) { '123e4567-e89b-12d3-a456-426614174000' }
 

@@ -47,6 +47,36 @@
     "number": "123456",
     "type": "checking_account"
   },
+  "split": [
+    {
+      "amount": 3500,
+      "charge_processing_fee": true,
+      "entity_id": "ent_xK9mPq2RkV3WnDQG",
+      "metadata": {},
+      "type": "flat"
+    },
+    {
+      "amount": 1500,
+      "charge_processing_fee": false,
+      "entity_id": "ent_2hQ9vBmKpR7xLtZ3",
+      "metadata": {
+        "order_id": "12345"
+      },
+      "type": "flat"
+    }
+  ],
+  "split_applied": [
+    {
+      "calculated_amount": 3500,
+      "charge_processing_fee": true,
+      "entity_id": "ent_xK9mPq2RkV3WnDQG"
+    },
+    {
+      "calculated_amount": 1500,
+      "charge_processing_fee": false,
+      "entity_id": "ent_2hQ9vBmKpR7xLtZ3"
+    }
+  ],
   "status": "succeeded",
   "transaction_date": "2026-02-10T15:24:15Z",
   "widget_token": null
