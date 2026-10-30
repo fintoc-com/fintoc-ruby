@@ -33,6 +33,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Account Numbers](#account-numbers)
       - [Transfers](#transfers)
       - [Transfer Batches](#transfer-batches)
+      - [Recipients](#recipients)
       - [Simulate](#simulate)
       - [Account Verifications](#account-verifications)
     - [Entity onboardings API Examples](#entity-onboardings-api-examples)
@@ -192,6 +193,17 @@ transfer_batch = client.v2.transfer_batches.create(
   currency: 'MXN',
   transfers: [{...}]
 )
+
+# Recipients
+recipients = client.v2.recipients.list(entity_id: 'entity_id')
+recipient = client.v2.recipients.get('recipient_id')
+recipient = client.v2.recipients.create(
+  entity_id: 'entity_id',
+  account_number: 'account_number',
+  holder_name: 'Jon Snow'
+)
+recipient = client.v2.recipients.update('recipient_id', alias: 'Jon')
+client.v2.recipients.delete('recipient_id')
 
 # Simulate
 simulated_transfer = client.v2.simulate.receive_transfer(
@@ -503,6 +515,39 @@ transfer_batches = client.v2.transfer_batches.list(
 
 # List the transfers of a batch
 transfers = client.v2.transfers.list(transfer_batch_id: 'transfer_batch_id')
+```
+
+#### Recipients
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Client.new('api_key', jws_private_key: 'jws_private_key')
+
+# Create a recipient
+recipient = client.v2.recipients.create(
+  entity_id: 'entity_id',
+  account_number: '000000001',
+  holder_name: 'Jon Snow',
+  account_type: 'checking_account',
+  holder_id: '11.111.111-1',
+  holder_type: 'person',
+  institution_id: 'cl_banco_de_chile',
+  alias: 'Jon',
+  email: 'jon.snow@example.com'
+)
+
+# Get a specific recipient
+recipient = client.v2.recipients.get('recipient_id')
+
+# List recipients, optionally filtered
+recipients = client.v2.recipients.list(entity_id: 'entity_id', holder_type: 'person')
+
+# Update a recipient
+recipient = client.v2.recipients.update('recipient_id', alias: 'Lord Snow')
+
+# Delete a recipient
+client.v2.recipients.delete('recipient_id')
 ```
 
 #### Simulate
