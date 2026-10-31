@@ -11,6 +11,16 @@ RSpec.describe Fintoc::V2::Subscription do
     JSON.parse(File.read("spec/fixtures/v2/#{name}.json"), symbolize_names: true)
   end
 
+  describe '#initialize' do
+    it 'exposes split' do
+      expect(subscription.split).to eq(fixture('subscription')[:split])
+    end
+
+    it 'defaults split to nil when absent' do
+      expect(described_class.new(id: 'sub_123', object: 'subscription').split).to be_nil
+    end
+  end
+
   describe '#subscription_items' do
     before do
       stub_request(:patch, "https://api.fintoc.com/v2/subscriptions/#{subscription.id}/items/#{item[:id]}")
