@@ -36,6 +36,24 @@
   },
   "mode": "live",
   "payment_method": "pm_2c4mDhAbCdEfGhIjKlMnOpQrStu",
+  "split": [
+    {
+      "amount": 2550,
+      "charge_processing_fee": true,
+      "entity_id": "ent_xK9mPq2RkV3WnDQG",
+      "metadata": {},
+      "type": "percentage"
+    },
+    {
+      "amount": 7450,
+      "charge_processing_fee": false,
+      "entity_id": "ent_2hQ9vBmKpR7xLtZ3",
+      "metadata": {
+        "role": "seller"
+      },
+      "type": "percentage"
+    }
+  ],
   "status": "active",
   "trial_end": null
 }

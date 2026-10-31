@@ -11,6 +11,17 @@ RSpec.describe Fintoc::V2::Invoice do
     JSON.parse(File.read("spec/fixtures/v2/#{name}.json"), symbolize_names: true)
   end
 
+  describe '#initialize' do
+    it 'exposes split and split_applied' do
+      expect(invoice).to have_attributes(fixture('invoice').slice(:split, :split_applied))
+    end
+
+    it 'defaults split fields to nil when absent' do
+      expect(described_class.new(id: 'inv_123', object: 'invoice'))
+        .to have_attributes(split: nil, split_applied: nil)
+    end
+  end
+
   describe '#invoice_lines' do
     before do
       stub_request(:patch, "https://api.fintoc.com/v2/invoices/#{invoice.id}/lines/#{line[:id]}")

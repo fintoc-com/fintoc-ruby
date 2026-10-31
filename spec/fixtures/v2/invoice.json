@@ -25,6 +25,36 @@
   "mode": "live",
   "next_payment_attempt_at": null,
   "payments": [],
+  "split": [
+    {
+      "amount": 2550,
+      "charge_processing_fee": true,
+      "entity_id": "ent_xK9mPq2RkV3WnDQG",
+      "metadata": {},
+      "type": "percentage"
+    },
+    {
+      "amount": 7450,
+      "charge_processing_fee": false,
+      "entity_id": "ent_2hQ9vBmKpR7xLtZ3",
+      "metadata": {
+        "role": "seller"
+      },
+      "type": "percentage"
+    }
+  ],
+  "split_applied": [
+    {
+      "calculated_amount": 7650,
+      "charge_processing_fee": true,
+      "entity_id": "ent_xK9mPq2RkV3WnDQG"
+    },
+    {
+      "calculated_amount": 22350,
+      "charge_processing_fee": false,
+      "entity_id": "ent_2hQ9vBmKpR7xLtZ3"
+    }
+  ],
   "status": "open",
   "subscription": "sub_2bVdWzKfHr5QgMt8ElYkSn1DxJp",
   "total": 30000
