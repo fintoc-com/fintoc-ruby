@@ -6,7 +6,7 @@ module Fintoc
       attr_reader :id, :object, :amount, :currency, :direction, :status, :mode,
                   :post_date, :transaction_date, :comment, :reference_id, :receipt_url,
                   :tracking_key, :return_reason, :counterparty, :account_number,
-                  :metadata, :created_at
+                  :metadata, :created_at, :execution, :purpose
 
       def initialize( # rubocop:disable Metrics/MethodLength
         id:,
@@ -27,6 +27,8 @@ module Fintoc
         account_number: nil,
         metadata: {},
         created_at: nil,
+        execution: nil,
+        purpose: nil,
         client: nil,
         **
       )
@@ -48,6 +50,8 @@ module Fintoc
         @account_number = account_number
         @metadata = metadata || {}
         @created_at = created_at
+        @execution = execution
+        @purpose = purpose
         @client = client
       end
 
@@ -123,6 +127,8 @@ module Fintoc
         @account_number = transfer.account_number
         @metadata = transfer.metadata
         @created_at = transfer.created_at
+        @execution = transfer.execution
+        @purpose = transfer.purpose
 
         self
       end

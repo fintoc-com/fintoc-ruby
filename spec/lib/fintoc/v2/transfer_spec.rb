@@ -53,6 +53,8 @@ RSpec.describe Fintoc::V2::Transfer do
       account_number: account_number_data,
       metadata: {},
       created_at: '2020-04-17T00:00:00.000Z',
+      execution: 'immediate',
+      purpose: nil,
       client: client
     }
   end
@@ -83,7 +85,9 @@ RSpec.describe Fintoc::V2::Transfer do
         counterparty: counterparty_data,
         account_number: account_number_data,
         metadata: {},
-        created_at: '2020-04-17T00:00:00.000Z'
+        created_at: '2020-04-17T00:00:00.000Z',
+        execution: 'immediate',
+        purpose: nil
       )
     end
   end
@@ -214,7 +218,9 @@ RSpec.describe Fintoc::V2::Transfer do
   end
 
   describe '#refresh' do
-    let(:refreshed_data) { data.merge(status: 'succeeded') }
+    let(:refreshed_data) do
+      data.merge(status: 'succeeded', execution: 'deferred', purpose: 'salary')
+    end
     let(:refreshed_transfer) { described_class.new(**refreshed_data) }
 
     before do
@@ -223,6 +229,10 @@ RSpec.describe Fintoc::V2::Transfer do
 
     it 'refreshes the transfer data' do
       expect { transfer.refresh }.to change { transfer.status }.from('pending').to('succeeded')
+    end
+
+    it 'refreshes execution and purpose' do
+      expect(transfer.refresh).to have_attributes(execution: 'deferred', purpose: 'salary')
     end
 
     it 'returns self' do
