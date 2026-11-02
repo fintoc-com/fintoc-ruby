@@ -69,12 +69,14 @@ module Fintoc
     class InvalidTransfersError < FintocError; end
     class InvalidTransfersSizeError < FintocError; end
     class InvalidDescriptionSizeError < FintocError; end
+    class DeferredExecutionNotEnabledError < FintocError; end
     class InvalidBillingCycleAnchorError < FintocError; end
     class InvalidCountryCodeError < FintocError; end
     class InvalidEmailError < FintocError; end
     class InvalidInvoiceStatusError < FintocError; end
     class InvalidMetadataError < FintocError; end
     class InvalidPeriodError < FintocError; end
+    class InvalidPurposeError < FintocError; end
     class InvalidReferenceIdFormatError < FintocError; end
     class InvalidRefundToGetVoucherError < FintocError; end
     class InvalidRutError < FintocError; end

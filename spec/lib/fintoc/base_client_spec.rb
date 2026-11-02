@@ -390,6 +390,16 @@ RSpec.describe Fintoc::BaseClient do
         .to eq(Fintoc::Errors::MaximumAmountLimitError)
     end
 
+    it 'resolves the deferred execution not enabled error' do
+      expect(client.send(:error_class, 'deferred_execution_not_enabled'))
+        .to eq(Fintoc::Errors::DeferredExecutionNotEnabledError)
+    end
+
+    it 'resolves the invalid purpose error' do
+      expect(client.send(:error_class, 'invalid_purpose'))
+        .to eq(Fintoc::Errors::InvalidPurposeError)
+    end
+
     it 'falls back to FintocError for unknown or missing codes' do
       expect([client.send(:error_class, 'brand_new_code'), client.send(:error_class, nil)])
         .to all(eq(Fintoc::Errors::FintocError))
