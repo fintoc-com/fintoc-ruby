@@ -25,6 +25,7 @@ RSpec.describe Fintoc::V2::Account do
       root_account_number: '738969123456789120',
       status: 'active',
       entity: entity_data,
+      in_transit_balance: 1500000,
       client: client
     }
   end
@@ -48,7 +49,8 @@ RSpec.describe Fintoc::V2::Account do
         root_account_number_id: 'acno_Kasf91034gj1AD',
         root_account_number: '738969123456789120',
         status: 'active',
-        entity: entity_data
+        entity: entity_data,
+        in_transit_balance: 1500000
       )
     end
   end
@@ -107,7 +109,9 @@ RSpec.describe Fintoc::V2::Account do
   end
 
   describe '#refresh' do
-    let(:updated_data) { data.merge(description: 'Updated account description') }
+    let(:updated_data) do
+      data.merge(description: 'Updated account description', in_transit_balance: 0)
+    end
 
     let(:updated_account) { described_class.new(**updated_data, client: client) }
 
@@ -123,6 +127,10 @@ RSpec.describe Fintoc::V2::Account do
       expect(client.accounts).to have_received(:get).with('acc_123')
 
       expect(account.description).to eq('Updated account description')
+    end
+
+    it 'refreshes the in transit balance' do
+      expect(account.refresh.in_transit_balance).to eq(0)
     end
 
     it 'raises an error if the account ID does not match' do

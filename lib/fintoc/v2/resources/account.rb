@@ -6,7 +6,8 @@ module Fintoc
   module V2
     class Account
       attr_reader :id, :object, :mode, :description, :available_balance, :currency,
-                  :is_root, :root_account_number_id, :root_account_number, :status, :entity
+                  :is_root, :root_account_number_id, :root_account_number, :status, :entity,
+                  :in_transit_balance
 
       def initialize(
         id:,
@@ -20,6 +21,7 @@ module Fintoc
         root_account_number:,
         status:,
         entity:,
+        in_transit_balance: nil,
         client: nil,
         **
       )
@@ -34,6 +36,7 @@ module Fintoc
         @root_account_number = root_account_number
         @status = status
         @entity = entity
+        @in_transit_balance = in_transit_balance
         @client = client
       end
 
@@ -108,6 +111,7 @@ module Fintoc
         @root_account_number = account.root_account_number
         @status = account.status
         @entity = account.entity
+        @in_transit_balance = account.in_transit_balance
 
         self
       end
