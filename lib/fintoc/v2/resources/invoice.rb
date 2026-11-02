@@ -5,8 +5,8 @@ module Fintoc
     class Invoice
       attr_reader :id, :object, :attempt_count, :collection_method, :created_at, :currency,
                   :customer, :default_payment_method, :external_payment, :hosted_invoice_url,
-                  :lines, :metadata, :mode, :next_payment_attempt_at, :payments, :status,
-                  :subscription, :total
+                  :lines, :metadata, :mode, :next_payment_attempt_at, :payments, :split,
+                  :split_applied, :status, :subscription, :total
 
       def initialize( # rubocop:disable Metrics/MethodLength
         id:,
@@ -24,6 +24,8 @@ module Fintoc
         mode: nil,
         next_payment_attempt_at: nil,
         payments: nil,
+        split: nil,
+        split_applied: nil,
         status: nil,
         subscription: nil,
         total: nil,
@@ -45,6 +47,8 @@ module Fintoc
         @mode = mode
         @next_payment_attempt_at = next_payment_attempt_at
         @payments = payments
+        @split = split
+        @split_applied = split_applied
         @status = status
         @subscription = subscription
         @total = total
