@@ -4,9 +4,10 @@ module Fintoc
   module V2
     class Subscription
       attr_reader :id, :object, :billing_cycle_anchor, :cancel_at, :collection_method, :created_at,
-                  :customer, :items, :metadata, :mode, :payment_method, :split, :status, :trial_end
+                  :customer, :items, :metadata, :mode, :payment_method, :reason, :split, :status,
+                  :trial_end
 
-      def initialize(
+      def initialize( # rubocop:disable Metrics/MethodLength
         id:,
         object:,
         billing_cycle_anchor: nil,
@@ -18,6 +19,7 @@ module Fintoc
         metadata: nil,
         mode: nil,
         payment_method: nil,
+        reason: nil,
         split: nil,
         status: nil,
         trial_end: nil,
@@ -35,6 +37,7 @@ module Fintoc
         @metadata = metadata
         @mode = mode
         @payment_method = payment_method
+        @reason = reason
         @split = split
         @status = status
         @trial_end = trial_end

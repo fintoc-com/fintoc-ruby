@@ -36,6 +36,7 @@
   },
   "mode": "live",
   "payment_method": "pm_2c4mDhAbCdEfGhIjKlMnOpQrStu",
+  "reason": null,
   "split": [
     {
       "amount": 2550,

@@ -9,6 +9,7 @@
   "currency": "CLP",
   "customer_email": "customer@example.com",
   "expires_at": null,
+  "max_completed_sessions": 1,
   "metadata": {
     "order_id": "1234"
   },

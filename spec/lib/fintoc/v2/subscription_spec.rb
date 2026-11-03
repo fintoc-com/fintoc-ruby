@@ -16,8 +16,17 @@ RSpec.describe Fintoc::V2::Subscription do
       expect(subscription.split).to eq(fixture('subscription')[:split])
     end
 
-    it 'defaults split to nil when absent' do
-      expect(described_class.new(id: 'sub_123', object: 'subscription').split).to be_nil
+    it 'defaults reason and split to nil when absent' do
+      expect(described_class.new(id: 'sub_123', object: 'subscription'))
+        .to have_attributes(reason: nil, split: nil)
+    end
+
+    it 'exposes the inconsistent reason' do
+      inconsistent = described_class.new(
+        **fixture('subscription'), status: 'inconsistent', reason: 'split_amount_mismatch'
+      )
+      expect(inconsistent).to have_attributes(status: 'inconsistent',
+                                              reason: 'split_amount_mismatch')
     end
   end
 

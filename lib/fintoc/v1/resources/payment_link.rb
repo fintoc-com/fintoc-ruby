@@ -2,7 +2,8 @@ module Fintoc
   module V1
     class PaymentLink
       attr_reader :id, :object, :amount, :checkout, :created_at, :currency, :customer_email,
-                  :expires_at, :metadata, :mode, :recipient_account, :status, :url
+                  :expires_at, :max_completed_sessions, :metadata, :mode, :recipient_account,
+                  :status, :url
 
       def initialize(
         id:,
@@ -13,6 +14,7 @@ module Fintoc
         currency: nil,
         customer_email: nil,
         expires_at: nil,
+        max_completed_sessions: nil,
         metadata: nil,
         mode: nil,
         recipient_account: nil,
@@ -28,6 +30,7 @@ module Fintoc
         @currency = currency
         @customer_email = customer_email
         @expires_at = expires_at
+        @max_completed_sessions = max_completed_sessions
         @metadata = metadata
         @mode = mode
         @recipient_account = recipient_account

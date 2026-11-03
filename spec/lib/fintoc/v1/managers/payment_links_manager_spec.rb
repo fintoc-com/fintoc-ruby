@@ -18,6 +18,7 @@ RSpec.describe Fintoc::V1::Managers::PaymentLinksManager do
         amount: 5000,
         currency: 'CLP',
         customer_email: 'customer@example.com',
+        max_completed_sessions: 1,
         metadata: { order_id: '1234' }
       }
     end
