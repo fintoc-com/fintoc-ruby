@@ -16,9 +16,17 @@ RSpec.describe Fintoc::V2::Invoice do
       expect(invoice).to have_attributes(fixture('invoice').slice(:split, :split_applied))
     end
 
-    it 'defaults split fields to nil when absent' do
+    it 'defaults reason and split fields to nil when absent' do
       expect(described_class.new(id: 'inv_123', object: 'invoice'))
-        .to have_attributes(split: nil, split_applied: nil)
+        .to have_attributes(reason: nil, split: nil, split_applied: nil)
+    end
+
+    it 'exposes the inconsistent reason' do
+      inconsistent = described_class.new(
+        **fixture('invoice'), status: 'inconsistent', reason: 'split_amount_mismatch'
+      )
+      expect(inconsistent).to have_attributes(status: 'inconsistent',
+                                              reason: 'split_amount_mismatch')
     end
   end
 

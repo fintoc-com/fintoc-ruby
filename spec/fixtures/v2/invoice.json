@@ -25,6 +25,7 @@
   "mode": "live",
   "next_payment_attempt_at": null,
   "payments": [],
+  "reason": null,
   "split": [
     {
       "amount": 2550,
