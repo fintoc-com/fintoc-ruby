@@ -7,6 +7,7 @@
   "documentation_upload_deadline": "2024-01-22T17:04:10.284Z",
   "documents": [],
   "mode": "live",
+  "payment_method_type": "card",
   "resource_id": "pi_8anBm9YpVwXzKqL2",
   "resource_type": "payment_intent",
   "status": "waiting_documentation",
