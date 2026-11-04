@@ -83,6 +83,8 @@ module Fintoc
     class MinimumAmountError < FintocError; end
     class MutuallyExclusiveParamsError < FintocError; end
     class NotSupportedRefundableResourceTypeError < FintocError; end
+    class SplitFlatNotAllowedInIndexedSubscriptionError < FintocError; end
+    class SplitNotAvailableError < FintocError; end
     class SplitSumMismatchError < FintocError; end
 
     # 401 Unauthorized Errors
@@ -165,6 +167,7 @@ module Fintoc
     class SubscriptionNotEditableError < FintocError; end
 
     # 422 Unprocessable Entity Errors
+    class AccountBlockedForDirectDebitError < FintocError; end
     class InvalidOtpCodeError < FintocError; end
     class OtpNotFoundError < FintocError; end
     class OtpBlockedError < FintocError; end

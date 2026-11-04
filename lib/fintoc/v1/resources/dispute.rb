@@ -2,7 +2,8 @@ module Fintoc
   module V1
     class Dispute
       attr_reader :id, :object, :amount, :created_at, :currency, :documentation_upload_deadline,
-                  :documents, :mode, :resource_id, :resource_type, :status, :updated_at
+                  :documents, :mode, :payment_method_type, :resource_id, :resource_type, :status,
+                  :updated_at
 
       def initialize(
         id:,
@@ -13,6 +14,7 @@ module Fintoc
         documentation_upload_deadline: nil,
         documents: nil,
         mode: nil,
+        payment_method_type: nil,
         resource_id: nil,
         resource_type: nil,
         status: nil,
@@ -27,6 +29,7 @@ module Fintoc
         @documentation_upload_deadline = documentation_upload_deadline
         @documents = documents
         @mode = mode
+        @payment_method_type = payment_method_type
         @resource_id = resource_id
         @resource_type = resource_type
         @status = status

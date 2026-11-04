@@ -380,6 +380,17 @@ RSpec.describe Fintoc::BaseClient do
         .to eq(Fintoc::Errors::MandateLimitExceededError)
     end
 
+    {
+      'split_flat_not_allowed_in_indexed_subscription' =>
+        'SplitFlatNotAllowedInIndexedSubscriptionError',
+      'split_not_available' => 'SplitNotAvailableError',
+      'account_blocked_for_direct_debit' => 'AccountBlockedForDirectDebitError'
+    }.each do |code, klass|
+      it "resolves the #{code} error" do
+        expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))
+      end
+    end
+
     it 'keeps codes already ending in error' do
       expect(client.send(:error_class, 'internal_server_error'))
         .to eq(Fintoc::Errors::InternalServerError)
