@@ -1,0 +1,9 @@
+{
+  "id": "org_0ujsswThIGTUYm2K8FjOOfXtY1K",
+  "object": "organization",
+  "external_reference": "SOL-123",
+  "interested_products": ["business_accounts"],
+  "metadata": { "request_id": "abc" },
+  "name": "Empresa SpA",
+  "tax_id": "111111111"
+}

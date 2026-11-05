@@ -17,6 +17,7 @@ require 'fintoc/v1/managers/charges_manager'
 require 'fintoc/v1/managers/refunds_manager'
 require 'fintoc/v1/managers/payouts_manager'
 require 'fintoc/v1/managers/disputes_manager'
+require 'fintoc/v1/managers/organizations_manager'
 
 module Fintoc
   module V1
@@ -91,6 +92,10 @@ module Fintoc
 
       def disputes
         @disputes ||= Managers::DisputesManager.new(self)
+      end
+
+      def organizations
+        @organizations ||= Managers::OrganizationsManager.new(self)
       end
     end
   end

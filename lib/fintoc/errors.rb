@@ -161,6 +161,7 @@ module Fintoc
     class InvoiceNotFinalizableError < FintocError; end
     class InvoiceNotMarkableUncollectibleError < FintocError; end
     class NoDocumentsToSubmitError < FintocError; end
+    class OrganizationAlreadyExistsError < FintocError; end
     class PaymentMethodNonCancelableError < FintocError; end
     class PaymentNonCancelableError < FintocError; end
     class PaymentNonExpirableError < FintocError; end
@@ -169,6 +170,8 @@ module Fintoc
     # 422 Unprocessable Entity Errors
     class AccountBlockedForDirectDebitError < FintocError; end
     class InvalidOtpCodeError < FintocError; end
+    class InvalidProductsError < FintocError; end
+    class InvalidTaxIdError < FintocError; end
     class OtpNotFoundError < FintocError; end
     class OtpBlockedError < FintocError; end
     class OtpVerificationFailedError < FintocError; end

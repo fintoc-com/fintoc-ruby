@@ -149,6 +149,15 @@ resources = client.v1.payouts.list_resources('payout_id', resource_type: 'paymen
 disputes = client.v1.disputes.list(status: 'needs_response')
 client.v1.disputes.create_document('dispute_id', file: 'path/to/evidence.pdf')
 client.v1.disputes.submit_for_review('dispute_id')
+
+# Referred organizations (live mode only). The request is signed with the JWS private key
+organization = client.v1.organizations.create(
+  name: 'Empresa SpA',
+  tax_id: '11.111.111-1',
+  founder_email: 'founder@example.com',
+  products: { business_accounts: {} },
+  external_reference: 'SOL-123'
+)
 ```
 
 ### **API V2 Client**

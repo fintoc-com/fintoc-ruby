@@ -9,7 +9,7 @@ module Fintoc
     end
 
     def v1
-      @v1 ||= Fintoc::V1::Client.new(@api_key)
+      @v1 ||= Fintoc::V1::Client.new(@api_key, jws_private_key: @jws_private_key)
     end
 
     def v2
