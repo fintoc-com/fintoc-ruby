@@ -384,7 +384,10 @@ RSpec.describe Fintoc::BaseClient do
       'split_flat_not_allowed_in_indexed_subscription' =>
         'SplitFlatNotAllowedInIndexedSubscriptionError',
       'split_not_available' => 'SplitNotAvailableError',
-      'account_blocked_for_direct_debit' => 'AccountBlockedForDirectDebitError'
+      'account_blocked_for_direct_debit' => 'AccountBlockedForDirectDebitError',
+      'organization_already_exists' => 'OrganizationAlreadyExistsError',
+      'invalid_products' => 'InvalidProductsError',
+      'invalid_tax_id' => 'InvalidTaxIdError'
     }.each do |code, klass|
       it "resolves the #{code} error" do
         expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))
