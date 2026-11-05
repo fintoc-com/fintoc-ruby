@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fintoc (1.8.0)
+    fintoc (1.9.0)
       http
       money-rails
       tabulate
