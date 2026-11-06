@@ -131,6 +131,7 @@ module Fintoc
     class InvalidUrlError < FintocError; end
     class OrganizationWithoutEntitiesError < FintocError; end
     class ResourceNotFoundError < FintocError; end
+    class FounderEmailMismatchError < FintocError; end
 
     # 405 Method Not Allowed Errors
     class OperationNotAllowedError < FintocError; end
@@ -156,6 +157,7 @@ module Fintoc
     class DisputeNotOpenForDocumentsError < FintocError; end
     class DuplicateRecipientError < FintocError; end
     class EntityHolderIdAlreadyExistsForOrganizationError < FintocError; end
+    class FounderAlreadyActivatedError < FintocError; end
     class InvalidEmptySubscriptionError < FintocError; end
     class InvoiceNotEditableError < FintocError; end
     class InvoiceNotFinalizableError < FintocError; end
@@ -169,6 +171,8 @@ module Fintoc
 
     # 422 Unprocessable Entity Errors
     class AccountBlockedForDirectDebitError < FintocError; end
+    class FounderEmailChangeLimitReachedError < FintocError; end
+    class InvalidHolderNameError < FintocError; end
     class InvalidOtpCodeError < FintocError; end
     class InvalidProductsError < FintocError; end
     class InvalidTaxIdError < FintocError; end

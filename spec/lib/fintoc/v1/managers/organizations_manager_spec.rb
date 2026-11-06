@@ -1,4 +1,3 @@
-require 'base64'
 require 'json'
 require 'openssl'
 require 'webmock/rspec'
@@ -8,18 +7,20 @@ RSpec.describe Fintoc::V1::Managers::OrganizationsManager do
   let(:jws_private_key) { OpenSSL::PKey::RSA.new(2048) }
   let(:manager) { Fintoc::Client.new('sk_live_organizations', jws_private_key:).v1.organizations }
   let(:collection_url) { 'https://api.fintoc.com/v1/organizations' }
+  let(:organization_id) { 'org_0ujsswThIGTUYm2K8FjOOfXtY1K' }
+  let(:resource_url) { "#{collection_url}/#{organization_id}" }
   let(:payload) do
     JSON.parse(File.read('spec/fixtures/v1/organization.json'), symbolize_names: true)
   end
   let(:headers) { { 'Content-Type' => 'application/json' } }
 
-  def signed?(request)
-    protected_b64, signature_b64 = request.headers['Fintoc-Jws-Signature'].split('.')
-    payload_b64 = Base64.urlsafe_encode64(request.body, padding: false)
-    jws_private_key.public_key.verify(
-      OpenSSL::Digest.new('SHA256'), Base64.urlsafe_decode64(signature_b64),
-      "#{protected_b64}.#{payload_b64}"
-    )
+  def unsigned?(request)
+    !request.headers.key?('Fintoc-Jws-Signature')
+  end
+
+  def stub_error(method, url, status:, type:, code:)
+    error = { error: { type:, code:, message: 'error' } }
+    stub_request(method, url).to_return(status:, body: error.to_json, headers:)
   end
 
   describe '#create' do
@@ -41,26 +42,58 @@ RSpec.describe Fintoc::V1::Managers::OrganizationsManager do
 
     before do
       stub_request(:post, collection_url)
-        .with(body: params.to_json) { |request| signed?(request) }
+        .with(body: params.to_json) { |request| unsigned?(request) }
         .to_return(status: 201, body: payload.to_json, headers: headers)
     end
 
-    it 'signs the body and returns the organization' do
+    it 'sends the body without a JWS signature and returns the organization' do
       expect(manager.create(**params))
         .to be_a(Fintoc::V1::Organization).and have_attributes(payload)
     end
 
     context 'when the tax_id belongs to another organization' do
       before do
-        error = { error: { type: 'conflicted_request_error', code: 'organization_already_exists',
-                           message: 'An organization with this tax_id already exists' } }
-        stub_request(:post, collection_url)
-          .to_return(status: 409, body: error.to_json, headers: headers)
+        stub_error(:post, collection_url, status: 409, type: 'conflicted_request_error',
+                                          code: 'organization_already_exists')
       end
 
       it 'raises OrganizationAlreadyExistsError' do
         expect { manager.create(**params) }
           .to raise_error(Fintoc::Errors::OrganizationAlreadyExistsError)
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:params) do
+      { founder_email: 'richard@piedpiper.com', previous_founder_email: 'jared@piedpiper.com' }
+    end
+
+    before do
+      stub_request(:patch, resource_url)
+        .with(body: params.to_json) { |request| unsigned?(request) }
+        .to_return(status: 200, body: payload.to_json, headers: headers)
+    end
+
+    it 'replaces the founder email and returns the organization' do
+      expect(manager.update(organization_id, **params))
+        .to be_a(Fintoc::V1::Organization).and have_attributes(payload)
+    end
+
+    {
+      [404, 'invalid_request_error', 'founder_email_mismatch'] =>
+        Fintoc::Errors::FounderEmailMismatchError,
+      [409, 'conflicted_request_error', 'founder_already_activated'] =>
+        Fintoc::Errors::FounderAlreadyActivatedError,
+      [422, 'invalid_request_error', 'founder_email_change_limit_reached'] =>
+        Fintoc::Errors::FounderEmailChangeLimitReachedError
+    }.each do |(status, type, code), error_class|
+      context "when the API responds #{code}" do
+        before { stub_error(:patch, resource_url, status:, type:, code:) }
+
+        it "raises #{error_class.name.split('::').last}" do
+          expect { manager.update(organization_id, **params) }.to raise_error(error_class)
+        end
       end
     end
   end
