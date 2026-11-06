@@ -9,8 +9,15 @@ module Fintoc
         end
 
         def create(name:, tax_id:, founder_email:, products:, **params)
-          data = @client.post(version: :v1, use_jws: true)
+          data = @client.post(version: :v1)
                         .call('organizations', name:, tax_id:, founder_email:, products:, **params)
+          build_organization(data)
+        end
+
+        def update(organization_id, founder_email:, previous_founder_email:)
+          data = @client.patch(version: :v1)
+                        .call("organizations/#{organization_id}", founder_email:,
+                                                                  previous_founder_email:)
           build_organization(data)
         end
 
