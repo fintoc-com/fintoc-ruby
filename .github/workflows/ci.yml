@@ -26,6 +26,17 @@ jobs:
     - name: Run RuboCop
       run: bundle exec rubocop
 
+  release-scripts:
+    runs-on: ubuntu-latest
+    name: Test release scripts
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Test resolve-release
+      run: .github/scripts/resolve-release.test.sh
+
   test:
     runs-on: ubuntu-latest
     strategy:
