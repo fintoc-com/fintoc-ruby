@@ -24,6 +24,15 @@ de cambios específicos también es bienvenido.
 - [x] Tests unitarios para x
 - [x] Tests de integración entre x e y
 
+## Release notes
+
+<!--
+Si este PR debe publicar una versión, agrega el label release:patch, release:minor
+o release:major y escribe aquí, en inglés, lo que verán los usuarios del SDK.
+Si queda vacío, se usan las notas autogeneradas de GitHub.
+Los PRs sin label no publican.
+-->
+
 ## Safety Checks
 
 - [ ] Versión y CHANGELOG actualizados (si corresponde)
