@@ -26,7 +26,7 @@ RSpec.describe Fintoc::Errors do
       Fintoc::Errors::InvalidRequestError.new(error[:message], error[:doc_url])
     ]
 
-    expect(errors.map { |e| [e.status, e.code] }).to all(eq([nil, nil]))
+    expect(errors).to all(have_attributes(status: nil, code: nil))
   end
 
   it 'exposes status and code passed as keywords' do
@@ -34,7 +34,7 @@ RSpec.describe Fintoc::Errors do
       error[:message], error[:doc_url], status: 400, code: 'invalid_request_error'
     )
 
-    expect([error_instance.status, error_instance.code]).to eq([400, 'invalid_request_error'])
+    expect(error_instance).to have_attributes(status: 400, code: 'invalid_request_error')
     expect(error_instance.message).to include('Missing required param: link_token', error[:doc_url])
   end
 end

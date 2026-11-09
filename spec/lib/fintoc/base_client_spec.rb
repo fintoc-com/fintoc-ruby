@@ -243,9 +243,7 @@ RSpec.describe Fintoc::BaseClient do
 
       def expect_error(klass, status:, code:)
         expect { client.request('post').call('test/resource') }
-          .to raise_error(klass) { |error|
-            expect([error.status, error.code]).to eq([status, code])
-          }
+          .to raise_error(an_instance_of(klass).and(have_attributes(status:, code:)))
       end
 
       it 'exposes status and code on errors with a known code' do
