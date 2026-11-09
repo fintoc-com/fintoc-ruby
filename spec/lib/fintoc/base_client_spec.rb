@@ -213,7 +213,8 @@ RSpec.describe Fintoc::BaseClient do
         )
         allow(mock_status).to receive_messages(
           client_error?: true,
-          server_error?: false
+          server_error?: false,
+          code: 401
         )
         allow(mock_headers).to receive(:get).with('link').and_return(nil)
         allow(client).to receive(:make_request).and_return(mock_response)
@@ -223,6 +224,50 @@ RSpec.describe Fintoc::BaseClient do
         request_proc = client.request('get')
         expect { request_proc.call('test/resource') }
           .to raise_error(Fintoc::Errors::AuthenticationError, /Invalid API key/)
+      end
+    end
+
+    context 'when the API responds with an error status' do
+      def stub_error_response(status:, code:)
+        allow(mock_response).to receive_messages(
+          body: {
+            error: { code:, message: 'Request failed', doc_url: 'https://docs.fintoc.com/errors' }
+          }.to_json,
+          status: mock_status
+        )
+        allow(mock_status).to receive_messages(
+          client_error?: status < 500, server_error?: status >= 500, code: status
+        )
+        allow(client).to receive(:make_request).and_return(mock_response)
+      end
+
+      def expect_error(klass, status:, code:)
+        expect { client.request('post').call('test/resource') }
+          .to raise_error(klass) { |error|
+            expect([error.status, error.code]).to eq([status, code])
+          }
+      end
+
+      it 'exposes status and code on errors with a known code' do
+        stub_error_response(status: 400, code: 'invalid_institution_id')
+
+        expect_error(
+          Fintoc::Errors::InvalidInstitutionIdError, status: 400, code: 'invalid_institution_id'
+        )
+      end
+
+      it 'exposes status and code when falling back to FintocError for an unknown code' do
+        stub_error_response(status: 400, code: 'brand_new_code')
+
+        expect_error(Fintoc::Errors::FintocError, status: 400, code: 'brand_new_code')
+      end
+
+      it 'exposes status and code on server errors' do
+        stub_error_response(status: 503, code: 'internal_server_error')
+
+        expect_error(
+          Fintoc::Errors::InternalServerError, status: 503, code: 'internal_server_error'
+        )
       end
     end
 
