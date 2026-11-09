@@ -3,11 +3,19 @@ require 'fintoc/constants'
 module Fintoc
   module Errors
     class FintocError < StandardError
-      def initialize(message, doc_url = Fintoc::Constants::GENERAL_DOC_URL)
+      # HTTP status of the API response (Integer), or nil when not raised from a response.
+      # API error code, such as 'invalid_institution_id' (String), or nil.
+      attr_reader :status, :code
+
+      def initialize(
+        message, doc_url = Fintoc::Constants::GENERAL_DOC_URL, status: nil, code: nil
+      )
         super(message)
 
         @message = message
         @doc_url = doc_url
+        @status = status
+        @code = code
       end
 
       def message

@@ -19,4 +19,22 @@ RSpec.describe Fintoc::Errors do
       .to(raise_error(an_instance_of(Fintoc::Errors::InvalidRequestError))
       .with_message(%r{https://docs.fintoc.com/reference/errors}))
   end
+
+  it 'leaves status and code nil when built with positional arguments only' do
+    errors = [
+      Fintoc::Errors::InvalidRequestError.new(error[:message]),
+      Fintoc::Errors::InvalidRequestError.new(error[:message], error[:doc_url])
+    ]
+
+    expect(errors).to all(have_attributes(status: nil, code: nil))
+  end
+
+  it 'exposes status and code passed as keywords' do
+    error_instance = Fintoc::Errors::InvalidRequestError.new(
+      error[:message], error[:doc_url], status: 400, code: 'invalid_request_error'
+    )
+
+    expect(error_instance).to have_attributes(status: 400, code: 'invalid_request_error')
+    expect(error_instance.message).to include('Missing required param: link_token', error[:doc_url])
+  end
 end

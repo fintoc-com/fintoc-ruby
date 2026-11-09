@@ -51,7 +51,7 @@ module Fintoc
         content = JSON.parse(response.body, symbolize_names: true)
 
         if response.status.client_error? || response.status.server_error?
-          raise_custom_error(content[:error])
+          raise_custom_error(content[:error], response.status.code)
         end
 
         @link_headers = response.headers.get('link')
@@ -147,8 +147,10 @@ module Fintoc
       value.respond_to?(:read) || (value.is_a?(String) && File.file?(value))
     end
 
-    def raise_custom_error(error)
-      raise error_class(error[:code]).new(error[:message], error[:doc_url])
+    def raise_custom_error(error, status)
+      raise error_class(error[:code]).new(
+        error[:message], error[:doc_url], status:, code: error[:code]
+      )
     end
 
     def error_class(snake_code)
