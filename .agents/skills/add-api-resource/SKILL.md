@@ -46,4 +46,4 @@ Replace `spec` with the affected spec paths for a focused run. Fix missing or mi
 
 ## Documentation and PR
 
-Update relevant README examples in English when public usage changes. Follow the repository's PR template and identify synthetic cassettes when added or changed. Keep version bumps, release changelog updates, and releases separate from resource changes; leave the template's version/CHANGELOG checkbox unchecked when not applicable.
+Update relevant README examples in English when public usage changes. Follow the repository's PR template and identify synthetic cassettes when added or changed. Do not bump the version or edit `CHANGELOG.md`, and leave the template's version/CHANGELOG checkbox unchecked; add the release label and `## Release notes` described in `AGENTS.md`.
