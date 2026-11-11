@@ -430,7 +430,8 @@ RSpec.describe Fintoc::BaseClient do
       'account_blocked_for_direct_debit' => 'AccountBlockedForDirectDebitError',
       'organization_already_exists' => 'OrganizationAlreadyExistsError',
       'invalid_products' => 'InvalidProductsError',
-      'invalid_tax_id' => 'InvalidTaxIdError'
+      'invalid_tax_id' => 'InvalidTaxIdError',
+      'limit_exceeded' => 'LimitExceededError'
     }.each do |code, klass|
       it "resolves the #{code} error" do
         expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))
