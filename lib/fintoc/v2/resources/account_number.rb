@@ -57,6 +57,10 @@ module Fintoc
         refresh_from_account_number(updated_account_number)
       end
 
+      def certificate
+        @client.account_numbers.certificate(@id)
+      end
+
       def enabled?
         @status == 'enabled'
       end

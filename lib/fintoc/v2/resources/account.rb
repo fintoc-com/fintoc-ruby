@@ -54,6 +54,10 @@ module Fintoc
         refresh_from_account(updated_account)
       end
 
+      def certificate
+        @client.accounts.certificate(@id)
+      end
+
       def active?
         @status == 'active'
       end

@@ -1,4 +1,5 @@
 require 'fintoc/v2/resources/account'
+require 'fintoc/v2/resources/account_certificate'
 
 module Fintoc
   module V2
@@ -25,6 +26,11 @@ module Fintoc
         def update(account_id, idempotency_key: nil, **params)
           data = _update_account(account_id, idempotency_key:, **params)
           build_account(data)
+        end
+
+        def certificate(account_id)
+          data = @client.get(version: :v2).call("accounts/#{account_id}/certificate")
+          Fintoc::V2::AccountCertificate.new(**data)
         end
 
         private

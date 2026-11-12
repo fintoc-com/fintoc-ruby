@@ -1,4 +1,5 @@
 require 'fintoc/v2/resources/account_number'
+require 'fintoc/v2/resources/account_certificate'
 
 module Fintoc
   module V2
@@ -31,6 +32,11 @@ module Fintoc
 
         def delete(account_number_id)
           _delete_account_number(account_number_id)
+        end
+
+        def certificate(account_number_id)
+          data = @client.get(version: :v2).call("account_numbers/#{account_number_id}/certificate")
+          Fintoc::V2::AccountCertificate.new(**data)
         end
 
         private

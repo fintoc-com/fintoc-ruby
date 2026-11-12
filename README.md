@@ -435,6 +435,10 @@ accounts = client.v2.accounts.list
 
 # Update an account
 updated_account = client.v2.accounts.update('account_id', description: 'Updated Description')
+
+# Get the account certificate (signed download URL)
+certificate = client.v2.accounts.certificate('account_id')
+certificate.download_url
 ```
 
 #### Account Numbers
@@ -461,6 +465,9 @@ updated_account_number = client.v2.account_numbers.update(
   'account_number_id',
   description: 'Updated account number'
 )
+
+# Get the certificate for an account number
+certificate = client.v2.account_numbers.certificate('account_number_id')
 ```
 
 #### Transfers

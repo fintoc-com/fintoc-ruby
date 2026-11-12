@@ -1,0 +1,7 @@
+{
+  "object": "account_certificate",
+  "account_id": "acc_31yYL7h9LVPg121AgFtCyJPDsgM",
+  "account_number_id": "acno_31yYL5uOb39vzvRIszPhoXYMjt4",
+  "download_url": "https://storage.example.com/account_certificates/certificate.pdf?signature=2d9a",
+  "expires_at": "2026-11-09T18:05:00Z"
+}
