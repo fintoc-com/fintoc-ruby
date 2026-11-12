@@ -63,9 +63,9 @@ RSpec.describe Fintoc::V2::AccountCertificate do
   end
 
   describe '#to_s' do
-    it 'includes the account number and download URL' do
+    it 'does not expose the signed download URL' do
       expect(described_class.new(**payload).to_s)
-        .to eq("📄 Account certificate (#{account_number_id}) - #{payload[:download_url]}")
+        .to eq("📄 Account certificate (#{account_number_id})")
     end
   end
 end

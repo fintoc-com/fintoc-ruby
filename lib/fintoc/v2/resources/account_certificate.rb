@@ -19,7 +19,7 @@ module Fintoc
       end
 
       def to_s
-        "📄 Account certificate (#{@account_number_id}) - #{@download_url}"
+        "📄 Account certificate (#{@account_number_id})"
       end
     end
   end
