@@ -1,0 +1,56 @@
+{
+  "id": "xbt_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+  "object": "crossborder_transfer",
+  "mode": "live",
+  "status": "pending_funds",
+  "direction": "mx_to_usd",
+  "quote_id": "xbq_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+  "source_amount": 1000000,
+  "source_currency": "MXN",
+  "target_amount": 52345,
+  "target_currency": "USD",
+  "exchange_rate": "19.1034",
+  "fees": [
+    {
+      "name": "fixed_fee",
+      "amount": 27069,
+      "currency": "MXN"
+    }
+  ],
+  "beneficiary": {
+    "id": "xbb_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+    "object": "crossborder_beneficiary",
+    "mode": "live",
+    "holder_type": "business",
+    "business_name": "Acme LLC",
+    "first_name": null,
+    "last_name": null,
+    "bank_name": "JPMorgan Chase Bank, N.A.",
+    "routing_number": "021000021",
+    "account_last4": "6789",
+    "address": {
+      "street_line1": "100 Main St",
+      "street_line2": null,
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "US"
+    },
+    "archived_at": null,
+    "created_at": "2026-11-06T14:00:00Z"
+  },
+  "reference": "Factura 123",
+  "funding_instructions": {
+    "type": "spei",
+    "clabe": "000000000000000000",
+    "concept": "FINTOC12345",
+    "amount": 1000000,
+    "currency": "MXN"
+  },
+  "credit": null,
+  "funds_received_at": null,
+  "succeeded_at": null,
+  "canceled_at": null,
+  "failed_at": null,
+  "created_at": "2026-11-06T15:00:04Z"
+}

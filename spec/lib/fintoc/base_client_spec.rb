@@ -431,7 +431,20 @@ RSpec.describe Fintoc::BaseClient do
       'organization_already_exists' => 'OrganizationAlreadyExistsError',
       'invalid_products' => 'InvalidProductsError',
       'invalid_tax_id' => 'InvalidTaxIdError',
-      'limit_exceeded' => 'LimitExceededError'
+      'limit_exceeded' => 'LimitExceededError',
+      'account_certificate_unavailable' => 'AccountCertificateUnavailableError',
+      'beneficiary_already_exists' => 'BeneficiaryAlreadyExistsError',
+      'quote_expired' => 'QuoteExpiredError',
+      'quote_already_accepted' => 'QuoteAlreadyAcceptedError',
+      'settlement_not_configured' => 'SettlementNotConfiguredError',
+      'provider_rejected' => 'ProviderRejectedError',
+      'provider_unavailable' => 'ProviderUnavailableError',
+      'provider_outcome_unknown' => 'ProviderOutcomeUnknownError',
+      'card_declined' => 'CardDeclinedError',
+      'card_confirmation_expired' => 'CardConfirmationExpiredError',
+      'charge_in_progress' => 'ChargeInProgressError',
+      'checkout_session_not_in_progress' => 'CheckoutSessionNotInProgressError',
+      'no_card_submitted' => 'NoCardSubmittedError'
     }.each do |code, klass|
       it "resolves the #{code} error" do
         expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))

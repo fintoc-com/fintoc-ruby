@@ -88,6 +88,8 @@ module Fintoc
     class InvalidRutError < FintocError; end
     class InvalidShareholderStructureError < FintocError; end
     class InvalidWebhookEventTypeError < FintocError; end
+    class QuoteExpiredError < FintocError; end
+    class SettlementNotConfiguredError < FintocError; end
     class MinimumAmountError < FintocError; end
     class MutuallyExclusiveParamsError < FintocError; end
     class NotSupportedRefundableResourceTypeError < FintocError; end
@@ -115,6 +117,7 @@ module Fintoc
 
     # 402 Payment Required Errors
     class PaymentRequiredError < FintocError; end
+    class CardDeclinedError < FintocError; end
 
     # 403 Forbidden Errors
     class InvalidAccountError < FintocError; end
@@ -176,9 +179,17 @@ module Fintoc
     class PaymentNonCancelableError < FintocError; end
     class PaymentNonExpirableError < FintocError; end
     class SubscriptionNotEditableError < FintocError; end
+    class BeneficiaryAlreadyExistsError < FintocError; end
+    class CardConfirmationExpiredError < FintocError; end
+    class ChargeInProgressError < FintocError; end
+    class CheckoutSessionNotInProgressError < FintocError; end
+    class NoCardSubmittedError < FintocError; end
+    class QuoteAlreadyAcceptedError < FintocError; end
 
     # 422 Unprocessable Entity Errors
     class AccountBlockedForDirectDebitError < FintocError; end
+    class AccountCertificateUnavailableError < FintocError; end
+    class ProviderRejectedError < FintocError; end
     class FounderEmailChangeLimitReachedError < FintocError; end
     class InvalidHolderNameError < FintocError; end
     class InvalidOtpCodeError < FintocError; end
@@ -244,6 +255,10 @@ module Fintoc
 
     # 501 Not Implemented Errors
     class OperationNotImplementedError < FintocError; end
+
+    # 503 Service Unavailable Errors
+    class ProviderOutcomeUnknownError < FintocError; end
+    class ProviderUnavailableError < FintocError; end
 
     # Webhook Errors
     class WebhookSignatureError < FintocError; end

@@ -16,6 +16,7 @@ require 'fintoc/v2/managers/setup_intents_manager'
 require 'fintoc/v2/managers/events_manager'
 require 'fintoc/v2/managers/invoices_manager'
 require 'fintoc/v2/managers/subscriptions_manager'
+require 'fintoc/v2/managers/crossborder_manager'
 
 module Fintoc
   module V2
@@ -86,6 +87,10 @@ module Fintoc
 
       def subscriptions
         @subscriptions ||= Managers::SubscriptionsManager.new(self)
+      end
+
+      def crossborder
+        @crossborder ||= Managers::CrossborderManager.new(self)
       end
     end
   end

@@ -34,6 +34,7 @@ Do yourself a favor: go grab some ice cubes by installing this refreshing librar
       - [Transfers](#transfers)
       - [Transfer Batches](#transfer-batches)
       - [Recipients](#recipients)
+      - [Crossborder](#crossborder)
       - [Simulate](#simulate)
       - [Account Verifications](#account-verifications)
     - [Entity onboardings API Examples](#entity-onboardings-api-examples)
@@ -273,6 +274,9 @@ eligibility = client.v2.payment_intents.check_eligibility(
 )
 checkout_session = client.v2.checkout_sessions.create(currency: 'CLP', flow: 'payment', amount: 5000)
 client.v2.checkout_sessions.expire('checkout_session_id')
+# Charge the card submitted to a `ui_mode: 'fields'` session. Call it again while
+# the session is still `in_progress` (202 Accepted) to get the result.
+checkout_session = client.v2.checkout_sessions.confirm('checkout_session_id')
 setup_intent = client.v2.setup_intents.get('setup_intent_id')
 
 # Products, subscriptions and invoices
@@ -569,6 +573,38 @@ recipient = client.v2.recipients.update('recipient_id', alias: 'Lord Snow')
 
 # Delete a recipient
 client.v2.recipients.delete('recipient_id')
+```
+
+#### Crossborder
+
+Crossborder beneficiaries, quotes and transfers are under the `v2.crossborder` namespace.
+Create a quote to lock the exchange rate, and accept it with a transfer to a beneficiary:
+
+```ruby
+require 'fintoc'
+
+client = Fintoc::Client.new('api_key')
+
+beneficiary = client.v2.crossborder.beneficiaries.create(
+  holder_type: 'business',
+  business_name: 'Acme LLC',
+  account_identifier: '123456789',
+  routing_number: '021000021',
+  bank_name: 'JPMorgan Chase Bank, N.A.',
+  address: { street_line1: '100 Main St', city: 'New York', state: 'NY', postal_code: '10001' }
+)
+beneficiaries = client.v2.crossborder.beneficiaries.list(limit: 10)
+client.v2.crossborder.beneficiaries.delete(beneficiary.id) # archives the beneficiary
+
+quote = client.v2.crossborder.quotes.create(direction: 'mx_to_usd', source_amount: 200001)
+quote = client.v2.crossborder.quotes.get(quote.id)
+
+transfer = client.v2.crossborder.transfers.create(
+  quote_id: quote.id, beneficiary_id: beneficiary.id, reference: 'Factura 123'
+)
+transfer.funding_instructions[:clabe]
+transfers = client.v2.crossborder.transfers.list(status: %w[pending_funds failed], direction: 'mx_to_usd')
+transfer = client.v2.crossborder.transfers.get('crossborder_transfer_id')
 ```
 
 #### Simulate

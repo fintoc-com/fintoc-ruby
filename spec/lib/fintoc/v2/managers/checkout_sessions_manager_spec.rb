@@ -72,4 +72,31 @@ RSpec.describe Fintoc::V2::Managers::CheckoutSessionsManager do
         .to be_a(Fintoc::V2::CheckoutSession).and have_attributes(payload)
     end
   end
+
+  describe '#confirm' do
+    before do
+      stub_request(:post, "#{resource_url}/confirm")
+        .with(body: {}, headers: { 'Idempotency-Key' => 'confirm-key' })
+        .to_return(status: 202, body: payload.to_json, headers: headers)
+    end
+
+    it 'returns the checkout session while the charge is pending' do
+      expect(manager.confirm(payload[:id], idempotency_key: 'confirm-key'))
+        .to be_a(Fintoc::V2::CheckoutSession).and have_attributes(payload)
+    end
+
+    context 'when the card is declined' do
+      before do
+        stub_request(:post, "#{resource_url}/confirm").to_return(
+          status: 402, headers: headers,
+          body: { error: { code: 'card_declined', message: 'Declined' } }.to_json
+        )
+      end
+
+      it 'raises CardDeclinedError' do
+        expect { manager.confirm(payload[:id]) }
+          .to raise_error(Fintoc::Errors::CardDeclinedError)
+      end
+    end
+  end
 end

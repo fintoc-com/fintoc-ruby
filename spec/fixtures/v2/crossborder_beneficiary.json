@@ -1,0 +1,22 @@
+{
+  "id": "xbb_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+  "object": "crossborder_beneficiary",
+  "mode": "live",
+  "holder_type": "business",
+  "business_name": "Acme LLC",
+  "first_name": null,
+  "last_name": null,
+  "bank_name": "JPMorgan Chase Bank, N.A.",
+  "routing_number": "021000021",
+  "account_last4": "6789",
+  "address": {
+    "street_line1": "100 Main St",
+    "street_line2": null,
+    "city": "New York",
+    "state": "NY",
+    "postal_code": "10001",
+    "country": "US"
+  },
+  "archived_at": null,
+  "created_at": "2026-11-06T14:00:00Z"
+}
