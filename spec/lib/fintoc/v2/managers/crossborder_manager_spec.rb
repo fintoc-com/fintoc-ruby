@@ -15,6 +15,25 @@ RSpec.describe Fintoc::V2::Managers::CrossborderManager do
     expect(client.crossborder).to equal(client.crossborder)
   end
 
+  describe 'resources #to_s' do
+    it 'describes each crossborder resource' do
+      expect(
+        [
+          Fintoc::V2::CrossborderBeneficiary.new(**fixture('crossborder_beneficiary')).to_s,
+          Fintoc::V2::CrossborderQuote.new(**fixture('crossborder_quote')).to_s,
+          Fintoc::V2::CrossborderTransfer.new(**fixture('crossborder_transfer')).to_s
+        ]
+      ).to eq(
+        [
+          'Crossborder beneficiary (xbb_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - ' \
+          'JPMorgan Chase Bank, N.A. ****6789',
+          'Crossborder quote (xbq_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - mx_to_usd open',
+          'Crossborder transfer (xbt_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - mx_to_usd pending_funds'
+        ]
+      )
+    end
+  end
+
   describe '#beneficiaries' do
     let(:manager) { client.crossborder.beneficiaries }
     let(:payload) { fixture('crossborder_beneficiary') }
