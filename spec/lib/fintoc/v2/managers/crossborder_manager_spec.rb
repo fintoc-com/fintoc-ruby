@@ -16,21 +16,16 @@ RSpec.describe Fintoc::V2::Managers::CrossborderManager do
   end
 
   describe 'resources #to_s' do
-    it 'describes each crossborder resource' do
-      expect(
-        [
-          Fintoc::V2::CrossborderBeneficiary.new(**fixture('crossborder_beneficiary')).to_s,
-          Fintoc::V2::CrossborderQuote.new(**fixture('crossborder_quote')).to_s,
-          Fintoc::V2::CrossborderTransfer.new(**fixture('crossborder_transfer')).to_s
-        ]
-      ).to eq(
-        [
-          'Crossborder beneficiary (xbb_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - ' \
-          'JPMorgan Chase Bank, N.A. ****6789',
-          'Crossborder quote (xbq_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - mx_to_usd open',
-          'Crossborder transfer (xbt_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw) - mx_to_usd pending_funds'
-        ]
-      )
+    {
+      'beneficiary' => 'JPMorgan Chase Bank, N.A. ****6789',
+      'quote' => 'mx_to_usd open',
+      'transfer' => 'mx_to_usd pending_funds'
+    }.each do |name, summary|
+      it "describes the crossborder #{name}" do
+        payload = fixture("crossborder_#{name}")
+        resource = Fintoc::V2.const_get("Crossborder#{name.capitalize}").new(**payload)
+        expect(resource.to_s).to eq("Crossborder #{name} (#{payload[:id]}) - #{summary}")
+      end
     end
   end
 
