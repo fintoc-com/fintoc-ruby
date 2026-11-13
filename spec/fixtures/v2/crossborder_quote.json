@@ -1,0 +1,22 @@
+{
+  "id": "xbq_2u6XjsX2BD3F8MzKQJf4Tr7Pcxw",
+  "object": "crossborder_quote",
+  "created_at": "2026-11-06T15:00:00Z",
+  "direction": "mx_to_usd",
+  "exchange_rate": "18.4958",
+  "expires_at": "2026-11-06T15:00:10Z",
+  "fees": [
+    {
+      "name": "fixed_fee",
+      "amount": 27069,
+      "currency": "MXN"
+    }
+  ],
+  "mode": "live",
+  "source_amount": 200001,
+  "source_currency": "MXN",
+  "status": "open",
+  "target_amount": 9313,
+  "target_currency": "USD",
+  "transfer_id": null
+}

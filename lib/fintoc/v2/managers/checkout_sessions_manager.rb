@@ -31,6 +31,12 @@ module Fintoc
           build_checkout_session(data)
         end
 
+        def confirm(checkout_session_id, idempotency_key: nil)
+          data = @client.post(version: :v2, idempotency_key:)
+                        .call("checkout_sessions/#{checkout_session_id}/confirm")
+          build_checkout_session(data)
+        end
+
         private
 
         def build_checkout_session(data)
