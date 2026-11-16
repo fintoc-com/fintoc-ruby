@@ -2,8 +2,8 @@ module Fintoc
   module V2
     class CrossborderQuote
       attr_reader :id, :object, :mode, :status, :direction, :source_amount, :source_currency,
-                  :target_amount, :target_currency, :exchange_rate, :fees, :transfer_id,
-                  :expires_at, :created_at
+                  :target_amount, :target_currency, :exchange_rate, :fees, :kind,
+                  :transfer_id, :expires_at, :created_at
 
       def initialize(
         id:,
@@ -17,6 +17,7 @@ module Fintoc
         target_currency: nil,
         exchange_rate: nil,
         fees: nil,
+        kind: nil,
         transfer_id: nil,
         expires_at: nil,
         created_at: nil,
@@ -33,6 +34,7 @@ module Fintoc
         @target_currency = target_currency
         @exchange_rate = exchange_rate
         @fees = fees
+        @kind = kind
         @transfer_id = transfer_id
         @expires_at = expires_at
         @created_at = created_at

@@ -27,6 +27,19 @@ module Fintoc
           build_transfer(data)
         end
 
+        def cancel(transfer_id, idempotency_key: nil)
+          data = @client.post(version: :v2, idempotency_key:)
+                        .call("crossborder/transfers/#{transfer_id}/cancel")
+          build_transfer(data)
+        end
+
+        # Test mode only.
+        def simulate_credit(transfer_id, idempotency_key: nil)
+          data = @client.post(version: :v2, idempotency_key:)
+                        .call("crossborder/transfers/#{transfer_id}/simulate_credit")
+          build_transfer(data)
+        end
+
         private
 
         def build_transfer(data)

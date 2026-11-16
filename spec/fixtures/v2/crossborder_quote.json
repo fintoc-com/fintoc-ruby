@@ -12,6 +12,7 @@
       "currency": "MXN"
     }
   ],
+  "kind": "locked",
   "mode": "live",
   "source_amount": 200001,
   "source_currency": "MXN",

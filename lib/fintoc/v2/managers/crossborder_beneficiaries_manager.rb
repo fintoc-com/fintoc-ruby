@@ -8,13 +8,9 @@ module Fintoc
           @client = client
         end
 
-        def create(
-          holder_type:, account_identifier:, routing_number:, bank_name:, address:,
-          idempotency_key: nil, **params
-        )
+        def create(holder_type:, account_identifier:, idempotency_key: nil, **params)
           data = @client.post(version: :v2, idempotency_key:).call(
-            'crossborder/beneficiaries',
-            holder_type:, account_identifier:, routing_number:, bank_name:, address:, **params
+            'crossborder/beneficiaries', holder_type:, account_identifier:, **params
           )
           build_beneficiary(data)
         end

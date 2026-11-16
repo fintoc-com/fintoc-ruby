@@ -96,6 +96,7 @@ module Fintoc
     class SplitFlatNotAllowedInIndexedSubscriptionError < FintocError; end
     class SplitNotAvailableError < FintocError; end
     class SplitSumMismatchError < FintocError; end
+    class CreditSimulationUnavailableError < FintocError; end
 
     # 401 Unauthorized Errors
     class AuthenticationError < FintocError; end
@@ -185,6 +186,9 @@ module Fintoc
     class CheckoutSessionNotInProgressError < FintocError; end
     class NoCardSubmittedError < FintocError; end
     class QuoteAlreadyAcceptedError < FintocError; end
+    class CreditAlreadySimulatedError < FintocError; end
+    class TransferNotCancellableError < FintocError; end
+    class UsdtCollectionAlreadyOpenError < FintocError; end
 
     # 422 Unprocessable Entity Errors
     class AccountBlockedForDirectDebitError < FintocError; end
@@ -231,6 +235,7 @@ module Fintoc
     class OrganizationWithoutOperationalRootEntityError < FintocError; end
     class PaymentCancellationNotSupportedError < FintocError; end
     class PaymentMethodInactiveError < FintocError; end
+    class PaymentMethodCanceledError < FintocError; end
     class PaymentMethodTypeNotAvailableError < FintocError; end
     class PaymentMethodTypeNotSupportedError < FintocError; end
     class PaymentMethodUnavailableError < FintocError; end
