@@ -444,7 +444,12 @@ RSpec.describe Fintoc::BaseClient do
       'card_confirmation_expired' => 'CardConfirmationExpiredError',
       'charge_in_progress' => 'ChargeInProgressError',
       'checkout_session_not_in_progress' => 'CheckoutSessionNotInProgressError',
-      'no_card_submitted' => 'NoCardSubmittedError'
+      'no_card_submitted' => 'NoCardSubmittedError',
+      'credit_simulation_unavailable' => 'CreditSimulationUnavailableError',
+      'credit_already_simulated' => 'CreditAlreadySimulatedError',
+      'transfer_not_cancellable' => 'TransferNotCancellableError',
+      'usdt_collection_already_open' => 'UsdtCollectionAlreadyOpenError',
+      'payment_method_canceled' => 'PaymentMethodCanceledError'
     }.each do |code, klass|
       it "resolves the #{code} error" do
         expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))

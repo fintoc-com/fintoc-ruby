@@ -596,6 +596,14 @@ beneficiary = client.v2.crossborder.beneficiaries.create(
 beneficiaries = client.v2.crossborder.beneficiaries.list(limit: 10)
 client.v2.crossborder.beneficiaries.delete(beneficiary.id) # archives the beneficiary
 
+wallet = client.v2.crossborder.beneficiaries.create(
+  holder_type: 'business',
+  business_name: 'Acme LLC',
+  account_scheme: 'evm_address',
+  network: 'polygon',
+  account_identifier: '0x52908400098527886E0F7030069857D2E4169EE7'
+)
+
 quote = client.v2.crossborder.quotes.create(direction: 'mx_to_usd', source_amount: 200001)
 quote = client.v2.crossborder.quotes.get(quote.id)
 
@@ -605,6 +613,11 @@ transfer = client.v2.crossborder.transfers.create(
 transfer.funding_instructions[:clabe]
 transfers = client.v2.crossborder.transfers.list(status: %w[pending_funds failed], direction: 'mx_to_usd')
 transfer = client.v2.crossborder.transfers.get('crossborder_transfer_id')
+
+# usdt_to_mx transfers waiting for their USDT can be canceled
+client.v2.crossborder.transfers.cancel('crossborder_transfer_id')
+# Test mode only: simulates the arrival of the pesos of a usdt_to_mx transfer
+client.v2.crossborder.transfers.simulate_credit('crossborder_transfer_id')
 ```
 
 #### Simulate
