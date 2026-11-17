@@ -80,6 +80,14 @@ RSpec.describe Fintoc::V2::Managers::PaymentMethodsManager do
 
       expect(manager.list(payment_options: { amount: 1000 })).to contain_exactly(a_kind_of(Fintoc::V2::PaymentMethod))
     end
+
+    it 'sends the off_session payment option in bracket notation' do
+      stub_request(:get, "#{collection_url}?payment_options%5Boff_session%5D=true")
+        .to_return(body: [payload].to_json, headers: headers)
+
+      expect(manager.list(payment_options: { off_session: true }))
+        .to contain_exactly(a_kind_of(Fintoc::V2::PaymentMethod))
+    end
   end
 
   describe '#get' do
@@ -118,6 +126,34 @@ RSpec.describe Fintoc::V2::Managers::PaymentMethodsManager do
 
     it 'returns the download information' do
       expect(manager.mandate_document(payload[:id])).to eq(response)
+    end
+  end
+
+  describe '#installments' do
+    let(:response) { { available_installments: [3, 6, 12] } }
+
+    before do
+      stub_request(:get, "#{resource_url}/installments")
+        .with(query: { amount: '1000', currency: 'CLP' })
+        .to_return(body: response.to_json, headers: headers)
+    end
+
+    it 'returns the available installments for the amount' do
+      expect(manager.installments(payload[:id], amount: 1000, currency: 'CLP')).to eq(response)
+    end
+
+    it 'raises the API error when the card is not available for installments' do
+      stub_request(:get, "#{resource_url}/installments")
+        .with(query: { amount: '1000', currency: 'CLP' })
+        .to_return(
+          status: 422,
+          body: { error: { type: 'invalid_request_error', code: 'invalid_payment_method_state',
+                           message: 'Payment method is not available for installments' } }.to_json,
+          headers: headers
+        )
+
+      expect { manager.installments(payload[:id], amount: 1000, currency: 'CLP') }
+        .to raise_error(Fintoc::Errors::InvalidPaymentMethodStateError)
     end
   end
 end

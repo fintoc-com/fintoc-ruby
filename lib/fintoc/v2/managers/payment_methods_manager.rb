@@ -36,6 +36,11 @@ module Fintoc
           @client.get(version: :v2).call("payment_methods/#{payment_method_id}/mandate_document")
         end
 
+        def installments(payment_method_id, amount:, currency:)
+          @client.get(version: :v2)
+                 .call("payment_methods/#{payment_method_id}/installments", amount:, currency:)
+        end
+
         private
 
         def flatten_form(fields, prefix = nil)

@@ -248,6 +248,8 @@ customer = client.v2.customers.create(email: 'customer@example.com', name: 'Jon 
 payment_methods = client.v2.payment_methods.list(customer: 'customer_id')
 client.v2.payment_methods.cancel('payment_method_id')
 mandate = client.v2.payment_methods.mandate_document('payment_method_id')
+installments = client.v2.payment_methods.installments('payment_method_id', amount: 1000, currency: 'CLP')
+# => { available_installments: [3, 6, 12] }
 # Mexican direct debit mandates are sent as multipart. Nested fields are sent in
 # bracket notation and consent documents accept a path or an IO.
 payment_method = client.v2.payment_methods.create(
