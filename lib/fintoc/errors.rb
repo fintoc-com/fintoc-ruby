@@ -214,6 +214,7 @@ module Fintoc
     class RejectedRefreshIntentError < FintocError; end
     class SenderBlockedAccountError < FintocError; end
     class AmountOutOfRangeError < FintocError; end
+    class ChargeProcessingFeeNotAllowedError < FintocError; end
     class CountryNotSupportedError < FintocError; end
     class DirectDebitSuspendedError < FintocError; end
     class FileTooLargeError < FintocError; end
