@@ -25,6 +25,12 @@ module Fintoc
           build_customer(data)
         end
 
+        def update(customer_id, metadata:, idempotency_key: nil)
+          data = @client.patch(version: :v2, idempotency_key:)
+                        .call("customers/#{customer_id}", metadata:)
+          build_customer(data)
+        end
+
         private
 
         def build_customer(data)

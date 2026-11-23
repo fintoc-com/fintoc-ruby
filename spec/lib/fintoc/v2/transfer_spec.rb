@@ -49,6 +49,7 @@ RSpec.describe Fintoc::V2::Transfer do
       receipt_url: nil,
       tracking_key: nil,
       return_reason: nil,
+      error_reason: nil,
       counterparty: counterparty_data,
       account_number: account_number_data,
       metadata: {},
@@ -80,6 +81,7 @@ RSpec.describe Fintoc::V2::Transfer do
         receipt_url: nil,
         tracking_key: nil,
         return_reason: nil,
+        error_reason: nil,
         counterparty: counterparty_data,
         account_number: account_number_data,
         metadata: {},
@@ -227,6 +229,15 @@ RSpec.describe Fintoc::V2::Transfer do
 
     it 'returns self' do
       expect(transfer.refresh).to eq(transfer)
+    end
+
+    context 'when the transfer failed' do
+      let(:refreshed_data) { data.merge(status: 'failed', error_reason: 'insufficient_balance') }
+
+      it 'refreshes the error reason' do
+        expect { transfer.refresh }
+          .to change { transfer.error_reason }.from(nil).to('insufficient_balance')
+      end
     end
 
     it 'raises an error if the transfer ID does not match' do

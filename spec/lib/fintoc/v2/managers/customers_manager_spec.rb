@@ -58,4 +58,20 @@ RSpec.describe Fintoc::V2::Managers::CustomersManager do
         .to be_a(Fintoc::V2::Customer).and have_attributes(payload)
     end
   end
+
+  describe '#update' do
+    let(:metadata) { { channel: 'digital' } }
+    let(:updated_payload) { payload.merge(metadata:) }
+
+    before do
+      stub_request(:patch, resource_url)
+        .with(body: { metadata: }, headers: { 'Idempotency-Key' => 'idem-key' })
+        .to_return(body: updated_payload.to_json, headers: headers)
+    end
+
+    it 'replaces the metadata and returns the customer' do
+      expect(manager.update(payload[:id], metadata:, idempotency_key: 'idem-key'))
+        .to be_a(Fintoc::V2::Customer).and have_attributes(updated_payload)
+    end
+  end
 end
