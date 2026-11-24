@@ -450,7 +450,8 @@ RSpec.describe Fintoc::BaseClient do
       'transfer_not_cancellable' => 'TransferNotCancellableError',
       'usdt_collection_already_open' => 'UsdtCollectionAlreadyOpenError',
       'payment_method_canceled' => 'PaymentMethodCanceledError',
-      'charge_processing_fee_not_allowed' => 'ChargeProcessingFeeNotAllowedError'
+      'charge_processing_fee_not_allowed' => 'ChargeProcessingFeeNotAllowedError',
+      'invalid_phone_number' => 'InvalidPhoneNumberError'
     }.each do |code, klass|
       it "resolves the #{code} error" do
         expect(client.send(:error_class, code)).to eq(Fintoc::Errors.const_get(klass))

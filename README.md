@@ -245,6 +245,8 @@ receipt = client.v2.transfers.receipt('transfer_id') # => { download_url: '...',
 
 # Customers and payment methods
 customer = client.v2.customers.create(email: 'customer@example.com', name: 'Jon Snow')
+# Replaces the customer's metadata; omitted keys are removed
+customer = client.v2.customers.update('customer_id', metadata: { channel: 'digital' })
 payment_methods = client.v2.payment_methods.list(customer: 'customer_id')
 client.v2.payment_methods.cancel('payment_method_id')
 mandate = client.v2.payment_methods.mandate_document('payment_method_id')

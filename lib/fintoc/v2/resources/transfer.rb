@@ -5,7 +5,7 @@ module Fintoc
     class Transfer
       attr_reader :id, :object, :amount, :currency, :direction, :status, :mode,
                   :post_date, :transaction_date, :comment, :reference_id, :receipt_url,
-                  :tracking_key, :return_reason, :counterparty, :account_number,
+                  :tracking_key, :return_reason, :error_reason, :counterparty, :account_number,
                   :metadata, :created_at
 
       def initialize( # rubocop:disable Metrics/MethodLength
@@ -24,6 +24,7 @@ module Fintoc
         receipt_url: nil,
         tracking_key: nil,
         return_reason: nil,
+        error_reason: nil,
         account_number: nil,
         metadata: {},
         created_at: nil,
@@ -44,6 +45,7 @@ module Fintoc
         @receipt_url = receipt_url
         @tracking_key = tracking_key
         @return_reason = return_reason
+        @error_reason = error_reason
         @counterparty = counterparty
         @account_number = account_number
         @metadata = metadata || {}
@@ -119,6 +121,7 @@ module Fintoc
         @receipt_url = transfer.receipt_url
         @tracking_key = transfer.tracking_key
         @return_reason = transfer.return_reason
+        @error_reason = transfer.error_reason
         @counterparty = transfer.counterparty
         @account_number = transfer.account_number
         @metadata = transfer.metadata

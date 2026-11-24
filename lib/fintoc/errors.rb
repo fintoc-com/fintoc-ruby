@@ -83,6 +83,7 @@ module Fintoc
     class InvalidInvoiceStatusError < FintocError; end
     class InvalidMetadataError < FintocError; end
     class InvalidPeriodError < FintocError; end
+    class InvalidPhoneNumberError < FintocError; end
     class InvalidReferenceIdFormatError < FintocError; end
     class InvalidRefundToGetVoucherError < FintocError; end
     class InvalidRutError < FintocError; end
